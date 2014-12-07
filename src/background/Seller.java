@@ -9,4 +9,9 @@ public class Seller{
         sales.add(s);
     }
 
+    public double commissionCost(Tour tour){
+        double totalCommission = 0.0;
+        for(Sale s : sales) if(s.tourID() == tour.getID()) totalCommission += s.passengerAmount().payingTotal() * 10;
+        return totalCommission;
+    }
 }

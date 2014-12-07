@@ -13,6 +13,10 @@ public class Enterprise implements Billable{
         this.sellers = new ArrayList<Seller>();
         this.boats = new ArrayList<Boat>();
     }
+    
+    public String getName(){
+        return this.name;
+    }
 
     public boolean addBoat(Boat b){
         return this.boats.add(b);
@@ -24,7 +28,9 @@ public class Enterprise implements Billable{
         return totalGross;
     }
     public double totalNet(){
-        return 0.0;
+        double totalNet = 0.0;
+        for(Boat b : boats) totalNet += b.totalNet();
+        return totalNet; 
     }
 
     public double apportionmentPercent(){ 

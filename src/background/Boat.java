@@ -21,11 +21,17 @@ public class Boat implements Billable{
     }
 
     public double totalNet(){
-        return 0.0;
+        double totalNet = 0.0;
+        for(Tour t : tours) totalNet += t.totalNet();
+        return totalNet;
     }
 
     public boolean addTour(Tour t){
         return this.tours.add(t);
+    }
+
+    public int getID(){
+        return this.id;
     }
 
     public double apportionmentPercent(){
