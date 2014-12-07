@@ -27,6 +27,17 @@ public class Tour implements Billable{
         return this.passengerAmount;
     }
 
+    public boolean incrementPassengers(PassengerAmount passengerAmount){
+        if(this.passengerAmount.sum(passengerAmount) > boat.capacity())
+            return false;
+        this.passengerAmount.increment(passengerAmount);
+        return true;
+    }
+
+    public boolean addSeller(Seller seller){
+        return this.sellers.add(seller);
+    }
+
     public int getID(){
         return this.id;
     }

@@ -34,6 +34,10 @@ public class Boat implements Billable{
         return this.id;
     }
 
+    public int capacity(){
+        return this.capacity;
+    }
+
     public double apportionmentPercent(){
         double apportionmentPercent = 0.0;
         for(Tour t : tours) apportionmentPercent += t.passengerAmount().payingTotal() / this.capacity;

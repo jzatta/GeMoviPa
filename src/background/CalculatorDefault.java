@@ -18,12 +18,12 @@ public class CalculatorDefault implements Calculator{
         avgApportionPercent /= enterprises.size();
         System.out.println("\n\nTotal bruto: R$ " + totalGross + " Total liq.: R$ " + totalNet + " Média perc.: " + avgApportionPercent);
         System.out.println("\n\nTrababalharam: ");
-        System.out.println("\tEmpresa  \tIndice");
+        System.out.println("\tEmpresa  \tIndice \tLiq.");
         System.out.println("----------------------------------------");
         for(Enterprise e : enterprises){
             double eApportionmentPercent = e.apportionmentPercent();
             if(eApportionmentPercent >= avgApportionPercent) enterIncluded.add(e);
-            System.out.println("\t" + e.getName()+"\t" + e.apportionmentPercent());
+            System.out.println("\t" + e.getName()+"\t" + e.apportionmentPercent() + "\t" + e.totalNet());
         }
 
         if(!enterIncluded.isEmpty()){

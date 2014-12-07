@@ -13,6 +13,10 @@ public class Main{
         Tour tour = new Tour(boat,50.0,new PassengerAmount(140));
         boat.addTour(tour);
 
+        Sale sale = new Sale(tour,new PassengerAmount(10));
+        Seller seller = new Seller();
+        seller.toSale(sale);
+
         enterprise = new Enterprise("Perola Negra",1);
         enterprises.add(enterprise);
         boat = new Boat("Perola Negra I",0,200);
