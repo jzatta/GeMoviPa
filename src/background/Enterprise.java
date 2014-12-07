@@ -33,10 +33,16 @@ public class Enterprise implements Billable{
         return totalNet; 
     }
 
-    public double apportionmentPercent(){ 
-        double apportionmentPercent = 0.0;
-        for(Boat b : boats) apportionmentPercent += b.apportionmentPercent();
-        return  apportionmentPercent / boats.size();
+    public double cargoPercent(){ 
+        double cargoPercent = 0.0;
+        for(Boat b : boats) cargoPercent += b.cargoPercent();
+        return  cargoPercent / boats.size();
+    }
+
+    public double totalCapacity(){
+        double totalCapacity = 0.0;
+        for(Boat b : boats) totalCapacity += b.capacity();
+        return totalCapacity;
     }
 
 }

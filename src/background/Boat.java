@@ -38,10 +38,10 @@ public class Boat implements Billable{
         return this.capacity;
     }
 
-    public double apportionmentPercent(){
-        double apportionmentPercent = 0.0;
-        for(Tour t : tours) apportionmentPercent += t.passengerAmount().payingTotal() / this.capacity;
-        return apportionmentPercent / tours.size();
+    public double cargoPercent(){
+        double cargoPercent = 0.0;
+        for(Tour t : tours) cargoPercent += t.passengerAmount().payingTotal() / this.capacity;
+        return cargoPercent / tours.size();
     }
 
 }

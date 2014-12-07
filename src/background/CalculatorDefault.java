@@ -5,32 +5,39 @@ import java.util.Arrays;
 public class CalculatorDefault implements Calculator{
 
     public void calculateApportionment(List<Enterprise> enterprises){
-        double avgApportionPercent = 0.0;
+        double avgCargoPercent = 0.0;
         double totalGross = 0.0;
         double totalNet = 0.0;
+        double totalCapacityApportion = 0.0;
         List<Enterprise> enterIncluded = new ArrayList<Enterprise>();
 
         for(Enterprise e : enterprises) {
             totalGross += e.totalGross();
             totalNet += e.totalNet();
-            avgApportionPercent += e.apportionmentPercent();
+            avgCargoPercent += e.cargoPercent();
         }
-        avgApportionPercent /= enterprises.size();
-        System.out.println("\n\nTotal bruto: R$ " + totalGross + " Total liq.: R$ " + totalNet + " Média perc.: " + avgApportionPercent);
+        avgCargoPercent /= enterprises.size();
+        System.out.println("\n\nTotal bruto: R$ " + totalGross + " Total liq.: R$ " + totalNet + " Média perc. carga: " + avgCargoPercent);
         System.out.println("\n\nTrababalharam: ");
         System.out.println("\tEmpresa  \tIndice \tLiq.");
         System.out.println("----------------------------------------");
         for(Enterprise e : enterprises){
-            double eApportionmentPercent = e.apportionmentPercent();
-            if(eApportionmentPercent >= avgApportionPercent) enterIncluded.add(e);
-            System.out.println("\t" + e.getName()+"\t" + e.apportionmentPercent() + "\t" + e.totalNet());
+            double eCargoPercent = e.cargoPercent();
+            if(eCargoPercent >= avgCargoPercent) {
+                totalCapacityApportion += e.totalCapacity();
+                enterIncluded.add(e);
+            }
+            System.out.println("\t" + e.getName()+"\t" + e.cargoPercent() + "\t" + e.totalNet());
         }
 
         if(!enterIncluded.isEmpty()){
             System.out.println("\n\nEntraram no rateio: ");
-            System.out.println("\tEmpresa  \tIndice");
+            System.out.println("\tEmpresa  \tPerc. Carga \tPerc. rateio \tGanho");
             System.out.println("----------------------------------------");
-            for(Enterprise e : enterIncluded) System.out.println("\t" + e.getName()+"\t" + e.apportionmentPercent());
+            for(Enterprise e : enterIncluded){
+                double perApportionment = e.totalCapacity()/totalCapacityApportion;
+                System.out.println("\t" + e.getName()+"\t" + e.cargoPercent() + "\t" + perApportionment + "\t" + perApportionment * totalNet);
+            }
         }
         else{
             System.out.println("Nao houve rateio");
