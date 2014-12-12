@@ -1,19 +1,21 @@
 public class Sale{
-    private Tour tour;
-    private PassengerAmount passengerAmount;
+    int fullPass, halfPass, freePass;
+    String sellerName, sellerEnterprise;
+    Timestamp departure;
+    String boatName, boatEnterprise;
 
-    public Sale(Tour tour, PassengerAmount passengerAmount){
-        this.tour = tour;
-        this.passengerAmount = passengerAmount;
+    public Sale(ResultSet){
+        
     }
-
-    public void validateSale(Seller seller){
-        this.tour.addSeller(seller);
-        this.tour.incrementPassengers(this.passengerAmount);
-    }
-
-    public double commissionCost(Tour tour){
-        if(this.tour.getID() == tour.getID()) return this.passengerAmount.payingTotal() * 10;
-        return 0.0;
+    
+    public String insertParameters(){
+      return Integer.toString(this.fullPass)+","+
+      Integer.toString(this.halfPass)+","+
+      Integer.toString(this.freePass)+","+
+      this.sellerName+","+
+      this.sellerEnterprise+","+
+      "\""+this.departure+"\","+
+      this.boatName+","+
+      this.boatEnterprise;
     }
 }
