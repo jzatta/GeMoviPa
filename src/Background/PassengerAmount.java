@@ -1,3 +1,5 @@
+package Background;
+
 public class PassengerAmount{
     private int full;
     private int half;
