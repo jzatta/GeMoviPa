@@ -9,7 +9,7 @@ public class Boat implements Billable{
     private double tourCost;
     
     public Boat(ResultSet result){
-      this.idBoat           = result.getInt("idBoat");
+      this.idBoat           = result.getInt("idboat");
       this.boatName         = result.getString("boatName");
       this.boatEnterprise   = result.getString("boatEnterprise");
       this.boatCapacity     = result.getInt("boatCapacity");

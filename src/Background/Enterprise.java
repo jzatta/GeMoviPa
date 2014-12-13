@@ -6,8 +6,11 @@ import java.util.ArrayList;
 public class Enterprise implements Billable{
     private int id;
     private String name;
-    private List<Seller> sellers;
-    private List<Boat> boats;
+    
+    public Enterprise(ResultSet result){
+      this.id   = result.getInt("identerprise");
+      this.name = result.getString("enterpriseName");
+    }
 
     public Enterprise(String name, int id){
         this.name = name;
