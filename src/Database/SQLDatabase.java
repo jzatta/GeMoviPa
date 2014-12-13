@@ -104,21 +104,21 @@ public class SQLDatabase implements DatabaseInterface{
       if (runCommand){
         rule += " AND";
       }
-      rule += " enterpriseName<='"+enterpriseName+"'";
+      rule += " enterpriseName='"+enterpriseName+"'";
       runCommand = true;
     }
     if (boatName != null){
       if (runCommand){
         rule += " AND";
       }
-      rule += " boatName<='"+boatName+"'";
+      rule += " boatName='"+boatName+"'";
       runCommand = true;
     }
     if (boatEnterpriseName != null){
       if (runCommand){
         rule += " AND";
       }
-      rule += " boatEnterpriseName<='"+boatEnterpriseName+"'";
+      rule += " boatEnterpriseName='"+boatEnterpriseName+"'";
       runCommand = true;
     }
     if (!runCommand){
@@ -164,14 +164,14 @@ public class SQLDatabase implements DatabaseInterface{
       if (runCommand){
         rule += " AND";
       }
-      rule += " boatName<='"+boatName+"'";
+      rule += " boatName='"+boatName+"'";
       runCommand = true;
     }
     if (boatEnterpriseName != null){
       if (runCommand){
         rule += " AND";
       }
-      rule += " boatEnterpriseName<='"+boatEnterpriseName+"'";
+      rule += " boatEnterpriseName='"+boatEnterpriseName+"'";
       runCommand = true;
     }
     if (!runCommand){

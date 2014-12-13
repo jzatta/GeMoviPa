@@ -12,7 +12,7 @@ public class JulianoTester{
       //q.createDatabaseIfNoExist();
       //q.storeSale(new Sale(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"Juliano","qwerty","barcoza","empresabarcoza"));
       //q.storeTour(new Tour(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"barcao","empresabarco"));
-      for (Sale t: q.loadSales(null, null, "Zatta", null, null, null)){
+      for (Sale t: q.loadSales(null, Timestamp.valueOf("2014-01-01 01:01:01"), null, null, null, null)){
         System.out.println(t.toString());
       }
       System.out.println();
