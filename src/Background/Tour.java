@@ -10,23 +10,23 @@ public class Tour{
     String boatName, boatEnterprise;
 
     public Tour(ResultSet result) throws SQLException{
-        this.fullPass         = result.getInt("fullPass");
-        this.halfPass         = result.getInt("halfPass");
-        this.freePass         = result.getInt("freePass");
-        this.departure        = result.getTimestamp("departure");
-        this.boatName         = result.getString("boatName");
-        this.boatEnterprise   = result.getString("boatEnterprise");
+      this.fullPass         = result.getInt("fullPass");
+      this.halfPass         = result.getInt("halfPass");
+      this.freePass         = result.getInt("freePass");
+      this.departure        = result.getTimestamp("departure");
+      this.boatName         = result.getString("boatName");
+      this.boatEnterprise   = result.getString("boatEnterprise");
     }
     
     public Tour(int fullPass, int halfPass, int freePass,
                 Timestamp departure,
                 String boatName, String boatEnterprise){
-        this.fullPass         = fullPass;
-        this.halfPass         = halfPass;
-        this.freePass         = freePass;
-        this.departure        = departure;
-        this.boatName         = boatName;
-        this.boatEnterprise   = boatEnterprise;
+      this.fullPass         = fullPass;
+      this.halfPass         = halfPass;
+      this.freePass         = freePass;
+      this.departure        = departure;
+      this.boatName         = boatName;
+      this.boatEnterprise   = boatEnterprise;
     }
     
     public String insertParameters(){

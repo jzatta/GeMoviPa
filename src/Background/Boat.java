@@ -4,10 +4,17 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Boat implements Billable{
-    private int id;
-    private String name;
-    private int capacity;
-    private List<Tour> tours;
+    private int idBoat, boatCapacity;
+    private String boatName, boatEnterprise;
+    private double tourCost;
+    
+    public Boat(ResultSet result){
+      this.idBoat           = result.getInt("idboat");
+      this.boatName         = result.getString("boatName");
+      this.boatEnterprise   = result.getString("boatEnterprise");
+      this.boatCapacity     = result.getInt("boatCapacity");
+      this.tourCost         = result.getDouble("tourCost");
+    }
 
     public Boat(String name, int id, int capacity){
         this.name = name;

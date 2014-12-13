@@ -9,7 +9,7 @@ public class SQLDatabase implements DatabaseInterface{
   private String hostname;
   private String username;
   private String password;
-  private String schemaName = "test";
+  private String schemaName = "huehueBRBR";
   
   public SQLDatabase(String hostname, String username, String password) {
     this.hostname = hostname;
@@ -24,14 +24,14 @@ public class SQLDatabase implements DatabaseInterface{
       System.out.println("jdbc:mysql Driver not founded");
       System.exit(0);
     }
-    return DriverManager.getConnection("jdbc:mysql://"+this.hostname+"/"+this.schemaName,this.username,this.password);
+    return DriverManager.getConnection("jdbc:mysql://"+this.hostname,this.username,this.password);
   }
   
   private ResultSet getData(String rule) throws SQLException{
     return connectServer().createStatement().executeQuery(rule);
   }
   
-  private int insertData(String rule) throws SQLException{
+  private int insertData(String rule) throws SQLException {
     Connection c = connectServer();
     int i = c.createStatement().executeUpdate(rule);
     c.close();
@@ -45,14 +45,12 @@ public class SQLDatabase implements DatabaseInterface{
       "CREATE DATABASE IF NOT EXISTS `"+this.schemaName+"`;",
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`sales` (`idsales` INT NOT NULL AUTO_INCREMENT, `fullPass` INT NOT NULL, `halfPass` INT NOT NULL, `freePass` INT NOT NULL, `departure` TIMESTAMP NOT NULL, `sellerName` VARCHAR(100) NOT NULL, `sellerEnterprise` VARCHAR(100) NOT NULL, `boatName` VARCHAR(100) NOT NULL, `boatEnterprise` VARCHAR(100) NOT NULL, PRIMARY KEY (`idsales`));",
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`tour` (`idtour` INT NOT NULL AUTO_INCREMENT, `fullPass` INT NOT NULL, `halfPass` INT NOT NULL, `freePass` INT NOT NULL, `departure` TIMESTAMP NOT NULL, `boatName` VARCHAR(100) NOT NULL, `boatEnterprise` VARCHAR(100) NOT NULL, PRIMARY KEY (`idtour`));",
+      "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`enterprises` (`identerprises` INT NOT NULL,`enterpriseName` VARCHAR(100) NOT NULL, PRIMARY KEY (`identerprises`));",
+      "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`boat` (`idboat` INT NOT NULL,`boatName` VARCHAR(100) NOT NULL,`boatEnterprise` VARCHAR(100) NOT NULL,`boatCapacity` INT NOT NULL,`tourCost` DOUBLE NOT NULL,PRIMARY KEY (`idboat`));",
       "SET sql_notes = 1;"
     };
     for (String command : creationCommands){
-      try{
-        System.out.println(getData(command).toString());
-      } catch(Exception e){
-        System.out.println(command);
-      }
+      insertData(command);
     }
   }
   
@@ -77,6 +75,9 @@ public class SQLDatabase implements DatabaseInterface{
       System.out.println("Error access Databank");
     }
   }
+  
+  public void storeBoat(Boat boat);
+  public void storeEnterprise(Enterprise enterprise);
   
   public List<Sale> loadSales(Timestamp from, Timestamp to, String sellerName, String enterpriseName, String boatName, String boatEnterpriseName){
     // select all(colums) from (table) where
@@ -122,7 +123,7 @@ public class SQLDatabase implements DatabaseInterface{
       runCommand = true;
     }
     if (!runCommand){
-      rule = "SELECT * FROM sales";
+      rule = "SELECT * FROM `"+this.schemaName+"`.`sales`";
     }
     rule += ";";
     ResultSet result;
@@ -175,7 +176,7 @@ public class SQLDatabase implements DatabaseInterface{
       runCommand = true;
     }
     if (!runCommand){
-      rule = "SELECT * FROM tour";
+      rule = "SELECT * FROM `"+this.schemaName+"`.`tour`";
     }
     rule += ";";
     ResultSet result;
@@ -197,4 +198,44 @@ public class SQLDatabase implements DatabaseInterface{
     }
     return tours;
   }
+  
+  public List<Boat> loadBoats(String boatName, String boatEnterprise){
+    String rule = "SELECT * FROM `"+this.schemaName+"`.`boat` WHERE";
+    boolean runCommand = false;
+    if (boatName != null){
+      rule += " boatName='"+boatName+"'";
+      runCommand = true;
+    }
+    if (boatEnterprise != null){
+      if (runCommand){
+        rule += " AND";
+      }
+      rule += " boatEnterpriseName='"+boatEnterpriseName+"'";
+      runCommand = true;
+    }
+    if (!runCommand){
+      rule = "SELECT * FROM `"+this.schemaName+"`.`boat`";
+    }
+    rule += ";";
+    ResultSet result;
+    List<Boat> boats = new ArrayList<Boat>();
+    try{
+      result = getData(rule);
+      if (!result.isBeforeFirst() ){
+        return tours;
+      }
+      do{
+        result.next();
+        boats.add(new Boat(result));
+      }while(!result.isLast());
+      result.getStatement().getConnection().close();
+    } catch (SQLException e){
+      e.printStackTrace();
+      System.out.println("Error access Databank");
+      return null;
+    }
+    return boats;
+  }
+  
+  public List<Enterprise> loadBoats(String enterpriseName);
 }
