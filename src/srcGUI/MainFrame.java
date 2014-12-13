@@ -1,3 +1,5 @@
+package srcGUI;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -23,12 +25,19 @@ public class MainFrame extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Recebidos Mesa");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new RecebidosMesa().setVisible(true);
+				RecebidosMesa recebidos = new RecebidosMesa();
+				recebidos.setLocation(getLocation());
+				recebidos.setVisible(true);
 			}
 		});
 		mnRecebidos.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Cml Vendas");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Não implementado ainda");
+			}
+		});
 		mnRecebidos.add(mntmNewMenuItem_1);
 	}
 	public static void main(String[] args){

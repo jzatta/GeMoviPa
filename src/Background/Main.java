@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main{
-
+	/*
     public static void main(String[] args){
         List<Enterprise> enterprises;
         enterprises = new ArrayList<Enterprise>();
@@ -47,5 +47,5 @@ public class Main{
         enterprise.addBoat(boat);
         tour = new Tour(boat,50.0,new PassengerAmount(100));
         boat.addTour(tour);
-    }
+    }*/
 }
