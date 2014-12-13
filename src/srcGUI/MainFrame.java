@@ -39,7 +39,7 @@ public class MainFrame extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Cml Vendas");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Não implementado ainda");
+				launchCommissionWindow();
 			}
 		});
 		mnRecebidos.add(mntmNewMenuItem_1);
@@ -53,10 +53,16 @@ public class MainFrame extends JFrame {
 	}
 	
 	void launchTableReceived(){
-		RecebidosMesa recebidos = new RecebidosMesa(dataBaseConnection);
+		TableReceived recebidos = new TableReceived(dataBaseConnection);
 		recebidos.setLocation(getLocation());
 		recebidos.setVisible(true);
 		
+	}
+	
+	void launchCommissionWindow(){
+		CommissionWindow commission = new CommissionWindow(dataBaseConnection);
+		commission.setLocation(getLocation());
+		commission.setVisible(true);
 	}
 
 }
