@@ -25,13 +25,13 @@ public class Boat implements Billable{
 
     public double totalGross(){
         double totalGross = 0.0;
-        for(Tour t : tours) totalGross += t.totalGross();
+       // for(Tour t : tours) totalGross += t.totalGross();
         return totalGross;
     }
 
     public double totalNet(){
         double totalNet = 0.0;
-        for(Tour t : tours) totalNet += t.totalNet();
+        //for(Tour t : tours) totalNet += t.totalNet();
         return totalNet;
     }
 
@@ -49,7 +49,7 @@ public class Boat implements Billable{
 
     public double cargoPercent(){
         double cargoPercent = 0.0;
-        for(Tour t : tours) cargoPercent += t.passengerAmount().payingTotal() / this.capacity;
+       // for(Tour t : tours) cargoPercent += t.passengerAmount().payingTotal() / this.capacity;
         return cargoPercent / tours.size();
     }
 
