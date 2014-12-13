@@ -10,5 +10,5 @@ public interface DatabaseInterface{
   void storeSale(Sale sale);
   // Database.Tour completely different of background.Tour
   List<Tour> loadTours(Timestamp from, Timestamp to, String boatName, String boatEnterpriseName);
-  void storeTours(Tour tour);
+  void storeTour(Tour tour);
 }

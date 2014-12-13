@@ -1,6 +1,6 @@
 package test;
 
-import Background.Sale;
+import Background.*;
 import Database.*;
 import java.sql.*;
 
@@ -8,7 +8,20 @@ import java.sql.*;
 public class JulianoTester{
 	public static void main(String[] args) throws Exception{
     SQLDatabase q = new SQLDatabase("127.0.0.1","root","root");
-    q.createDatabaseIfNoExist();
+    try {
+      //q.createDatabaseIfNoExist();
+      //q.storeSale(new Sale(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"Juliano","qwerty","barcoza","empresabarcoza"));
+      //q.storeTour(new Tour(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"barcao","empresabarco"));
+      for (Sale t: q.loadSales(null, null, "Zatta", null, null, null)){
+        System.out.println(t.toString());
+      }
+      System.out.println();
+      for (Tour t: q.loadTours(null, null, null, null)){
+        System.out.println(t.toString());
+      }
+    }catch (Exception e){
+      System.out.println("Deu ruim");
+    }
 	}
 	
 }
