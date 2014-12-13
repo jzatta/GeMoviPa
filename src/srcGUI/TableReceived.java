@@ -40,7 +40,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 
 
-public class RecebidosMesa extends JFrame {
+public class TableReceived extends JFrame {
 	private JTextField textField_2;
 	private JTextField tFTourValue;
 	private JTextField tFBoatCapacity;
@@ -58,7 +58,7 @@ public class RecebidosMesa extends JFrame {
 	private JFormattedTextField tFFDepartureDate;
 	private SQLDatabase dataBaseConnection;
 	
-	public RecebidosMesa(SQLDatabase dataBaseConnection) {
+	public TableReceived(SQLDatabase dataBaseConnection) {
 		
 		this.dataBaseConnection = dataBaseConnection;
 		setSize(new Dimension(488, 390));
@@ -124,7 +124,6 @@ public class RecebidosMesa extends JFrame {
 		try {
 			tFFDepartureDate = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		} catch (ParseException e1) {
-			// TODO Bloco catch gerado automaticamente
 			e1.printStackTrace();
 		}
 		jPTourInfo.add(tFFDepartureDate, "8, 2, fill, center");
@@ -281,7 +280,12 @@ public class RecebidosMesa extends JFrame {
 	}
 	
 	private int getIntFormJText(JTextField jt) throws NumberFormatException{
-		return Integer.parseInt(jt.getText());
+		try{
+			return Integer.parseInt(jt.getText());
+		}catch(NumberFormatException e){
+			jt.setBackground(Color.RED);
+			throw e;
+		}
 	}
 	
 	Timestamp getDepartureTimestamp() throws IllegalArgumentException{
