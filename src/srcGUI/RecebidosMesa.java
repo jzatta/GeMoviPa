@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -30,12 +31,16 @@ import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.Timestamp;
+import java.text.ParseException;
+
 import Background.*;
+import Database.SQLDatabase;
+
+import javax.swing.JFormattedTextField;
+import javax.swing.text.MaskFormatter;
 
 
 public class RecebidosMesa extends JFrame {
-	private JTextField tFDepartureHour;
-	private JTextField tFDepartureDate;
 	private JTextField textField_2;
 	private JTextField tFTourValue;
 	private JTextField tFBoatCapacity;
@@ -49,9 +54,13 @@ public class RecebidosMesa extends JFrame {
 	private JTextField textField_12;
 	private JTextField textField_13;
 	private JComboBox<String> cBBoatName;
+	private JFormattedTextField tFFDepartureHour;
+	private JFormattedTextField tFFDepartureDate;
+	private SQLDatabase dataBaseConnection;
 	
-	public RecebidosMesa() {
+	public RecebidosMesa(SQLDatabase dataBaseConnection) {
 		
+		this.dataBaseConnection = dataBaseConnection;
 		setSize(new Dimension(488, 390));
 		//getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -81,11 +90,11 @@ public class RecebidosMesa extends JFrame {
 				FormFactory.UNRELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
+				ColumnSpec.decode("default:grow"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
+				ColumnSpec.decode("default:grow"),
 				FormFactory.UNRELATED_GAP_COLSPEC,},
 			new RowSpec[] {
 				FormFactory.LINE_GAP_ROWSPEC,
@@ -101,16 +110,24 @@ public class RecebidosMesa extends JFrame {
 		JLabel lblDataSada = new JLabel("Hora Saída");
 		jPTourInfo.add(lblDataSada, "2, 2, left, center");
 		
-		tFDepartureHour = new JTextField();
-		jPTourInfo.add(tFDepartureHour, "4, 2, fill, center");
-		tFDepartureHour.setColumns(10);
+		try {
+			tFFDepartureHour = new JFormattedTextField(new MaskFormatter("##:##"));
+		} catch (ParseException e1) {
+			// TODO Bloco catch gerado automaticamente
+			e1.printStackTrace();
+		}
+		jPTourInfo.add(tFFDepartureHour, "4, 2, fill, center");
 		
 		JLabel lblDataSada_1 = new JLabel("Data Saída");
-		jPTourInfo.add(lblDataSada_1, "6, 2, left, center");
+		jPTourInfo.add(lblDataSada_1, "6, 2, right, center");
 		
-		tFDepartureDate = new JTextField();
-		jPTourInfo.add(tFDepartureDate, "8, 2, fill, center");
-		tFDepartureDate.setColumns(10);
+		try {
+			tFFDepartureDate = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e1) {
+			// TODO Bloco catch gerado automaticamente
+			e1.printStackTrace();
+		}
+		jPTourInfo.add(tFFDepartureDate, "8, 2, fill, center");
 		
 		JLabel lblCdigoBarco = new JLabel("Código Barco");
 		jPTourInfo.add(lblCdigoBarco, "2, 4, left, center");
@@ -254,17 +271,34 @@ public class RecebidosMesa extends JFrame {
 		jPButtons.add(button);
 		
 		JButton button_1 = new JButton("Registrar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processRegButton();
+			}
+		});
 		jPButtons.add(button_1);
 		
 	}
 	
-	int getIntFormJText(JTextField jt) throws NumberFormatException{
+	private int getIntFormJText(JTextField jt) throws NumberFormatException{
 		return Integer.parseInt(jt.getText());
 	}
 	
-	Timestamp getDepartureTimestamp(){
-		return null;
-		//TODO operate on jTextFileds to do this.
+	Timestamp getDepartureTimestamp() throws IllegalArgumentException{
+		try{
+			String dateFormated = tFFDepartureDate.getText();
+			String year = dateFormated.substring(dateFormated.lastIndexOf('/') + 1);
+			dateFormated = dateFormated.substring(0,dateFormated.lastIndexOf('/'));
+			String month = dateFormated.substring(dateFormated.lastIndexOf('/') + 1);
+			String day = dateFormated.substring(0,dateFormated.indexOf('/'));
+			
+			return Timestamp.valueOf(year + "-" + month + "-" + day + " " + tFFDepartureHour.getText() + ":00");
+		}catch(IllegalArgumentException e){
+			tFFDepartureDate.setBackground(Color.RED);
+			tFFDepartureHour.setBackground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Insira data ou hora corretamente", "Erro!", JOptionPane.ERROR_MESSAGE);
+			throw e;
+		}
 	}
 	
 	Tour getTour(){
@@ -276,9 +310,14 @@ public class RecebidosMesa extends JFrame {
 	                (String)cBBoatName.getSelectedItem(), boatEnterprise);
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "Insira números inteiros corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Problemas na extração do passeio", "ERRO", JOptionPane.ERROR_MESSAGE);
 		}
-		return null;
-		
+		return null;		
+	}
+	
+	void processRegButton(){
+		dataBaseConnection.storeTour(getTour());
 	}
 
 }

@@ -7,13 +7,19 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import Database.SQLDatabase;
+
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
 public class MainFrame extends JFrame {
+	private SQLDatabase dataBaseConnection;
+	
 	public MainFrame() {
+		
+		dataBaseConnection = new SQLDatabase("127.0.0.1","root","root");
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -25,9 +31,7 @@ public class MainFrame extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Recebidos Mesa");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RecebidosMesa recebidos = new RecebidosMesa();
-				recebidos.setLocation(getLocation());
-				recebidos.setVisible(true);
+				launchTableReceived();
 			}
 		});
 		mnRecebidos.add(mntmNewMenuItem);
@@ -46,6 +50,13 @@ public class MainFrame extends JFrame {
 				new MainFrame().setVisible(true);
 			}
 		});
+	}
+	
+	void launchTableReceived(){
+		RecebidosMesa recebidos = new RecebidosMesa(dataBaseConnection);
+		recebidos.setLocation(getLocation());
+		recebidos.setVisible(true);
+		
 	}
 
 }
