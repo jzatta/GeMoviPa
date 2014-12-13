@@ -1,8 +1,8 @@
 package Background;
 
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class Sale{
     int fullPass, halfPass, freePass;
