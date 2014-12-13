@@ -11,6 +11,6 @@ public interface DatabaseInterface{
   void storeTour(Tour tour);
   List<Boat> loadBoats(String boatName, String boatEnterprise);
   void storeBoat(Boat boat);
-  List<Enterprise> loadBoats(String enterpriseName);
+  List<Enterprise> loadEnterprises(String enterpriseName);
   void storeEnterprise(Enterprise enterprise);
 }

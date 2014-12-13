@@ -10,8 +10,8 @@ public class JulianoTester{
     SQLDatabase q = new SQLDatabase("127.0.0.1","root","root");
     try {
       q.createDatabaseIfNoExist();
-      //q.storeSale(new Sale(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"Juliano","qwerty","barcoza","empresabarcoza"));
-      //q.storeTour(new Tour(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"barcao","empresabarco"));
+      q.storeSale(new Sale(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"Juliano","qwerty","barcoza","empresabarcoza"));
+      q.storeTour(new Tour(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"barcao","empresabarco"));
       for (Sale t: q.loadSales(null, Timestamp.valueOf("2014-01-01 01:01:01"), null, null, null, null)){
         System.out.println(t.toString());
       }
@@ -20,6 +20,7 @@ public class JulianoTester{
         System.out.println(t.toString());
       }
     }catch (Exception e){
+      e.printStackTrace();
       System.out.println("Deu ruim");
     }
 	}
