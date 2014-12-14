@@ -15,14 +15,14 @@ public class JulianoTester{
 //       q.storeBoat(new Boat("barcao1","empresabarco1",8001,8.09));
 //       q.storeEnterprise(new Enterprise("empresabarcoza1"));
 //       q.storeSeller(new Seller("nomevendedor","empresavendedor"));
-      
+      /*
       	q.storeEnterprise(new Enterprise("Barba Negra"));
       	q.storeEnterprise(new Enterprise("Pérola Negra"));
       	q.storeEnterprise(new Enterprise("Barba Negra"));
       	q.storeBoat(new Boat("Barba Negra I","Barba Negra",120,50.0));
       	q.storeBoat(new Boat("Barba Negra II","Barba Negra",100,50.0));
       	q.storeBoat(new Boat("Perola Negra I","Perola Negra",200,50.0));
-      	q.storeSeller(new Seller("Serjio","Barba Negra"));
+      	q.storeSeller(new Seller("Serjio","Barba Negra"));*/
       for (Sale t: q.loadSales(null, null, null, null, null, null)){
         System.out.println(t.toDebug());
       }

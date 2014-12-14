@@ -31,7 +31,10 @@ public class CalculatorDefault{
         int boatsTotal = 0;
         double totalGross = 0.0;
         double totalNet = 0.0;
+        double totalGrossApportion = 0.0;
+        double totalNetApportion = 0.0;
         double totalCommisionCost = 0.0;
+        double totalCommisionCostApportion = 0.0;
         double totalCapacityApportion = 0.0;
         
         List<Boat> boatsEnvolved = new ArrayList<Boat>();
@@ -93,22 +96,34 @@ public class CalculatorDefault{
         
         System.out.println("\n\nTotal bruto: R$ " + totalGross + " Total liq.: R$ " + totalNet + " Média perc. carga: " + avgCargoPercent);
         System.out.println("\n\nTrababalharam: ");
-        System.out.println("\tBarco  \tIndice \tLiq.");
+        System.out.println("\tBarco  \tIndice \tBruto \tLiq.");
         System.out.println("----------------------------------------");
         for(Boat b : boatsEnvolved){
         	double eCargoPercent = 0.0;
+        	double totalCommisionCostBoat = 0.0;
+        	double totalGrossBoat = 0.0;
         	List<Tour> toursBoat = getToursByBoat(tours, b);
-        	for(Tour t : toursBoat) eCargoPercent += t.payingPassengers();
+        	for(Tour t : toursBoat) {
+        		eCargoPercent += t.payingPassengers();
+        		totalGrossBoat += t.payingPassengers() * b.tourCost();
+        	}
         	eCargoPercent /= b.capacity() * toursBoat.size();
+        	
+        	List<Sale> salesBoat = getSalesByBoat(sales, b);
+    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
         	
         	if(eCargoPercent >= avgCargoPercent){
         		totalCapacityApportion += b.capacity();
+        		totalGrossApportion += totalGrossBoat;
+        		totalCommisionCostApportion += totalCommisionCostBoat;
                 boatsApportion.add(b);
         	}
         	
-        	System.out.println("\t" + b.toString() +"\t" + eCargoPercent + "\t" /*+ e.totalNet()*/);
+        	System.out.println("\t" + b.toString() +"\t" + eCargoPercent + "\t" + totalGrossBoat + "\t" + (totalGrossBoat - totalCommisionCostBoat));
         }
+        totalNetApportion = totalGrossApportion - totalCommisionCostApportion;
         if(!boatsApportion.isEmpty()){
+        	System.out.println("\n\nTotal bruto rateio: R$ " + totalGrossApportion + " Total liq. rateio: R$ " + totalNetApportion);
             System.out.println("\n\nEntraram no rateio: ");
             System.out.println("\tEmpresa  \tPerc. Carga \tPerc. rateio \tGanho");
             System.out.println("----------------------------------------");
@@ -118,7 +133,7 @@ public class CalculatorDefault{
             	for(Tour t : toursBoat) eCargoPercent += t.payingPassengers();
             	eCargoPercent /= b.capacity() * toursBoat.size();
                 double perApportionment = b.capacity()/totalCapacityApportion;
-                System.out.println("\t" + b.toString()+"\t" + eCargoPercent + "\t" + perApportionment + "\t" + perApportionment * totalNet);
+                System.out.println("\t" + b.toString()+"\t" + eCargoPercent + "\t" + perApportionment + "\t" + perApportionment * totalNetApportion);
             }
         }
         else{

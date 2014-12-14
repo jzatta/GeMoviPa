@@ -124,7 +124,8 @@ public class MainFrame extends JFrame {
 		Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			JOptionPane.showMessageDialog(null, "Não implementado ainda");
+			JOptionPane.showMessageDialog(null, "Verifique console");
+			new CalculatorDefault().calculateApportionment(dataBaseConnection, timeFrom, timeTo);
 		}
 		
 	}
