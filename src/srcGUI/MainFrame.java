@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		
-		dataBaseConnection = new SQLDatabase("127.0.0.1","root","root");
+		dataBaseConnection = new SQLDatabase("10.42.0.35","root","root");
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

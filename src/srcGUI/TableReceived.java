@@ -32,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.List;
 
 import Background.*;
 import Database.SQLDatabase;
@@ -41,7 +42,7 @@ import javax.swing.text.MaskFormatter;
 
 
 public class TableReceived extends JFrame {
-	private JTextField textField_2;
+	private JTextField tFBoatID;
 	private JTextField tFTourValue;
 	private JTextField tFBoatCapacity;
 	private JTextField tFTourValueDisc;
@@ -53,7 +54,7 @@ public class TableReceived extends JFrame {
 	private JTextField textField_11;
 	private JTextField textField_12;
 	private JTextField textField_13;
-	private JComboBox<String> cBBoatName;
+	private JComboBox<Boat> cBBoatName;
 	private JFormattedTextField tFFDepartureHour;
 	private JFormattedTextField tFFDepartureDate;
 	private SQLDatabase dataBaseConnection;
@@ -131,11 +132,13 @@ public class TableReceived extends JFrame {
 		JLabel lblCdigoBarco = new JLabel("Código Barco");
 		jPTourInfo.add(lblCdigoBarco, "2, 4, left, center");
 		
-		textField_2 = new JTextField();
-		jPTourInfo.add(textField_2, "4, 4, fill, center");
-		textField_2.setColumns(10);
+		tFBoatID = new JTextField();
+		jPTourInfo.add(tFBoatID, "4, 4, fill, center");
+		tFBoatID.setColumns(10);
 		
-		cBBoatName = new JComboBox<String>();
+		cBBoatName = new JComboBox<Boat>();
+		List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+		for(Boat b : boats) cBBoatName.addItem(b);
 		jPTourInfo.add(cBBoatName, "6, 4, 3, 1, fill, top");
 		
 		JLabel lblHoraSada = new JLabel("Valor passeio");
@@ -279,38 +282,12 @@ public class TableReceived extends JFrame {
 		
 	}
 	
-	private int getIntFormJText(JTextField jt) throws NumberFormatException{
-		try{
-			return Integer.parseInt(jt.getText());
-		}catch(NumberFormatException e){
-			jt.setBackground(Color.RED);
-			throw e;
-		}
-	}
-	
-	Timestamp getDepartureTimestamp() throws IllegalArgumentException{
-		try{
-			String dateFormated = tFFDepartureDate.getText();
-			String year = dateFormated.substring(dateFormated.lastIndexOf('/') + 1);
-			dateFormated = dateFormated.substring(0,dateFormated.lastIndexOf('/'));
-			String month = dateFormated.substring(dateFormated.lastIndexOf('/') + 1);
-			String day = dateFormated.substring(0,dateFormated.indexOf('/'));
-			
-			return Timestamp.valueOf(year + "-" + month + "-" + day + " " + tFFDepartureHour.getText() + ":00");
-		}catch(IllegalArgumentException e){
-			tFFDepartureDate.setBackground(Color.RED);
-			tFFDepartureHour.setBackground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Insira data ou hora corretamente", "Erro!", JOptionPane.ERROR_MESSAGE);
-			throw e;
-		}
-	}
-	
 	Tour getTour(){
 		try{
 			String boatEnterprise = null;
 			//TODO get boatEnterprise from DB.
-			return new Tour(getIntFormJText(tFQtFull),0, getIntFormJText(tFQtFree),
-	                getDepartureTimestamp(),
+			return new Tour(GUITransUtils.getIntFromJText(tFQtFull),0, GUITransUtils.getIntFromJText(tFQtFree),
+					GUITransUtils.getDepartureTimestamp(tFFDepartureHour,tFFDepartureDate),
 	                (String)cBBoatName.getSelectedItem(), boatEnterprise);
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "Insira números inteiros corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
