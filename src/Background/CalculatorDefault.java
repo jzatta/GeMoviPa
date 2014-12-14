@@ -116,7 +116,7 @@ public class CalculatorDefault{
         		totalCapacityApportion += b.capacity();
         		totalGrossApportion += totalGrossBoat;
         		totalCommisionCostApportion += totalCommisionCostBoat;
-                boatsApportion.add(b);
+        		boatsApportion.add(b);
         	}
         	
         	System.out.println("\t" + b.toString() +"\t" + eCargoPercent + "\t" + totalGrossBoat + "\t" + (totalGrossBoat - totalCommisionCostBoat));
@@ -125,7 +125,7 @@ public class CalculatorDefault{
         if(!boatsApportion.isEmpty()){
         	System.out.println("\n\nTotal bruto rateio: R$ " + totalGrossApportion + " Total liq. rateio: R$ " + totalNetApportion);
             System.out.println("\n\nEntraram no rateio: ");
-            System.out.println("\tEmpresa  \tPerc. Carga \tPerc. rateio \tGanho");
+            System.out.println("\tBarco  \tPerc. Carga \tPerc. rateio \tGanho");
             System.out.println("----------------------------------------");
             for(Boat b : boatsApportion){
             	double eCargoPercent = 0.0;
@@ -134,10 +134,27 @@ public class CalculatorDefault{
             	eCargoPercent /= b.capacity() * toursBoat.size();
                 double perApportionment = b.capacity()/totalCapacityApportion;
                 System.out.println("\t" + b.toString()+"\t" + eCargoPercent + "\t" + perApportionment + "\t" + perApportionment * totalNetApportion);
+                boatsEnvolved.remove(b); //remove to calculate who not on apportionment
             }
         }
         else{
             System.out.println("Nao houve rateio");
+        }
+        System.out.println("\n\nNão entraram no rateio: ");
+        System.out.println("\tBarco \tLiq.");
+        System.out.println("----------------------------------------");
+        for(Boat b : boatsEnvolved){
+        	double totalCommisionCostBoat = 0.0;
+        	double totalGrossBoat = 0.0;
+        	
+        	List<Tour> toursBoat = getToursByBoat(tours, b);
+        	for(Tour t : toursBoat) totalGrossBoat += t.payingPassengers() * b.tourCost();
+        	
+        	List<Sale> salesBoat = getSalesByBoat(sales, b);
+    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
+    		
+    		System.out.println("\t" + b.toString()+"\t" + (totalGrossBoat - totalCommisionCostBoat));
+        	
         }
         
 
