@@ -82,6 +82,14 @@ public class MainFrame extends JFrame {
 		});
 		mnRegistros.add(mntmRateio);
 		
+		JMenuItem mntmComisses = new JMenuItem("Comissões");
+		mntmComisses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processCommissionMenu();
+			}
+		});
+		mnRegistros.add(mntmComisses);
+		
 		JLabel lbLog = new JLabel("");
 		getContentPane().add(lbLog, BorderLayout.SOUTH);
 	}
@@ -124,8 +132,22 @@ public class MainFrame extends JFrame {
 		Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			JOptionPane.showMessageDialog(null, "Verifique console");
 			new CalculatorDefault().calculateApportionment(dataBaseConnection, timeFrom, timeTo);
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoRateio.csv");
+		}
+		
+	}
+	
+	void processCommissionMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		Timestamp timeFrom = tm.getTimestampFrom();
+		Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			new CalculatorDefault().calculateCommission(dataBaseConnection, timeFrom, timeTo);
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoComissões.csv");
 		}
 		
 	}

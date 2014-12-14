@@ -178,6 +178,40 @@ public class CalculatorDefault{
 
     }
     public void calculateCommission(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
+    	List<Seller> sellers = dataBaseConnection.loadSellers(null, null);
+    	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
+    	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+    	
+    	 File outFile = new File("ResultadoComissões.csv");
+         FileWriter fileWriter = null;
+         BufferedWriter bufferedWritter = null;
+         try {
+ 			fileWriter = new FileWriter(outFile);
+ 			bufferedWritter = new BufferedWriter(fileWriter);
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+         try{
+         	bufferedWritter.write("De,"+timeFrom.toString()+",Até,"+timeTo.toString()+"\n\n");
+         	bufferedWritter.write("Vendedor,Barco da venda,Comissão\n");
+         
+	         for(Seller seller : sellers){
+	        	 double totalCommission = 0.0;	        	
+	        	 bufferedWritter.write(seller.toString() + ", , \n");
+	        	 for(Boat b : boats){
+	        		 double commissionBoat = 0.0;
+		        	 for(Sale sale : sales) {
+		        		 if((sale.sellerName().equals(seller.toString())) && (sale.boatName().equals(b.toString()))) commissionBoat += sale.payingPassengers() * 10;
+		        	 }
+		        	 totalCommission += commissionBoat;
+		        	 if(commissionBoat > 0.0) bufferedWritter.write(","+b.toString()+","+commissionBoat+"\n");	 
+	        	 }	        	 
+	        	 bufferedWritter.write(",Total," + totalCommission);
+	         }
+	         bufferedWritter.close();
+         }catch(IOException e){
+        	 e.printStackTrace();
+         }
 
     }
 }

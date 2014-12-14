@@ -21,6 +21,7 @@ public class Sale{
         this.boatEnterprise   = result.getString("boatEnterprise");
     }
     
+    
     public Sale(int fullPass, int halfPass, int freePass,
                 Timestamp departure,
                 String sellerName, String sellerEnterprise, String boatName, String boatEnterprise){
