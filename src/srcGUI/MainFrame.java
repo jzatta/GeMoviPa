@@ -13,6 +13,13 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
+import java.sql.SQLException;
+
+import javax.swing.JLabel;
+
 
 public class MainFrame extends JFrame {
 	private SQLDatabase dataBaseConnection;
@@ -43,6 +50,9 @@ public class MainFrame extends JFrame {
 			}
 		});
 		mnRecebidos.add(mntmNewMenuItem_1);
+		
+		JLabel lbLog = new JLabel("");
+		getContentPane().add(lbLog, BorderLayout.SOUTH);
 	}
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable(){
@@ -53,16 +63,26 @@ public class MainFrame extends JFrame {
 	}
 	
 	void launchTableReceived(){
-		TableReceived recebidos = new TableReceived(dataBaseConnection);
-		recebidos.setLocation(getLocation());
-		recebidos.setVisible(true);
+		try{
+			TableReceived recebidos = new TableReceived(dataBaseConnection);
+			recebidos.setLocation(getLocation());
+			recebidos.setVisible(true);
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Problemas na conexão com o banco de dados", "ERRO!", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		
 	}
 	
 	void launchCommissionWindow(){
-		CommissionWindow commission = new CommissionWindow(dataBaseConnection);
-		commission.setLocation(getLocation());
-		commission.setVisible(true);
+		try{
+			CommissionWindow commission = new CommissionWindow(dataBaseConnection);
+			commission.setLocation(getLocation());
+			commission.setVisible(true);
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Problemas na conexão com o banco de dados", "ERRO!", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 	}
 
 }

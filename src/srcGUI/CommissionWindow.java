@@ -27,6 +27,7 @@ import javax.swing.text.MaskFormatter;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
@@ -46,7 +47,7 @@ public class CommissionWindow extends JFrame {
 	private JComboBox<Seller> cBSeller;
 	private JFormattedTextField tFFDepartureHour;
 	
-	public CommissionWindow(SQLDatabase dataBaseConnection) {
+	public CommissionWindow(SQLDatabase dataBaseConnection) throws SQLException{
 		this.dataBaseConnection = dataBaseConnection;
 		setSize(new Dimension(488, 390));
 		JPanel jPMain = new JPanel();

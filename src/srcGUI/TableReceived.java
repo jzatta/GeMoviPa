@@ -30,6 +30,7 @@ import javax.swing.border.EtchedBorder;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
@@ -59,7 +60,7 @@ public class TableReceived extends JFrame {
 	private JFormattedTextField tFFDepartureDate;
 	private SQLDatabase dataBaseConnection;
 	
-	public TableReceived(SQLDatabase dataBaseConnection) {
+	public TableReceived(SQLDatabase dataBaseConnection) throws SQLException{
 		
 		this.dataBaseConnection = dataBaseConnection;
 		setSize(new Dimension(488, 390));
