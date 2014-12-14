@@ -17,6 +17,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
@@ -28,7 +32,21 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		
-		dataBaseConnection = new SQLDatabase("10.42.0.54","root","root");
+		File dbAddress;
+		FileReader fR;
+		StringBuilder address = new StringBuilder();
+		int charReaded;
+		try {
+			dbAddress = new File("dbAddress");
+			fR = new FileReader(dbAddress);
+			while( (charReaded = fR.read()) > 0) address.append((char)charReaded);
+			fR.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		System.out.println("DB address: " + address.toString());
+		dataBaseConnection = new SQLDatabase(address.toString(),"root","root");
 		
 		try{
 			dataBaseConnection.createDatabaseIfNoExist();			
