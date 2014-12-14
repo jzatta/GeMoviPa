@@ -13,4 +13,6 @@ public interface DatabaseInterface{
   void storeBoat(Boat boat);
   List<Enterprise> loadEnterprises(String enterpriseName);
   void storeEnterprise(Enterprise enterprise);
+  List<Seller> loadSellers(String sellerName, String sellerEnterprise);
+  void storeSeller(Seller seller);
 }

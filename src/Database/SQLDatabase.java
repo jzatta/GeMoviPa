@@ -48,6 +48,7 @@ public class SQLDatabase implements DatabaseInterface{
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`tours` (`idtours` INT NOT NULL AUTO_INCREMENT, `fullPass` INT NOT NULL, `halfPass` INT NOT NULL, `freePass` INT NOT NULL, `departure` TIMESTAMP NOT NULL, `boatName` VARCHAR(100) NOT NULL, `boatEnterprise` VARCHAR(100) NOT NULL, PRIMARY KEY (`idtours`));",
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`enterprises` (`identerprises` INT NOT NULL AUTO_INCREMENT,`enterpriseName` VARCHAR(100) NOT NULL, PRIMARY KEY (`identerprises`));",
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`boats` (`idboats` INT NOT NULL AUTO_INCREMENT,`boatName` VARCHAR(100) NOT NULL,`boatEnterprise` VARCHAR(100) NOT NULL,`boatCapacity` INT NOT NULL,`tourCost` DOUBLE NOT NULL,PRIMARY KEY (`idboats`));",
+      "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`sellers` (`idsellers` INT NOT NULL AUTO_INCREMENT, `sellerName` VARCHAR(100) NOT NULL,`sellerEnterprise` VARCHAR(100) NOT NULL, PRIMARY KEY (`idsellers`));",
       "SET sql_notes = 1;"
     };
     for (String command : creationCommands){
@@ -85,6 +86,12 @@ public class SQLDatabase implements DatabaseInterface{
   public void storeEnterprise(Enterprise enterprise){
     String insertRule = "INSERT INTO `"+this.schemaName+"`.`enterprises`(`enterpriseName`) VALUES ";
     insertRule += "("+enterprise.insertParameters()+");";
+    this.store(insertRule);
+  }
+  
+  public void storeSeller(Seller seller){
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`sellers`(`sellerName`,`sellerEnterprise`) VALUES ";
+    insertRule += "("+seller.insertParameters()+");";
     this.store(insertRule);
   }
   
@@ -275,5 +282,43 @@ public class SQLDatabase implements DatabaseInterface{
       return null;
     }
     return enterprises;
+  }
+  
+  public List<Seller> loadSellers(String sellerName, String sellerEnterprise){
+    String rule = "SELECT * FROM `"+this.schemaName+"`.`sellers` WHERE";
+    boolean runCommand = false;
+    if (sellerName != null){
+      rule += " sellerName='"+sellerName+"'";
+      runCommand = true;
+    }
+    if (sellerEnterprise != null){
+      if (runCommand){
+        rule += " AND";
+      }
+      rule += " sellerEnterprise='"+sellerEnterprise+"'";
+      runCommand = true;
+    }
+    if (!runCommand){
+      rule = "SELECT * FROM `"+this.schemaName+"`.`sellers`";
+    }
+    rule += ";";
+    ResultSet result;
+    List<Seller> sellers = new ArrayList<Seller>();
+    try{
+      result = getData(rule);
+      if (!result.isBeforeFirst() ){
+        return sellers;
+      }
+      do{
+        result.next();
+        sellers.add(new Seller(result));
+      }while(!result.isLast());
+      result.getStatement().getConnection().close();
+    } catch (SQLException e){
+      e.printStackTrace();
+      System.out.println("Error access Databank");
+      return null;
+    }
+    return sellers;
   }
 }

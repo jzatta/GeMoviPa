@@ -2,23 +2,30 @@ package Background;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Seller{
-    private int id;
-    private String name;
-    private List<Sale> sales;
+  private int idSeller;
+  private String sellerName, sellerEnterprise;
+  
+  public Seller(ResultSet result) throws SQLException{
+    this.idSeller           = result.getInt("idsellers");
+    this.sellerName         = result.getString("sellerName");
+    this.sellerEnterprise   = result.getString("sellerEnterprise");
+  }
+  
+  public Seller(String sellerName, String sellerEnterprise){
+    this.sellerName       = sellerName;
+    this.sellerEnterprise = sellerEnterprise;
+  }
+  
+  public String insertParameters(){
+    return "\""+this.sellerName+"\","+
+    "\""+this.sellerEnterprise+"\"";
+  }
 
-    public Seller(){
-        sales = new ArrayList<Sale>();
-    }
-    public void toSale(Sale s){
-      //  s.validateSale(this);
-        sales.add(s);
-    }
-
-    public double commissionCost(Tour tour){
-        double totalCommission = 0.0;
-        //for(Sale s : sales) totalCommission += s.commissionCost(tour);
-        return totalCommission;
-    }
+  public String toString(){
+    return Integer.toString(idSeller) +"/"+ sellerName +"/"+ sellerEnterprise;
+  }
 }
