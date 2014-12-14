@@ -55,6 +55,10 @@ public class SQLDatabase implements DatabaseInterface{
     }
   }
   
+  public void addAccess(String ip) throws SQLException{
+    this.insertData("GRANT ALL PRIVILEGES ON *.* TO \"root\"@\""+ip+"\" IDENTIFIED BY \"root\";");
+  }
+  
   private void store(String insertRule){
     try{
       insertData(insertRule);

@@ -16,23 +16,23 @@ public class JulianoTester{
 //       q.storeEnterprise(new Enterprise("empresabarcoza1"));
 //       q.storeSeller(new Seller("nomevendedor","empresavendedor"));
       for (Sale t: q.loadSales(null, null, null, null, null, null)){
-        System.out.println(t.toString());
+        System.out.println(t.toDebug());
       }
       System.out.println();
       for (Tour t: q.loadTours(null, null, null, null)){
-        System.out.println(t.toString());
+        System.out.println(t.toDebug());
       }
       System.out.println();
       for (Boat t: q.loadBoats(null, null)){
-        System.out.println(t.toString());
+        System.out.println(t.toDebug());
       }
       System.out.println();
       for (Enterprise t: q.loadEnterprises(null)){
-        System.out.println(t.toString());
+        System.out.println(t.toDebug());
       }
       System.out.println();
       for (Seller t: q.loadSellers(null,null)){
-        System.out.println(t.toString());
+        System.out.println(t.toDebug());
       }
     }catch (Exception e){
       e.printStackTrace();
