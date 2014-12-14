@@ -39,7 +39,6 @@ public class SQLDatabase implements DatabaseInterface{
     return i;
   }
   
-  // not working
   public void createDatabaseIfNoExist() throws SQLException{
     String[] creationCommands = {
       "SET sql_notes = 0;",

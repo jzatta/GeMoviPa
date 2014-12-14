@@ -45,7 +45,7 @@ public class Sale{
       "\""+this.boatEnterprise  +"\"";
     }
     
-    public String toString(){
+    public String toDebug(){
       return this.fullPass+"/"+this.halfPass+"/"+this.freePass+"/"+this.departure+"/"+this.sellerName+"/"+this.sellerEnterprise+"/"+this.boatName+"/"+this.boatEnterprise;
     }
 }

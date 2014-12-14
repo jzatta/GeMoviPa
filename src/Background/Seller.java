@@ -24,8 +24,12 @@ public class Seller{
     return "\""+this.sellerName+"\","+
     "\""+this.sellerEnterprise+"\"";
   }
-
+  
   public String toString(){
+    return sellerName;
+  }
+
+  public String toDebug(){
     return Integer.toString(idSeller) +"/"+ sellerName +"/"+ sellerEnterprise;
   }
 }

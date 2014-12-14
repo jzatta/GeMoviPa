@@ -37,8 +37,8 @@ public class Tour{
       "\""+this.boatName        +"\","+
       "\""+this.boatEnterprise  +"\"";
     }
-    
-    public String toString(){
+
+    public String toDebug(){
       return this.fullPass+"/"+this.halfPass+"/"+this.freePass+"/"+this.departure+"/"+this.boatName+"/"+this.boatEnterprise;
     }
 }

@@ -22,6 +22,10 @@ public class Enterprise{
     }
     
     public String toString(){
+      return name;
+    }
+    
+    public String toDebug(){
       return Integer.toString(id) +"/"+ name;
     }
 

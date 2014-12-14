@@ -31,8 +31,12 @@ public class Boat{
       Integer.toString(this.boatCapacity)+","+
       Double.toString(this.tourCost);
     }
-
+    
     public String toString(){
+      return Integer.toString(idBoat) + " - " + boatName;
+    }
+
+    public String toDebug(){
       return Integer.toString(idBoat) +"/"+ Integer.toString(boatCapacity) +"/"+ boatName +"/"+ boatEnterprise +"/"+ Double.toString(tourCost);
     }
 }
