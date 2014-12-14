@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import Database.SQLDatabase;
 
-public class CalculatorDefault implements Calculator{
+public class CalculatorDefault{
 	
 	private Boat getBoatByName(List<Boat> boats, String name){
 		for(Boat b : boats) if(b.toString().equals(name)) return b;
@@ -26,7 +26,7 @@ public class CalculatorDefault implements Calculator{
 		return salesRet;
 	}
 	
-    public void calculateApportionment(List<Enterprise> enterprises){
+    public void calculateApportionment(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
         double avgCargoPercent = 0.0;
         int boatsTotal = 0;
         double totalGross = 0.0;
@@ -36,13 +36,12 @@ public class CalculatorDefault implements Calculator{
         
         List<Boat> boatsEnvolved = new ArrayList<Boat>();
         List<Boat> boatsApportion = new ArrayList<Boat>();
-        SQLDatabase dataBaseConnection = new SQLDatabase("10.42.0.54","root","root");
         
         List<Boat> boats = dataBaseConnection.loadBoats(null, null);
         
-        List<Tour> tours = dataBaseConnection.loadTours(Timestamp.valueOf("1994-01-01 00:00:00"), Timestamp.valueOf("2014-12-01 00:00:00"), null, null);
+        List<Tour> tours = dataBaseConnection.loadTours(timeFrom, timeTo, null, null);
 
-        List<Sale> sales = dataBaseConnection.loadSales(Timestamp.valueOf("1994-01-01 00:00:00"), Timestamp.valueOf("2014-12-01 00:00:00"),null,null, null, null);
+        List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
         /*List<Enterprise> enterIncluded = new ArrayList<Enterprise>();
         for(Enterprise e : enterprises) {
             totalGross += e.totalGross();

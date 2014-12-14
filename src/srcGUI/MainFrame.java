@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import javax.swing.JLabel;
 
@@ -34,8 +35,6 @@ public class MainFrame extends JFrame {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		
-		new CalculatorDefault().calculateApportionment(null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -72,6 +71,17 @@ public class MainFrame extends JFrame {
 		JMenuItem mntmBarco = new JMenuItem("Barco");
 		mnCadastro.add(mntmBarco);
 		
+		JMenu mnRegistros = new JMenu("Relatórios");
+		menuBar.add(mnRegistros);
+		
+		JMenuItem mntmRateio = new JMenuItem("Rateio");
+		mntmRateio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				processApportionmentMenu();
+			}
+		});
+		mnRegistros.add(mntmRateio);
+		
 		JLabel lbLog = new JLabel("");
 		getContentPane().add(lbLog, BorderLayout.SOUTH);
 	}
@@ -104,6 +114,19 @@ public class MainFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "Problemas na conexão com o banco de dados", "ERRO!", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
+	}
+	
+	void processApportionmentMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		Timestamp timeFrom = tm.getTimestampFrom();
+		Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			JOptionPane.showMessageDialog(null, "Não implementado ainda");
+		}
+		
 	}
 
 }

@@ -56,13 +56,13 @@ public class CommissionWindow extends JFrame {
 		setContentPane(jPMain);
 		jPMain.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
+				ColumnSpec.decode("default:grow"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,},
 			new RowSpec[] {
 				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("139px"),
+				RowSpec.decode("default:grow"),
 				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("35px"),
+				RowSpec.decode("default:grow"),
 				FormFactory.LINE_GAP_ROWSPEC,}));
 		
 		JPanel jPSaleInfo = new JPanel();
@@ -155,7 +155,7 @@ public class CommissionWindow extends JFrame {
 		tFPassAmount.setColumns(10);
 		
 		JPanel jPButton = new JPanel();
-		jPMain.add(jPButton, "2, 4, right, fill");
+		jPMain.add(jPButton, "2, 4, right, center");
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
