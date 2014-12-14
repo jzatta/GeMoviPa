@@ -29,6 +29,18 @@ public class Boat{
     	return this.boatEnterprise;
     }
     
+    public int id(){
+    	return this.idBoat;
+    }
+    
+    public double tourCost(){
+    	return this.tourCost;
+    }
+    
+    public int capacity(){
+    	return this.boatCapacity;
+    }
+    
     public String insertParameters(){
       return "\""+this.boatName+"\","+
       "\""+this.boatEnterprise+"\","+

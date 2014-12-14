@@ -115,7 +115,6 @@ public class TableReceived extends JFrame {
 		try {
 			tFFDepartureHour = new JFormattedTextField(new MaskFormatter("##:##"));
 		} catch (ParseException e1) {
-			// TODO Bloco catch gerado automaticamente
 			e1.printStackTrace();
 		}
 		jPTourInfo.add(tFFDepartureHour, "4, 2, fill, center");
@@ -129,23 +128,28 @@ public class TableReceived extends JFrame {
 			e1.printStackTrace();
 		}
 		jPTourInfo.add(tFFDepartureDate, "8, 2, fill, center");
-		
+				
 		JLabel lblCdigoBarco = new JLabel("Código Barco");
 		jPTourInfo.add(lblCdigoBarco, "2, 4, left, center");
 		
 		tFBoatID = new JTextField();
+		tFBoatID.setEditable(false);
 		jPTourInfo.add(tFBoatID, "4, 4, fill, center");
-		tFBoatID.setColumns(10);
+		tFBoatID.setColumns(10);		
 		
 		cBBoatName = new JComboBox<Boat>();
-		List<Boat> boats = dataBaseConnection.loadBoats(null, null);
-		for(Boat b : boats) cBBoatName.addItem(b);
+		cBBoatName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				updateFields();
+			}
+		});
 		jPTourInfo.add(cBBoatName, "6, 4, 3, 1, fill, top");
 		
 		JLabel lblHoraSada = new JLabel("Valor passeio");
 		jPTourInfo.add(lblHoraSada, "2, 6, left, center");
 		
 		tFTourValue = new JTextField();
+		tFTourValue.setEditable(false);
 		jPTourInfo.add(tFTourValue, "4, 6, fill, center");
 		tFTourValue.setColumns(10);
 		
@@ -153,6 +157,7 @@ public class TableReceived extends JFrame {
 		jPTourInfo.add(lblNewLabel, "6, 6, left, center");
 		
 		tFBoatCapacity = new JTextField();
+		tFBoatCapacity.setEditable(false);
 		jPTourInfo.add(tFBoatCapacity, "8, 6, fill, center");
 		tFBoatCapacity.setColumns(10);
 		
@@ -281,25 +286,35 @@ public class TableReceived extends JFrame {
 		});
 		jPButtons.add(button_1);
 		
+		List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+		for(Boat b : boats) cBBoatName.addItem(b);
+		
+		updateFields();
+		
 	}
 	
 	Tour getTour(){
-		try{
-			String boatEnterprise = null;
-			//TODO get boatEnterprise from DB.
+			Boat boat = (Boat)cBBoatName.getSelectedItem();
 			return new Tour(GUITransUtils.getIntFromJText(tFQtFull),0, GUITransUtils.getIntFromJText(tFQtFree),
 					GUITransUtils.getDepartureTimestamp(tFFDepartureHour,tFFDepartureDate),
-	                (String)cBBoatName.getSelectedItem(), boatEnterprise);
+	                boat.toString(), boat.enterpriseName());
+	}
+	
+	void processRegButton(){
+		try{
+			dataBaseConnection.storeTour(getTour());
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "Insira números inteiros corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Problemas na extração do passeio", "ERRO", JOptionPane.ERROR_MESSAGE);
 		}
-		return null;		
 	}
 	
-	void processRegButton(){
-		dataBaseConnection.storeTour(getTour());
+	void updateFields(){
+		Boat selectedBoat = (Boat)cBBoatName.getSelectedItem();
+		tFBoatID.setText(String.valueOf(selectedBoat.id()));
+		tFTourValue.setText(String.valueOf(selectedBoat.tourCost()));
+		tFBoatCapacity.setText(String.valueOf(selectedBoat.capacity()));
 	}
 
 }

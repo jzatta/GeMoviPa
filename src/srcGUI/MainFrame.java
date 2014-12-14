@@ -51,6 +51,18 @@ public class MainFrame extends JFrame {
 		});
 		mnRecebidos.add(mntmNewMenuItem_1);
 		
+		JMenu mnCadastro = new JMenu("Cadastro");
+		menuBar.add(mnCadastro);
+		
+		JMenuItem menuItem = new JMenuItem("Vendedores");
+		mnCadastro.add(menuItem);
+		
+		JMenuItem mntmEmpresa = new JMenuItem("Empresa");
+		mnCadastro.add(mntmEmpresa);
+		
+		JMenuItem mntmBarco = new JMenuItem("Barco");
+		mnCadastro.add(mntmBarco);
+		
 		JLabel lbLog = new JLabel("");
 		getContentPane().add(lbLog, BorderLayout.SOUTH);
 	}
