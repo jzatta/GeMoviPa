@@ -49,7 +49,7 @@ public class Boat{
     }
     
     public String toString(){
-      return Integer.toString(idBoat) + " - " + boatName;
+      return boatName;
     }
 
     public String toDebug(){
