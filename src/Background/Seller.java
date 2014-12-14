@@ -24,6 +24,10 @@ public class Seller{
   	return this.sellerEnterprise;
   }
   
+  public int id(){
+	  return this.idSeller;
+  }
+  
   public String insertParameters(){
     return "\""+this.sellerName+"\","+
     "\""+this.sellerEnterprise+"\"";

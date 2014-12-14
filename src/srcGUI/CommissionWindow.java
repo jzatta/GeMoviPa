@@ -93,7 +93,7 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblNewLabel, "2, 2, left, center");
 		
 		try {
-			tFFDepartureDate = new JFormattedTextField(new MaskFormatter("##:##"));
+			tFFDepartureDate = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		} catch (ParseException e1) {
 			// TODO Bloco catch gerado automaticamente
 			e1.printStackTrace();
@@ -104,7 +104,7 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblHoraDaSada, "2, 4, left, center");
 		
 		try {
-			tFFDepartureHour = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			tFFDepartureHour = new JFormattedTextField(new MaskFormatter("##:##"));
 		} catch (ParseException e1) {
 			// TODO Bloco catch gerado automaticamente
 			e1.printStackTrace();
@@ -115,10 +115,16 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblCod, "2, 6, left, center");
 		
 		tFBoatID = new JTextField();
+		tFBoatID.setEditable(false);
 		jPSaleInfo.add(tFBoatID, "4, 6, fill, center");
 		tFBoatID.setColumns(10);
 		
 		cBBoat = new JComboBox<Boat>();
+		cBBoat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateFields();
+			}
+		});
 		List<Boat> boats = dataBaseConnection.loadBoats(null, null);
 		for(Boat b : boats) cBBoat.addItem(b);
 		jPSaleInfo.add(cBBoat, "6, 6, fill, default");
@@ -127,10 +133,16 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblCdVendedor, "2, 8, left, center");
 		
 		tFSellerID = new JTextField();
+		tFSellerID.setEditable(false);
 		jPSaleInfo.add(tFSellerID, "4, 8, fill, center");
 		tFSellerID.setColumns(10);
 		
 		cBSeller = new JComboBox<Seller>();
+		cBSeller.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateFields();
+			}
+		});
 		List<Seller> sellers = dataBaseConnection.loadSellers(null, null);
 		for(Seller s : sellers) cBSeller.addItem(s);
 		jPSaleInfo.add(cBSeller, "6, 8, fill, default");
@@ -163,25 +175,34 @@ public class CommissionWindow extends JFrame {
 	}
 	
 	Sale getSale(){
-		try{
-			int halfPass = 0;
-			double passengers = GUITransUtils.getDoubleFromJText(tFPassAmount);
-			int fullPass = (int)passengers;
-			if((passengers - fullPass) == 0.5) halfPass = 1;
-			Boat boat = (Boat)cBBoat.getSelectedItem();
-			Seller seller = (Seller)cBSeller.getSelectedItem();
-			return new Sale(fullPass,halfPass,0,GUITransUtils.getDepartureTimestamp(tFFDepartureHour, tFFDepartureDate),
-					seller.toString(),seller.enterpriseName(),boat.toString(),boat.enterpriseName());
-		}catch(NumberFormatException e){
-			JOptionPane.showMessageDialog(null, "Insira números inteiros corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
-		}catch(Exception e){
-			JOptionPane.showMessageDialog(null, "Problemas na extração do passeio", "ERRO", JOptionPane.ERROR_MESSAGE);
-		}
-		return null;		
+		int halfPass = 0;
+		double passengers = GUITransUtils.getDoubleFromJText(tFPassAmount);
+		int fullPass = (int)passengers;
+		if((passengers - fullPass) == 0.5) halfPass = 1;
+		Boat boat = (Boat)cBBoat.getSelectedItem();
+		Seller seller = (Seller)cBSeller.getSelectedItem();
+		return new Sale(fullPass,halfPass,0,GUITransUtils.getDepartureTimestamp(tFFDepartureHour, tFFDepartureDate),
+				seller.toString(),seller.enterpriseName(),boat.toString(),boat.enterpriseName());
 	}
 	
 	void processRegButton(){
-		dataBaseConnection.storeSale(getSale());
+		try{
+			dataBaseConnection.storeSale(getSale());
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "Insira números corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Problemas na extração da venda", "ERRO", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	void updateFields(){
+		try{
+			Boat selectedBoat = (Boat)cBBoat.getSelectedItem();
+			Seller selectedSeller = (Seller)cBSeller.getSelectedItem();
+			tFBoatID.setText(String.valueOf(selectedBoat.id()));
+			tFSellerID.setText(String.valueOf(selectedSeller.id()));
+		}catch(Exception e){}
 	}
 
 }
