@@ -110,10 +110,10 @@ public class CalculatorDefault{
         totalNet = totalGross - totalCommisionCost;
         
         try{
-        	bufferedWritter.write("De,"+timeFrom.toString()+",Até,"+timeTo.toString()+"\n\n");
-        	bufferedWritter.write("Total bruto,R$ " + totalGross + ",Total liq.,R$ " + totalNet + ",Média perc. carga," + avgCargoPercent+ "\n");
+        	bufferedWritter.write("De\t"+"\""+timeFrom.toString()+"\""+"\tAté\t"+"\""+timeTo.toString()+"\""+"\n\n");
+        	bufferedWritter.write("\"Total bruto\"\t" + totalGross + "\t\"Total liq.\"\t" + totalNet + "\t\"Média perc. carga\"\t" + avgCargoPercent+ "\n");
         	bufferedWritter.write("\n\nTrabalharam"+ "\n\n");
-        	bufferedWritter.write("Barco,Indice,Bruto,Liq."+ "\n");
+        	bufferedWritter.write("Barco\tIndice\tBruto\tLiq."+ "\n");
 	        for(Boat b : boatsEnvolved){
 	        	double eCargoPercent = 0.0;
 	        	double totalCommisionCostBoat = 0.0;
@@ -135,28 +135,28 @@ public class CalculatorDefault{
 	        		boatsApportion.add(b);
 	        	}
 	        	
-	        	bufferedWritter.write(b.toString() +"," + eCargoPercent + "," + totalGrossBoat + "," + (totalGrossBoat - totalCommisionCostBoat) + "\n");
+	        	bufferedWritter.write("\""+b.toString() +"\"\t" + eCargoPercent + "\t" + totalGrossBoat + "\t" + (totalGrossBoat - totalCommisionCostBoat) + "\n");
 	        }
 	        totalNetApportion = totalGrossApportion - totalCommisionCostApportion;
 	        if(!boatsApportion.isEmpty()){
-	        	bufferedWritter.write("\n\nTotal bruto rateio,R$ " + totalGrossApportion + ",Total liq. rateio,R$ " + totalNetApportion + "\n");
-	        	bufferedWritter.write("\n\nEntraram no rateio\n\n");
-	        	bufferedWritter.write("Barco,Perc. Carga,Perc. rateio,Liq.\n");
+	        	bufferedWritter.write("\n\n\"Total bruto rateio\"\t" + totalGrossApportion + "\t\"Total liq. rateio\"\t" + totalNetApportion + "\n");
+	        	bufferedWritter.write("\n\n\"Entraram no rateio\"\n\n");
+	        	bufferedWritter.write("Barco\t\"Perc. Carga\"\t\"Perc. rateio\"\tLiq.\n");
 	            for(Boat b : boatsApportion){
 	            	double eCargoPercent = 0.0;
 	            	List<Tour> toursBoat = getToursByBoat(tours, b);
 	            	for(Tour t : toursBoat) eCargoPercent += t.payingPassengers();
 	            	eCargoPercent /= b.capacity() * toursBoat.size();
 	                double perApportionment = b.capacity()/totalCapacityApportion;
-	                bufferedWritter.write(b.toString()+"," + eCargoPercent + "," + perApportionment + "," + perApportionment * totalNetApportion + "\n");
+	                bufferedWritter.write("\""+b.toString()+"\"\t" + eCargoPercent + "\t" + perApportionment + "\t" + perApportionment * totalNetApportion + "\n");
 	                boatsEnvolved.remove(b); //remove to calculate who not on apportionment
 	            }
 	        }
 	        else{
-	        	bufferedWritter.write("Nao houve rateio"+ "\n");
+	        	bufferedWritter.write("\"Nao houve rateio\""+ "\n");
 	        }
-	        bufferedWritter.write("\n\nNão entraram no rateio"+ "\n\n");
-	        bufferedWritter.write("Barco,Liq."+ "\n");
+	        bufferedWritter.write("\n\n\"Não entraram no rateio\""+ "\n\n");
+	        bufferedWritter.write("Barco\tLiq."+ "\n");
 	        for(Boat b : boatsEnvolved){
 	        	double totalCommisionCostBoat = 0.0;
 	        	double totalGrossBoat = 0.0;
@@ -167,7 +167,7 @@ public class CalculatorDefault{
 	        	List<Sale> salesBoat = getSalesByBoat(sales, b);
 	    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
 	    		
-	    		bufferedWritter.write(b.toString()+"," + (totalGrossBoat - totalCommisionCostBoat) + "\n");
+	    		bufferedWritter.write("\""+b.toString()+"\"\t" + (totalGrossBoat - totalCommisionCostBoat) + "\n");
 	        	
 	        }
 	        bufferedWritter.close();
@@ -192,21 +192,21 @@ public class CalculatorDefault{
  			e.printStackTrace();
  		}
          try{
-         	bufferedWritter.write("De,"+timeFrom.toString()+",Até,"+timeTo.toString()+"\n\n");
-         	bufferedWritter.write("Vendedor,Barco da venda,Comissão\n");
+         	bufferedWritter.write("De\t"+timeFrom.toString()+"\tAté\t"+timeTo.toString()+"\n\n");
+         	bufferedWritter.write("Vendedor\t\"Barco da venda\"\tComissão\n");
          
 	         for(Seller seller : sellers){
 	        	 double totalCommission = 0.0;	        	
-	        	 bufferedWritter.write(seller.toString() + ", , \n");
+	        	 bufferedWritter.write(seller.toString() + "\t \t \n");
 	        	 for(Boat b : boats){
 	        		 double commissionBoat = 0.0;
 		        	 for(Sale sale : sales) {
 		        		 if((sale.sellerName().equals(seller.toString())) && (sale.boatName().equals(b.toString()))) commissionBoat += sale.payingPassengers() * 10;
 		        	 }
 		        	 totalCommission += commissionBoat;
-		        	 if(commissionBoat > 0.0) bufferedWritter.write(","+b.toString()+","+commissionBoat+"\n");	 
+		        	 if(commissionBoat > 0.0) bufferedWritter.write("\t\""+b.toString()+"\"\t"+commissionBoat+"\n");	 
 	        	 }	        	 
-	        	 bufferedWritter.write(",Total," + totalCommission);
+	        	 bufferedWritter.write("\tTotal\t" + totalCommission+"\n\n");
 	         }
 	         bufferedWritter.close();
          }catch(IOException e){
