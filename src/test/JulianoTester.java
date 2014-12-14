@@ -12,11 +12,21 @@ public class JulianoTester{
       q.createDatabaseIfNoExist();
       q.storeSale(new Sale(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"Juliano","qwerty","barcoza","empresabarcoza"));
       q.storeTour(new Tour(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"barcao","empresabarco"));
-      for (Sale t: q.loadSales(null, Timestamp.valueOf("2014-01-01 01:01:01"), null, null, null, null)){
+      q.storeBoat(new Boat("barcao1","empresabarco1",8001,8.09));
+      q.storeEnterprise(new Enterprise("empresabarcoza1"));
+      for (Sale t: q.loadSales(null, null, null, null, null, null)){
         System.out.println(t.toString());
       }
       System.out.println();
       for (Tour t: q.loadTours(null, null, null, null)){
+        System.out.println(t.toString());
+      }
+      System.out.println();
+      for (Boat t: q.loadBoats(null, null)){
+        System.out.println(t.toString());
+      }
+      System.out.println();
+      for (Enterprise t: q.loadEnterprises(null)){
         System.out.println(t.toString());
       }
     }catch (Exception e){

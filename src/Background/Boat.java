@@ -18,11 +18,21 @@ public class Boat{
       this.tourCost         = result.getDouble("tourCost");
     }
     
+    public Boat(String boatName, String boatEnterprise, int boatCapacity, double tourCost){
+      this.boatName       = boatName;
+      this.boatEnterprise = boatEnterprise;
+      this.boatCapacity   = boatCapacity;
+      this.tourCost       = tourCost;
+    }
+    
     public String insertParameters(){
-      return this.boatName+","+
-      this.boatEnterprise+","+
+      return "\""+this.boatName+"\","+
+      "\""+this.boatEnterprise+"\","+
       Integer.toString(this.boatCapacity)+","+
       Double.toString(this.tourCost);
     }
 
+    public String toString(){
+      return Integer.toString(idBoat) +"/"+ Integer.toString(boatCapacity) +"/"+ boatName +"/"+ boatEnterprise +"/"+ Double.toString(tourCost);
+    }
 }

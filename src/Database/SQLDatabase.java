@@ -77,13 +77,13 @@ public class SQLDatabase implements DatabaseInterface{
   }
   
   public void storeBoat(Boat boat){
-    String insertRule = "INSERT INTO `"+this.schemaName+"`.`boats`(`idboats`,`boatName`,`boatEnterprise`,`boatCapacity`,`tourCost`) VALUES ";
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`boats`(`boatName`,`boatEnterprise`,`boatCapacity`,`tourCost`) VALUES ";
     insertRule += "("+boat.insertParameters()+");";
     this.store(insertRule);
   }
   
   public void storeEnterprise(Enterprise enterprise){
-    String insertRule = "INSERT INTO `"+this.schemaName+"`.`enterprises`(`identerprises`,`enterpriseName`)VALUES ";
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`enterprises`(`enterpriseName`) VALUES ";
     insertRule += "("+enterprise.insertParameters()+");";
     this.store(insertRule);
   }

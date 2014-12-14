@@ -13,8 +13,16 @@ public class Enterprise{
       this.name = result.getString("enterpriseName");
     }
     
+    public Enterprise(String enterpriseName){
+      this.name = enterpriseName;
+    }
+    
     public String insertParameters(){
-      return this.name;
+      return "\""+this.name+"\"";
+    }
+    
+    public String toString(){
+      return Integer.toString(id) +"/"+ name;
     }
 
 }
