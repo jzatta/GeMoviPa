@@ -1,5 +1,9 @@
 package Background;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.ArrayList;
@@ -45,6 +49,17 @@ public class CalculatorDefault{
         List<Tour> tours = dataBaseConnection.loadTours(timeFrom, timeTo, null, null);
 
         List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
+        
+        File outFile = new File("ResultadoRateio.csv");
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWritter = null;
+        try {
+			fileWriter = new FileWriter(outFile);
+			bufferedWritter = new BufferedWriter(fileWriter);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
         /*List<Enterprise> enterIncluded = new ArrayList<Enterprise>();
         for(Enterprise e : enterprises) {
             totalGross += e.totalGross();
@@ -94,72 +109,75 @@ public class CalculatorDefault{
         
         totalNet = totalGross - totalCommisionCost;
         
-        System.out.println("\n\nTotal bruto: R$ " + totalGross + " Total liq.: R$ " + totalNet + " Média perc. carga: " + avgCargoPercent);
-        System.out.println("\n\nTrababalharam: ");
-        System.out.println("\tBarco  \tIndice \tBruto \tLiq.");
-        System.out.println("----------------------------------------");
-        for(Boat b : boatsEnvolved){
-        	double eCargoPercent = 0.0;
-        	double totalCommisionCostBoat = 0.0;
-        	double totalGrossBoat = 0.0;
-        	List<Tour> toursBoat = getToursByBoat(tours, b);
-        	for(Tour t : toursBoat) {
-        		eCargoPercent += t.payingPassengers();
-        		totalGrossBoat += t.payingPassengers() * b.tourCost();
-        	}
-        	eCargoPercent /= b.capacity() * toursBoat.size();
-        	
-        	List<Sale> salesBoat = getSalesByBoat(sales, b);
-    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
-        	
-        	if(eCargoPercent >= avgCargoPercent){
-        		totalCapacityApportion += b.capacity();
-        		totalGrossApportion += totalGrossBoat;
-        		totalCommisionCostApportion += totalCommisionCostBoat;
-        		boatsApportion.add(b);
-        	}
-        	
-        	System.out.println("\t" + b.toString() +"\t" + eCargoPercent + "\t" + totalGrossBoat + "\t" + (totalGrossBoat - totalCommisionCostBoat));
-        }
-        totalNetApportion = totalGrossApportion - totalCommisionCostApportion;
-        if(!boatsApportion.isEmpty()){
-        	System.out.println("\n\nTotal bruto rateio: R$ " + totalGrossApportion + " Total liq. rateio: R$ " + totalNetApportion);
-            System.out.println("\n\nEntraram no rateio: ");
-            System.out.println("\tBarco  \tPerc. Carga \tPerc. rateio \tGanho");
-            System.out.println("----------------------------------------");
-            for(Boat b : boatsApportion){
-            	double eCargoPercent = 0.0;
-            	List<Tour> toursBoat = getToursByBoat(tours, b);
-            	for(Tour t : toursBoat) eCargoPercent += t.payingPassengers();
-            	eCargoPercent /= b.capacity() * toursBoat.size();
-                double perApportionment = b.capacity()/totalCapacityApportion;
-                System.out.println("\t" + b.toString()+"\t" + eCargoPercent + "\t" + perApportionment + "\t" + perApportionment * totalNetApportion);
-                boatsEnvolved.remove(b); //remove to calculate who not on apportionment
-            }
-        }
-        else{
-            System.out.println("Nao houve rateio");
-        }
-        System.out.println("\n\nNão entraram no rateio: ");
-        System.out.println("\tBarco \tLiq.");
-        System.out.println("----------------------------------------");
-        for(Boat b : boatsEnvolved){
-        	double totalCommisionCostBoat = 0.0;
-        	double totalGrossBoat = 0.0;
-        	
-        	List<Tour> toursBoat = getToursByBoat(tours, b);
-        	for(Tour t : toursBoat) totalGrossBoat += t.payingPassengers() * b.tourCost();
-        	
-        	List<Sale> salesBoat = getSalesByBoat(sales, b);
-    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
-    		
-    		System.out.println("\t" + b.toString()+"\t" + (totalGrossBoat - totalCommisionCostBoat));
-        	
+        try{
+        	bufferedWritter.write("De,"+timeFrom.toString()+",Até,"+timeTo.toString()+"\n\n");
+        	bufferedWritter.write("Total bruto,R$ " + totalGross + ",Total liq.,R$ " + totalNet + ",Média perc. carga," + avgCargoPercent+ "\n");
+        	bufferedWritter.write("\n\nTrabalharam"+ "\n\n");
+        	bufferedWritter.write("Barco,Indice,Bruto,Liq."+ "\n");
+	        for(Boat b : boatsEnvolved){
+	        	double eCargoPercent = 0.0;
+	        	double totalCommisionCostBoat = 0.0;
+	        	double totalGrossBoat = 0.0;
+	        	List<Tour> toursBoat = getToursByBoat(tours, b);
+	        	for(Tour t : toursBoat) {
+	        		eCargoPercent += t.payingPassengers();
+	        		totalGrossBoat += t.payingPassengers() * b.tourCost();
+	        	}
+	        	eCargoPercent /= b.capacity() * toursBoat.size();
+	        	
+	        	List<Sale> salesBoat = getSalesByBoat(sales, b);
+	    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
+	        	
+	        	if(eCargoPercent >= avgCargoPercent){
+	        		totalCapacityApportion += b.capacity();
+	        		totalGrossApportion += totalGrossBoat;
+	        		totalCommisionCostApportion += totalCommisionCostBoat;
+	        		boatsApportion.add(b);
+	        	}
+	        	
+	        	bufferedWritter.write(b.toString() +"," + eCargoPercent + "," + totalGrossBoat + "," + (totalGrossBoat - totalCommisionCostBoat) + "\n");
+	        }
+	        totalNetApportion = totalGrossApportion - totalCommisionCostApportion;
+	        if(!boatsApportion.isEmpty()){
+	        	bufferedWritter.write("\n\nTotal bruto rateio,R$ " + totalGrossApportion + ",Total liq. rateio,R$ " + totalNetApportion + "\n");
+	        	bufferedWritter.write("\n\nEntraram no rateio\n\n");
+	        	bufferedWritter.write("Barco,Perc. Carga,Perc. rateio,Liq.\n");
+	            for(Boat b : boatsApportion){
+	            	double eCargoPercent = 0.0;
+	            	List<Tour> toursBoat = getToursByBoat(tours, b);
+	            	for(Tour t : toursBoat) eCargoPercent += t.payingPassengers();
+	            	eCargoPercent /= b.capacity() * toursBoat.size();
+	                double perApportionment = b.capacity()/totalCapacityApportion;
+	                bufferedWritter.write(b.toString()+"," + eCargoPercent + "," + perApportionment + "," + perApportionment * totalNetApportion + "\n");
+	                boatsEnvolved.remove(b); //remove to calculate who not on apportionment
+	            }
+	        }
+	        else{
+	        	bufferedWritter.write("Nao houve rateio"+ "\n");
+	        }
+	        bufferedWritter.write("\n\nNão entraram no rateio"+ "\n\n");
+	        bufferedWritter.write("Barco,Liq."+ "\n");
+	        for(Boat b : boatsEnvolved){
+	        	double totalCommisionCostBoat = 0.0;
+	        	double totalGrossBoat = 0.0;
+	        	
+	        	List<Tour> toursBoat = getToursByBoat(tours, b);
+	        	for(Tour t : toursBoat) totalGrossBoat += t.payingPassengers() * b.tourCost();
+	        	
+	        	List<Sale> salesBoat = getSalesByBoat(sales, b);
+	    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
+	    		
+	    		bufferedWritter.write(b.toString()+"," + (totalGrossBoat - totalCommisionCostBoat) + "\n");
+	        	
+	        }
+	        bufferedWritter.close();
+        }catch(IOException e){
+        	e.printStackTrace();
         }
         
 
     }
-    public void calculateCommission(List<Seller> sellers){
+    public void calculateCommission(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
 
     }
 }
