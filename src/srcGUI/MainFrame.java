@@ -27,7 +27,13 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		
-		dataBaseConnection = new SQLDatabase("10.42.0.35","root","root");
+		dataBaseConnection = new SQLDatabase("10.42.0.54","root","root");
+		
+		try{
+			dataBaseConnection.createDatabaseIfNoExist();			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 		
 		new CalculatorDefault().calculateApportionment(null);
 		

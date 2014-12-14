@@ -33,17 +33,18 @@ public class CalculatorDefault implements Calculator{
         double totalNet = 0.0;
         double totalCommisionCost = 0.0;
         double totalCapacityApportion = 0.0;
-        //List<Enterprise> enterIncluded = new ArrayList<Enterprise>();
+        
         List<Boat> boatsEnvolved = new ArrayList<Boat>();
         List<Boat> boatsApportion = new ArrayList<Boat>();
-        SQLDatabase dataBaseConnection = new SQLDatabase("10.42.0.35","root","root");
+        SQLDatabase dataBaseConnection = new SQLDatabase("10.42.0.54","root","root");
         
         List<Boat> boats = dataBaseConnection.loadBoats(null, null);
         
         List<Tour> tours = dataBaseConnection.loadTours(Timestamp.valueOf("1994-01-01 00:00:00"), Timestamp.valueOf("2014-12-01 00:00:00"), null, null);
 
         List<Sale> sales = dataBaseConnection.loadSales(Timestamp.valueOf("1994-01-01 00:00:00"), Timestamp.valueOf("2014-12-01 00:00:00"),null,null, null, null);
-        /*for(Enterprise e : enterprises) {
+        /*List<Enterprise> enterIncluded = new ArrayList<Enterprise>();
+        for(Enterprise e : enterprises) {
             totalGross += e.totalGross();
             totalNet += e.totalNet();
             avgCargoPercent += e.cargoPercent();
