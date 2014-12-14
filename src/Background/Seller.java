@@ -20,6 +20,10 @@ public class Seller{
     this.sellerEnterprise = sellerEnterprise;
   }
   
+  public String enterpriseName(){
+  	return this.sellerEnterprise;
+  }
+  
   public String insertParameters(){
     return "\""+this.sellerName+"\","+
     "\""+this.sellerEnterprise+"\"";

@@ -6,6 +6,9 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import Background.Boat;
+import Background.Sale;
+import Background.Seller;
 import Database.SQLDatabase;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -14,23 +17,37 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.MaskFormatter;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.List;
+
+import javax.swing.JFormattedTextField;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CommissionWindow extends JFrame {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField tFBoatID;
+	private JTextField tFSellerID;
+	private JTextField tFPassAmount;
 	private SQLDatabase dataBaseConnection;
+	private JFormattedTextField tFFDepartureDate;
+	private JComboBox<Boat> cBBoat;
+	private JComboBox<Seller> cBSeller;
+	private JFormattedTextField tFFDepartureHour;
 	
-	public CommissionWindow(SQLDatabase dataBaseConnection) {
+	public CommissionWindow(SQLDatabase dataBaseConnection) throws SQLException{
 		this.dataBaseConnection = dataBaseConnection;
 		setSize(new Dimension(488, 390));
 		JPanel jPMain = new JPanel();
@@ -75,52 +92,96 @@ public class CommissionWindow extends JFrame {
 		JLabel lblNewLabel = new JLabel("Data da venda");
 		jPSaleInfo.add(lblNewLabel, "2, 2, left, center");
 		
-		textField = new JTextField();
-		jPSaleInfo.add(textField, "4, 2, fill, center");
-		textField.setColumns(10);
+		try {
+			tFFDepartureDate = new JFormattedTextField(new MaskFormatter("##:##"));
+		} catch (ParseException e1) {
+			// TODO Bloco catch gerado automaticamente
+			e1.printStackTrace();
+		}
+		jPSaleInfo.add(tFFDepartureDate, "4, 2, fill, center");
 		
 		JLabel lblHoraDaSada = new JLabel("Hora da saída");
 		jPSaleInfo.add(lblHoraDaSada, "2, 4, left, center");
 		
-		textField_1 = new JTextField();
-		jPSaleInfo.add(textField_1, "4, 4, fill, center");
-		textField_1.setColumns(10);
+		try {
+			tFFDepartureHour = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e1) {
+			// TODO Bloco catch gerado automaticamente
+			e1.printStackTrace();
+		}
+		jPSaleInfo.add(tFFDepartureHour, "4, 4, fill, center");
 		
 		JLabel lblCod = new JLabel("Cód. barco venda");
 		jPSaleInfo.add(lblCod, "2, 6, left, center");
 		
-		textField_2 = new JTextField();
-		jPSaleInfo.add(textField_2, "4, 6, fill, center");
-		textField_2.setColumns(10);
+		tFBoatID = new JTextField();
+		jPSaleInfo.add(tFBoatID, "4, 6, fill, center");
+		tFBoatID.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
-		jPSaleInfo.add(comboBox, "6, 6, fill, default");
+		cBBoat = new JComboBox<Boat>();
+		List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+		for(Boat b : boats) cBBoat.addItem(b);
+		jPSaleInfo.add(cBBoat, "6, 6, fill, default");
 		
 		JLabel lblCdVendedor = new JLabel("Cód. vendedor");
 		jPSaleInfo.add(lblCdVendedor, "2, 8, left, center");
 		
-		textField_3 = new JTextField();
-		jPSaleInfo.add(textField_3, "4, 8, fill, center");
-		textField_3.setColumns(10);
+		tFSellerID = new JTextField();
+		jPSaleInfo.add(tFSellerID, "4, 8, fill, center");
+		tFSellerID.setColumns(10);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		jPSaleInfo.add(comboBox_1, "6, 8, fill, default");
+		cBSeller = new JComboBox<Seller>();
+		List<Seller> sellers = dataBaseConnection.loadSellers(null, null);
+		for(Seller s : sellers) cBSeller.addItem(s);
+		jPSaleInfo.add(cBSeller, "6, 8, fill, default");
 		
 		JLabel lblNewLabel_1 = new JLabel("Qtde. passageiros");
 		jPSaleInfo.add(lblNewLabel_1, "2, 10, left, center");
 		
-		textField_4 = new JTextField();
-		jPSaleInfo.add(textField_4, "4, 10, fill, center");
-		textField_4.setColumns(10);
+		tFPassAmount = new JTextField();
+		jPSaleInfo.add(tFPassAmount, "4, 10, fill, center");
+		tFPassAmount.setColumns(10);
 		
 		JPanel jPButton = new JPanel();
 		jPMain.add(jPButton, "2, 4, right, fill");
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		jPButton.add(btnCancelar);
 		
 		JButton btnRegistrar = new JButton("Registrar");
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processRegButton();
+			}
+		});
 		jPButton.add(btnRegistrar);
+	}
+	
+	Sale getSale(){
+		try{
+			int halfPass = 0;
+			double passengers = GUITransUtils.getDoubleFromJText(tFPassAmount);
+			int fullPass = (int)passengers;
+			if((passengers - fullPass) == 0.5) halfPass = 1;
+			Boat boat = (Boat)cBBoat.getSelectedItem();
+			Seller seller = (Seller)cBSeller.getSelectedItem();
+			return new Sale(fullPass,halfPass,0,GUITransUtils.getDepartureTimestamp(tFFDepartureHour, tFFDepartureDate),
+					seller.toString(),seller.enterpriseName(),boat.toString(),boat.enterpriseName());
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "Insira números inteiros corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Problemas na extração do passeio", "ERRO", JOptionPane.ERROR_MESSAGE);
+		}
+		return null;		
+	}
+	
+	void processRegButton(){
+		dataBaseConnection.storeSale(getSale());
 	}
 
 }

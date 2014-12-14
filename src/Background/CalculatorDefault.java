@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class CalculatorDefault implements Calculator{
 
     public void calculateApportionment(List<Enterprise> enterprises){
-        double avgCargoPercent = 0.0;
+        /*double avgCargoPercent = 0.0;
         double totalGross = 0.0;
         double totalNet = 0.0;
         double totalCapacityApportion = 0.0;
@@ -44,7 +44,7 @@ public class CalculatorDefault implements Calculator{
         else{
             System.out.println("Nao houve rateio");
         }
-
+*/
     }
     public void calculateCommission(List<Seller> sellers){
 

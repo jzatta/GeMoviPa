@@ -25,6 +25,10 @@ public class Boat{
       this.tourCost       = tourCost;
     }
     
+    public String enterpriseName(){
+    	return this.boatEnterprise;
+    }
+    
     public String insertParameters(){
       return "\""+this.boatName+"\","+
       "\""+this.boatEnterprise+"\","+
