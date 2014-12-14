@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 import java.sql.SQLException;
 
 public class Tour{
-    int fullPass, halfPass, freePass;
-    Timestamp departure;
-    String boatName, boatEnterprise;
+    private int fullPass, halfPass, freePass;
+    private Timestamp departure;
+    private String boatName, boatEnterprise;
 
     public Tour(ResultSet result) throws SQLException{
       this.fullPass         = result.getInt("fullPass");
@@ -16,6 +16,14 @@ public class Tour{
       this.departure        = result.getTimestamp("departure");
       this.boatName         = result.getString("boatName");
       this.boatEnterprise   = result.getString("boatEnterprise");
+    }
+    
+    public String boatName(){
+    	return this.boatName;
+    }
+    
+    public double payingPassengers(){
+    	return fullPass + halfPass * 0.5;
     }
     
     public Tour(int fullPass, int halfPass, int freePass,

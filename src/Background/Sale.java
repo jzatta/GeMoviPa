@@ -34,6 +34,18 @@ public class Sale{
         this.boatEnterprise   = boatEnterprise;
     }
     
+    public String boatName(){
+    	return this.boatName;
+    }
+    
+    public String sellerName(){
+    	return this.sellerName;
+    }
+    
+    public double payingPassengers(){
+    	return fullPass + halfPass * 0.5;
+    }
+    
     public String insertParameters(){
       return Integer.toString(this.fullPass)+","+
       Integer.toString(this.halfPass)+","+

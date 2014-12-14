@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import Background.CalculatorDefault;
 import Database.SQLDatabase;
 
 import java.awt.Dimension;
@@ -27,6 +28,8 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		
 		dataBaseConnection = new SQLDatabase("10.42.0.35","root","root");
+		
+		new CalculatorDefault().calculateApportionment(null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
