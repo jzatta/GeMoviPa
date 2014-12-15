@@ -206,8 +206,6 @@ public class CommissionWindow extends JFrame {
 			Seller selectedSeller = (Seller)cBSeller.getSelectedItem();
 			tFBoatID.setText(String.valueOf(selectedBoat.id()));
 			tFSellerID.setText(String.valueOf(selectedSeller.id()));
-			cBBoat.setSelectedIndex(0);
-			cBSeller.setSelectedIndex(0);
 		}catch(Exception e){}
 	}
 	
@@ -217,6 +215,8 @@ public class CommissionWindow extends JFrame {
 			Component e = jPSaleInfo.getComponent(i);
 			if(e instanceof JTextField) ((JTextField) e).setText("");
 		}
+		cBBoat.setSelectedIndex(0);
+		cBSeller.setSelectedIndex(0);
 	}
 
 }
