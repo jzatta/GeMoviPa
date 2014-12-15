@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
+import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -46,6 +47,7 @@ public class CommissionWindow extends JFrame {
 	private JComboBox<Boat> cBBoat;
 	private JComboBox<Seller> cBSeller;
 	private JFormattedTextField tFFDepartureHour;
+	private JPanel jPSaleInfo;
 	
 	public CommissionWindow(SQLDatabase dataBaseConnection) throws SQLException{
 		this.dataBaseConnection = dataBaseConnection;
@@ -65,7 +67,7 @@ public class CommissionWindow extends JFrame {
 				RowSpec.decode("default:grow"),
 				FormFactory.LINE_GAP_ROWSPEC,}));
 		
-		JPanel jPSaleInfo = new JPanel();
+		jPSaleInfo = new JPanel();
 		jPSaleInfo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		jPMain.add(jPSaleInfo, "2, 2, fill, fill");
 		jPSaleInfo.setLayout(new FormLayout(new ColumnSpec[] {
@@ -188,6 +190,8 @@ public class CommissionWindow extends JFrame {
 	void processRegButton(){
 		try{
 			dataBaseConnection.storeSale(getSale());
+			resetFields();
+			JOptionPane.showMessageDialog(null, "Dados inseridos!");
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "Insira números corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
 		}catch(Exception e){
@@ -202,7 +206,17 @@ public class CommissionWindow extends JFrame {
 			Seller selectedSeller = (Seller)cBSeller.getSelectedItem();
 			tFBoatID.setText(String.valueOf(selectedBoat.id()));
 			tFSellerID.setText(String.valueOf(selectedSeller.id()));
+			cBBoat.setSelectedIndex(0);
+			cBSeller.setSelectedIndex(0);
 		}catch(Exception e){}
+	}
+	
+	void resetFields(){
+		int components = jPSaleInfo.getComponentCount();
+		for(int i = 0; i < components; i++) {
+			Component e = jPSaleInfo.getComponent(i);
+			if(e instanceof JTextField) ((JTextField) e).setText("");
+		}
 	}
 
 }

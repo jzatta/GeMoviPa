@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -59,6 +60,8 @@ public class TableReceived extends JFrame {
 	private JFormattedTextField tFFDepartureHour;
 	private JFormattedTextField tFFDepartureDate;
 	private SQLDatabase dataBaseConnection;
+	private JPanel jPTourInfo;
+	private JPanel jPQuantities;
 	
 	public TableReceived(SQLDatabase dataBaseConnection) throws SQLException{
 		
@@ -85,7 +88,7 @@ public class TableReceived extends JFrame {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.LINE_GAP_ROWSPEC,}));
 		
-		JPanel jPTourInfo = new JPanel();
+		jPTourInfo = new JPanel();
 		jPTourInfo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		mainPanel.add(jPTourInfo, "2, 2, fill, center");
 		jPTourInfo.setLayout(new FormLayout(new ColumnSpec[] {
@@ -175,7 +178,7 @@ public class TableReceived extends JFrame {
 		jPTourInfo.add(tFAnimationValue, "8, 8, fill, top");
 		tFAnimationValue.setColumns(10);
 		
-		JPanel jPQuantities = new JPanel();
+		jPQuantities = new JPanel();
 		jPQuantities.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		mainPanel.add(jPQuantities, "2, 4, fill, center");
 		jPQuantities.setLayout(new FormLayout(new ColumnSpec[] {
@@ -303,6 +306,8 @@ public class TableReceived extends JFrame {
 	void processRegButton(){
 		try{
 			dataBaseConnection.storeTour(getTour());
+			resetFields();
+			JOptionPane.showMessageDialog(null, "Dados inseridos!");
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "Insira números inteiros corretos", "ERRO", JOptionPane.ERROR_MESSAGE);
 		}catch(Exception e){
@@ -315,6 +320,21 @@ public class TableReceived extends JFrame {
 		tFBoatID.setText(String.valueOf(selectedBoat.id()));
 		tFTourValue.setText(String.valueOf(selectedBoat.tourCost()));
 		tFBoatCapacity.setText(String.valueOf(selectedBoat.capacity()));
+	}
+	
+	void resetFields(){
+		int components = jPTourInfo.getComponentCount();
+		for(int i = 0; i < components; i++) {
+			Component e = jPTourInfo.getComponent(i);
+			if(e instanceof JTextField) ((JTextField) e).setText("");
+		}
+		components = jPQuantities.getComponentCount();
+		for(int i = 0; i < components; i++) {
+			Component e = jPQuantities.getComponent(i);
+			if(e instanceof JTextField) ((JTextField) e).setText("");
+		}
+		cBBoatName.setSelectedIndex(0);
+		
 	}
 
 }
