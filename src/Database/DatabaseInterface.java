@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface DatabaseInterface{
   List<Sale> loadSales(Timestamp from, Timestamp to, String sellerName, String enterpriseName, String boatName, String boatEnterpriseName);
-  void storeSale(Sale sale);
+  String storeSale(Sale sale);
   List<Tour> loadTours(Timestamp from, Timestamp to, String boatName, String boatEnterpriseName);
-  void storeTour(Tour tour);
+  String storeTour(Tour tour);
   List<Boat> loadBoats(String boatName, String boatEnterprise);
-  void storeBoat(Boat boat);
+  String storeBoat(Boat boat);
   List<Enterprise> loadEnterprises(String enterpriseName);
-  void storeEnterprise(Enterprise enterprise);
+  String storeEnterprise(Enterprise enterprise);
   List<Seller> loadSellers(String sellerName, String sellerEnterprise);
-  void storeSeller(Seller seller);
+  String storeSeller(Seller seller);
 }

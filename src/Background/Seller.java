@@ -16,6 +16,13 @@ public class Seller{
   }
   
   public Seller(String sellerName, String sellerEnterprise){
+    this.idSeller         = 0;
+    this.sellerName       = sellerName;
+    this.sellerEnterprise = sellerEnterprise;
+  }
+  
+  public Seller(int idSeller, String sellerName, String sellerEnterprise){
+    this.idSeller         = idSeller;
     this.sellerName       = sellerName;
     this.sellerEnterprise = sellerEnterprise;
   }
@@ -29,7 +36,7 @@ public class Seller{
   }
   
   public String insertParameters(){
-    return "\""+this.sellerName+"\","+
+    return Integer.toString(this.idSeller)+",\""+this.sellerName+"\","+
     "\""+this.sellerEnterprise+"\"";
   }
   

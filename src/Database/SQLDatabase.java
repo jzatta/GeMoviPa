@@ -9,7 +9,7 @@ public class SQLDatabase implements DatabaseInterface{
   private String hostname;
   private String username;
   private String password;
-  private String schemaName = "GeMoviPaData";
+  private String schemaName = "qqw";
   
   public SQLDatabase(String hostname, String username, String password) {
     this.hostname = hostname;
@@ -59,43 +59,66 @@ public class SQLDatabase implements DatabaseInterface{
     this.insertData("GRANT ALL PRIVILEGES ON *.* TO \"root\"@\""+ip+"\" IDENTIFIED BY \"root\";");
   }
   
-  private void store(String insertRule){
-    try{
-      insertData(insertRule);
-    } catch (SQLException e){
-      e.printStackTrace();
-      System.out.println("Error access Databank");
-    }
+  private void store(String insertRule) throws SQLException{
+    insertData(insertRule);
   }
   
-  public void storeSale(Sale sale){
+  public String storeSale(Sale sale){
     String insertRule = "INSERT INTO `"+this.schemaName+"`.`sales` (`fullPass`,`halfPass`,`freePass`,`departure`,`sellerName`,`sellerEnterprise`,`boatName`,`boatEnterprise`) VALUES ";
     insertRule += "("+sale.insertParameters()+");";
-    this.store(insertRule);
+    try{
+      this.store(insertRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+    }
+    return "OK";
   }
   
-  public void storeTour(Tour tour){
+  public String storeTour(Tour tour){
     String insertRule = "INSERT INTO `"+this.schemaName+"`.`tours` (`fullPass`,`halfPass`,`freePass`,`departure`,`boatName`,`boatEnterprise`) VALUES ";
     insertRule += "("+tour.insertParameters()+");";
-    this.store(insertRule);
+    try{
+      this.store(insertRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+    }
+    return "OK";
   }
   
-  public void storeBoat(Boat boat){
+  public String storeBoat(Boat boat){
     String insertRule = "INSERT INTO `"+this.schemaName+"`.`boats`(`boatName`,`boatEnterprise`,`boatCapacity`,`tourCost`) VALUES ";
     insertRule += "("+boat.insertParameters()+");";
-    this.store(insertRule);
+    try{
+      this.store(insertRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+    }
+    return "OK";
   }
   
-  public void storeEnterprise(Enterprise enterprise){
+  public String storeEnterprise(Enterprise enterprise){
     String insertRule = "INSERT INTO `"+this.schemaName+"`.`enterprises`(`enterpriseName`) VALUES ";
     insertRule += "("+enterprise.insertParameters()+");";
-    this.store(insertRule);
+    try{
+      this.store(insertRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+    }
+    return "OK";
   }
   
-  public void storeSeller(Seller seller){
-    String insertRule = "INSERT INTO `"+this.schemaName+"`.`sellers`(`sellerName`,`sellerEnterprise`) VALUES ";
+  public String storeSeller(Seller seller){
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`sellers`(`idsellers`,`sellerName`,`sellerEnterprise`) VALUES ";
     insertRule += "("+seller.insertParameters()+");";
-    this.store(insertRule);
+    try{
+      this.store(insertRule);
+    } catch (SQLException e){
+      if (e.getMessage().equals("Duplicate entry '1' for key 'PRIMARY'")){
+        return "ID do vendedor Duplicado";
+      }
+      e.printStackTrace();
+    }
+    return "OK";
   }
   
   public List<Sale> loadSales(Timestamp from, Timestamp to, String sellerName, String enterpriseName, String boatName, String boatEnterpriseName){

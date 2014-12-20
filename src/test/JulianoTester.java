@@ -7,9 +7,10 @@ import java.sql.*;
 
 public class JulianoTester{
 	public static void main(String[] args) throws Exception{
-    SQLDatabase q = new SQLDatabase("10.42.0.54","root","root");
+    SQLDatabase q = new SQLDatabase("127.0.0.1","root","root");
     try {
       q.createDatabaseIfNoExist();
+      System.out.println(q.storeSeller(new Seller(1,"Samara","Barba Negra")));
 //       q.storeSale(new Sale(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"Juliano","qwerty","barcoza","empresabarcoza"));
 //       q.storeTour(new Tour(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"barcao","empresabarco"));
 //       q.storeBoat(new Boat("barcao1","empresabarco1",8001,8.09));
