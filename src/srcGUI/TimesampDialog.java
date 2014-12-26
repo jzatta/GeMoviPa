@@ -74,6 +74,11 @@ public class TimesampDialog extends JDialog {
 		
 		try {
 			tFFDateFrom = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			tFFDateFrom.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tFFHourFrom.requestFocus();
+				}
+			});
 		} catch (ParseException e) {
 			// TODO Bloco catch gerado automaticamente
 			e.printStackTrace();
@@ -85,6 +90,11 @@ public class TimesampDialog extends JDialog {
 		
 		try {
 			tFFHourFrom = new JFormattedTextField(new MaskFormatter("##:##"));
+			tFFHourFrom.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tFFDateTo.requestFocus();
+				}
+			});
 		} catch (ParseException e) {
 			// TODO Bloco catch gerado automaticamente
 			e.printStackTrace();
@@ -96,6 +106,11 @@ public class TimesampDialog extends JDialog {
 		
 		try {
 			tFFDateTo = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			tFFDateTo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tFFHourTo.requestFocus();
+				}
+			});
 		} catch (ParseException e) {
 			// TODO Bloco catch gerado automaticamente
 			e.printStackTrace();
@@ -107,6 +122,11 @@ public class TimesampDialog extends JDialog {
 		
 		try {
 			tFFHourTo = new JFormattedTextField(new MaskFormatter("##:##"));
+			tFFHourTo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					processGenButton();
+				}
+			});
 		} catch (ParseException e) {
 			// TODO Bloco catch gerado automaticamente
 			e.printStackTrace();

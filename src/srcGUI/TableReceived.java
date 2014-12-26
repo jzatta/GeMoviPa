@@ -117,6 +117,11 @@ public class TableReceived extends JFrame {
 		
 		try {
 			tFFDepartureHour = new JFormattedTextField(new MaskFormatter("##:##"));
+			tFFDepartureHour.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tFFDepartureDate.requestFocus();
+				}
+			});
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -127,6 +132,11 @@ public class TableReceived extends JFrame {
 		
 		try {
 			tFFDepartureDate = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			tFFDepartureDate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tFBoatID.requestFocus();
+				}
+			});
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -136,7 +146,12 @@ public class TableReceived extends JFrame {
 		jPTourInfo.add(lblCdigoBarco, "2, 4, left, center");
 		
 		tFBoatID = new JTextField();
-		tFBoatID.setEditable(false);
+		tFBoatID.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO load boat from DB by ID
+				tFTourValueDisc.requestFocus();
+			}
+		});
 		jPTourInfo.add(tFBoatID, "4, 4, fill, center");
 		tFBoatID.setColumns(10);		
 		
@@ -168,6 +183,11 @@ public class TableReceived extends JFrame {
 		jPTourInfo.add(lblNewLabel_1, "2, 8, left, center");
 		
 		tFTourValueDisc = new JTextField();
+		tFTourValueDisc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tFQtFull.requestFocus();
+			}
+		});
 		jPTourInfo.add(tFTourValueDisc, "4, 8, fill, top");
 		tFTourValueDisc.setColumns(10);
 		
@@ -175,6 +195,7 @@ public class TableReceived extends JFrame {
 		jPTourInfo.add(lblValorAnimao, "6, 8, left, center");
 		
 		tFAnimationValue = new JTextField();
+		tFAnimationValue.setEditable(false);
 		jPTourInfo.add(tFAnimationValue, "8, 8, fill, top");
 		tFAnimationValue.setColumns(10);
 		
@@ -202,6 +223,11 @@ public class TableReceived extends JFrame {
 		jPQuantities.add(label, "2, 2, left, center");
 		
 		tFQtFull = new JTextField();
+		tFQtFull.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tFQtFree.requestFocus();
+			}
+		});
 		tFQtFull.setColumns(10);
 		jPQuantities.add(tFQtFull, "4, 2, left, top");
 		
@@ -209,6 +235,11 @@ public class TableReceived extends JFrame {
 		jPQuantities.add(label_3, "6, 2, fill, center");
 		
 		tFQtFree = new JTextField();
+		tFQtFree.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				processRegButton();
+			}
+		});
 		tFQtFree.setColumns(10);
 		jPQuantities.add(tFQtFree, "8, 2, right, top");
 		
@@ -216,6 +247,7 @@ public class TableReceived extends JFrame {
 		jPQuantities.add(label_2, "2, 4, left, center");
 		
 		tFQtTotal = new JTextField();
+		tFQtTotal.setEditable(false);
 		tFQtTotal.setColumns(10);
 		jPQuantities.add(tFQtTotal, "4, 4, left, top");
 		
@@ -223,6 +255,7 @@ public class TableReceived extends JFrame {
 		jPQuantities.add(label_1, "6, 4, left, center");
 		
 		tFSaleValue = new JTextField();
+		tFSaleValue.setEditable(false);
 		tFSaleValue.setColumns(10);
 		jPQuantities.add(tFSaleValue, "8, 4,left, top");
 		
@@ -251,6 +284,7 @@ public class TableReceived extends JFrame {
 		jPResults.add(label_4, "2, 2, left, center");
 		
 		textField_11 = new JTextField();
+		textField_11.setEditable(false);
 		textField_11.setColumns(10);
 		jPResults.add(textField_11, "4, 2, left, top");
 		
@@ -258,6 +292,7 @@ public class TableReceived extends JFrame {
 		jPResults.add(lblValorDoBilhete, "2, 4, left, center");
 		
 		textField_12 = new JTextField();
+		textField_12.setEditable(false);
 		jPResults.add(textField_12, "4, 4, left, default");
 		textField_12.setColumns(10);
 		
@@ -265,6 +300,7 @@ public class TableReceived extends JFrame {
 		jPResults.add(lblNewLabel_2, "2, 6, left, center");
 		
 		textField_13 = new JTextField();
+		textField_13.setEditable(false);
 		jPResults.add(textField_13, "4, 6, left, default");
 		textField_13.setColumns(10);
 		
@@ -326,12 +362,18 @@ public class TableReceived extends JFrame {
 		int components = jPTourInfo.getComponentCount();
 		for(int i = 0; i < components; i++) {
 			Component e = jPTourInfo.getComponent(i);
-			if(e instanceof JTextField) ((JTextField) e).setText("");
+			if(e instanceof JTextField) {
+				((JTextField) e).setBackground(Color.WHITE);
+				((JTextField) e).setText("");
+			}
 		}
 		components = jPQuantities.getComponentCount();
 		for(int i = 0; i < components; i++) {
 			Component e = jPQuantities.getComponent(i);
-			if(e instanceof JTextField) ((JTextField) e).setText("");
+			if(e instanceof JTextField) {
+				((JTextField) e).setBackground(Color.WHITE);
+				((JTextField) e).setText("");
+			}
 		}
 		cBBoatName.setSelectedIndex(0);
 		
