@@ -129,7 +129,7 @@ public class CommissionWindow extends JFrame {
 		tFBoatID = new JTextField();
 		tFBoatID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO fill the combobox with ID inserted
+				GUITransUtils.setSelectedBoatByID(tFBoatID, cBBoat);
 				tFSellerID.requestFocus();
 			}
 		});
@@ -152,7 +152,7 @@ public class CommissionWindow extends JFrame {
 		tFSellerID = new JTextField();
 		tFSellerID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO fill the combobox with ID inserted
+				GUITransUtils.setSelectedSellerByID(tFSellerID,cBSeller);
 				tFPassAmount.requestFocus();
 			}
 		});

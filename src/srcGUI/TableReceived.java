@@ -63,9 +63,9 @@ public class TableReceived extends JFrame {
 	private JPanel jPTourInfo;
 	private JPanel jPQuantities;
 	
-	public TableReceived(SQLDatabase dataBaseConnection) throws SQLException{
+	public TableReceived(SQLDatabase dataBaseConnectionV) throws SQLException{
 		
-		this.dataBaseConnection = dataBaseConnection;
+		this.dataBaseConnection = dataBaseConnectionV;
 		setSize(new Dimension(488, 390));
 		//getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -148,7 +148,7 @@ public class TableReceived extends JFrame {
 		tFBoatID = new JTextField();
 		tFBoatID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO load boat from DB by ID
+				GUITransUtils.setSelectedBoatByID(tFBoatID, cBBoatName);				
 				tFTourValueDisc.requestFocus();
 			}
 		});
