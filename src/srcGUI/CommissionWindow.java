@@ -96,6 +96,11 @@ public class CommissionWindow extends JFrame {
 		
 		try {
 			tFFDepartureDate = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			tFFDepartureDate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					tFFDepartureHour.requestFocus();
+				}
+			});
 		} catch (ParseException e1) {
 			// TODO Bloco catch gerado automaticamente
 			e1.printStackTrace();
@@ -107,6 +112,11 @@ public class CommissionWindow extends JFrame {
 		
 		try {
 			tFFDepartureHour = new JFormattedTextField(new MaskFormatter("##:##"));
+			tFFDepartureHour.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					tFBoatID.requestFocus();
+				}
+			});
 		} catch (ParseException e1) {
 			// TODO Bloco catch gerado automaticamente
 			e1.printStackTrace();
@@ -117,7 +127,12 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblCod, "2, 6, left, center");
 		
 		tFBoatID = new JTextField();
-		tFBoatID.setEditable(false);
+		tFBoatID.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO fill the combobox with ID inserted
+				tFSellerID.requestFocus();
+			}
+		});
 		jPSaleInfo.add(tFBoatID, "4, 6, fill, center");
 		tFBoatID.setColumns(10);
 		
@@ -135,7 +150,12 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblCdVendedor, "2, 8, left, center");
 		
 		tFSellerID = new JTextField();
-		tFSellerID.setEditable(false);
+		tFSellerID.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO fill the combobox with ID inserted
+				tFPassAmount.requestFocus();
+			}
+		});
 		jPSaleInfo.add(tFSellerID, "4, 8, fill, center");
 		tFSellerID.setColumns(10);
 		
@@ -153,6 +173,11 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblNewLabel_1, "2, 10, left, center");
 		
 		tFPassAmount = new JTextField();
+		tFPassAmount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				processRegButton();
+			}
+		});
 		jPSaleInfo.add(tFPassAmount, "4, 10, fill, center");
 		tFPassAmount.setColumns(10);
 		
