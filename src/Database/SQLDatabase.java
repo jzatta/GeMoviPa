@@ -75,7 +75,7 @@ public class SQLDatabase implements DatabaseInterface{
   }
   
   public String storeTour(Tour tour){
-    String insertRule = "INSERT INTO `"+this.schemaName+"`.`tours` (`fullPass`,`halfPass`,`freePass`,`departure`,`boatName`,`boatEnterprise`) VALUES ";
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`tours` (`fullPass`,`halfPass`,`freePass`,`departure`,`boatName`,`boatEnterprise`,`discountValueTotal`) VALUES ";
     insertRule += "("+tour.insertParameters()+");";
     try{
       this.store(insertRule);
@@ -279,6 +279,26 @@ public class SQLDatabase implements DatabaseInterface{
     return boats;
   }
   
+  public Boat loadBoats(int id){
+    String rule = "SELECT * FROM `"+this.schemaName+"`.`boats` WHERE idboats="+Integer.toString(id)+";";
+    ResultSet result;
+    try{
+      result = getData(rule);
+      if (!result.isBeforeFirst()){
+        return null;
+      }
+      Boat boat = null;
+      result.next();
+      boat = new Boat(result);
+      result.getStatement().getConnection().close();
+      return boat;
+    } catch (SQLException e){
+      e.printStackTrace();
+      System.out.println("Error access Databank");
+      return null;
+    }
+  }
+  
   public List<Enterprise> loadEnterprises(String enterpriseName){
     String rule = "SELECT * FROM `"+this.schemaName+"`.`enterprises` WHERE";
     boolean runCommand = false;
@@ -346,5 +366,25 @@ public class SQLDatabase implements DatabaseInterface{
       return null;
     }
     return sellers;
+  }
+  
+  public Seller loadSellers(int id){
+    String rule = "SELECT * FROM `"+this.schemaName+"`.`sellers` WHERE `idsellers`="+Integer.toString(id)+";";
+    ResultSet result;
+    try{
+      result = getData(rule);
+      if (!result.isBeforeFirst() ){
+        return null;
+      }
+      Seller seller;
+      result.next();
+      seller = new Seller(result);
+      result.getStatement().getConnection().close();
+      return seller;
+    } catch (SQLException e){
+      e.printStackTrace();
+      System.out.println("Error access Databank");
+      return null;
+    }
   }
 }

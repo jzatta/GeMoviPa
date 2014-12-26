@@ -10,9 +10,11 @@ public interface DatabaseInterface{
   List<Tour> loadTours(Timestamp from, Timestamp to, String boatName, String boatEnterpriseName);
   String storeTour(Tour tour);
   List<Boat> loadBoats(String boatName, String boatEnterprise);
+  Boat loadBoats(int id);
   String storeBoat(Boat boat);
   List<Enterprise> loadEnterprises(String enterpriseName);
   String storeEnterprise(Enterprise enterprise);
   List<Seller> loadSellers(String sellerName, String sellerEnterprise);
+  Seller loadSellers(int id);
   String storeSeller(Seller seller);
 }
