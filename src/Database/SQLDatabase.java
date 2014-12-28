@@ -388,8 +388,8 @@ public class SQLDatabase implements DatabaseInterface{
     }
   }
   
-  boolean deleteTour(Tour toDelete){
-    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`tours` WHERE `idtours`="+Integer.toStrong(toDelete.id())+";";
+  public boolean deleteTour(Tour toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`tours` WHERE `idtours`="+Integer.toString(toDelete.id())+";";
     try{
       this.store(deleteRule);
     } catch (SQLException e){
@@ -399,8 +399,8 @@ public class SQLDatabase implements DatabaseInterface{
     return true;
   }
   
-  boolean deleteBoat(Boat toDelete){
-    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`boats` WHERE `idboats`="+Integer.toStrong(toDelete.id())+";";
+  public boolean deleteBoat(Boat toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`boats` WHERE `idboats`="+Integer.toString(toDelete.id())+";";
     try{
       this.store(deleteRule);
     } catch (SQLException e){
@@ -410,8 +410,8 @@ public class SQLDatabase implements DatabaseInterface{
     return true;
   }
   
-  boolean deleteEnterprise(Enterprise toDelete){
-    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`enterprises` WHERE `identerprises`="+Integer.toStrong(toDelete.id())+";";
+  public boolean deleteEnterprise(Enterprise toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`enterprises` WHERE `identerprises`="+Integer.toString(toDelete.id())+";";
     try{
       this.store(deleteRule);
     } catch (SQLException e){
@@ -421,8 +421,8 @@ public class SQLDatabase implements DatabaseInterface{
     return true;
   }
   
-  boolean deleteSeller(Seller toDelete){
-    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`sellers` WHERE `idsellers`="+Integer.toStrong(toDelete.id())+";";
+  public boolean deleteSeller(Seller toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`sellers` WHERE `idsellers`="+Integer.toString(toDelete.id())+";";
     try{
       this.store(deleteRule);
     } catch (SQLException e){
