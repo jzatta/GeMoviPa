@@ -22,6 +22,10 @@ public class Tour{
       this.discountValueTotal = result.getDouble("discountValueTotal");
     }
     
+    public int id(){
+      return this.idTour;
+    }
+    
     public String boatName(){
     	return this.boatName;
     }

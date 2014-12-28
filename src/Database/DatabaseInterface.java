@@ -17,4 +17,9 @@ public interface DatabaseInterface{
   List<Seller> loadSellers(String sellerName, String sellerEnterprise);
   Seller loadSellers(int id);
   String storeSeller(Seller seller);
+  
+  boolean deleteTour(Tour tour);
+  boolean deleteBoat(Boat boat);
+  boolean deleteEnterprise(Enterprise enterprise);
+  boolean deleteSeller(Seller seller);
 }
