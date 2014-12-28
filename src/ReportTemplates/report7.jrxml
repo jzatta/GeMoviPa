@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report7" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2fd5221-6e2f-4f03-94a1-3ca1a88528eb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Embarcação" class="java.lang.String"/>
+	<field name="Data" class="java.lang.String"/>
+	<field name="Média" class="java.lang.String"/>
+	<field name="% Carga" class="java.lang.String"/>
+	<field name="% Rateio" class="java.lang.String"/>
+	<field name="Valor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="10" splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="117" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="15" width="555" height="1" uuid="2bd7a17a-c205-4256-bcfd-6598ccf1e286"/>
+			</line>
+			<line>
+				<reportElement x="0" y="85" width="555" height="1" uuid="bd1c73b8-3917-49ca-9131-df8d4a4e11ce"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="53" width="100" height="20" uuid="c76f0eba-56d9-46a8-b678-186324d4c09a"/>
+				<textFieldExpression><![CDATA[$F{Embarcação}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="33" width="100" height="20" uuid="5c21f6fb-0b06-4e67-be46-6dcb28c01ce0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Embarcação]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="53" width="100" height="20" uuid="2948b865-325c-46b1-9e6a-9d82a4103537"/>
+				<textFieldExpression><![CDATA[$F{Data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="33" width="100" height="20" uuid="70fb2d1e-2831-4c28-a310-5602a52f86ff"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="53" width="100" height="20" uuid="d8c05d57-fada-4d1d-a25f-658ddcda512c"/>
+				<textFieldExpression><![CDATA[$F{Média}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="33" width="100" height="20" uuid="abccbab0-d6bb-422e-b83e-0115154658bf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Média]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="300" y="53" width="100" height="20" uuid="54440dc4-c039-45e3-8e6e-d9fa5ec5d103"/>
+				<textFieldExpression><![CDATA[$F{% Carga}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="33" width="100" height="20" uuid="2a363561-b2c2-4786-9a55-894e096a1e5b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[% Carga]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="53" width="100" height="20" uuid="31fd8ce1-0ff2-4de5-8207-b35d07166326"/>
+				<textFieldExpression><![CDATA[$F{% Rateio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="400" y="33" width="100" height="20" uuid="5cfa0bcf-f74a-4ff0-b5d4-cb3a04f6e09d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[% Rateio]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="53" width="100" height="20" uuid="495844a6-838d-44db-8828-6fb373650234"/>
+				<textFieldExpression><![CDATA[$F{Valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="500" y="33" width="100" height="20" uuid="8d9f3c9a-6e29-4d01-bbbf-62bd88e0f85e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="105" width="555" height="1" uuid="5f250d45-3c30-4ab3-ae65-3b280b758fe6"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

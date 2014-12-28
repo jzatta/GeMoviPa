@@ -13,6 +13,16 @@ import Database.SQLDatabase;
 
 public class CalculatorDefault{
 	
+	private String getDatePortuguese(Timestamp t){
+		String ret = t.toString();
+		String year = ret.substring(0,ret.indexOf('-'));
+		ret = ret.substring(ret.indexOf('-') + 1);
+		String month = ret.substring(0,ret.indexOf('-'));
+		ret = ret.substring(ret.indexOf('-') + 1);
+		String day = ret.substring(0,ret.indexOf(' '));
+		return day + "/" + month + "/" + year;
+	}
+	
 	private Boat getBoatByName(List<Boat> boats, String name){
 		for(Boat b : boats) if(b.toString().equals(name)) return b;
 		return null;
@@ -40,6 +50,8 @@ public class CalculatorDefault{
         double totalCommisionCost = 0.0;
         double totalCommisionCostApportion = 0.0;
         double totalCapacityApportion = 0.0;
+        
+        final String formatPattern = "%.4f";
         
         List<Boat> boatsEnvolved = new ArrayList<Boat>();
         List<Boat> boatsApportion = new ArrayList<Boat>();
@@ -110,10 +122,10 @@ public class CalculatorDefault{
         totalNet = totalGross - totalCommisionCost;
         
         try{
-        	bufferedWritter.write("De\t"+"\""+timeFrom.toString()+"\""+"\tAté\t"+"\""+timeTo.toString()+"\""+"\n\n");
+       /* 	bufferedWritter.write("De\t"+"\""+timeFrom.toString()+"\""+"\tAté\t"+"\""+timeTo.toString()+"\""+"\n\n");
         	bufferedWritter.write("\"Total bruto\"\t" + totalGross + "\t\"Total liq.\"\t" + totalNet + "\t\"Média perc. carga\"\t" + avgCargoPercent+ "\n");
         	bufferedWritter.write("\n\nTrabalharam"+ "\n\n");
-        	bufferedWritter.write("Barco\tIndice\tBruto\tLiq."+ "\n");
+        	bufferedWritter.write("Barco\tIndice\tBruto\tLiq."+ "\n");*/
 	        for(Boat b : boatsEnvolved){
 	        	double eCargoPercent = 0.0;
 	        	double totalCommisionCostBoat = 0.0;
@@ -135,42 +147,53 @@ public class CalculatorDefault{
 	        		boatsApportion.add(b);
 	        	}
 	        	
-	        	bufferedWritter.write("\""+b.toString() +"\"\t" + eCargoPercent + "\t" + totalGrossBoat + "\t" + (totalGrossBoat - totalCommisionCostBoat) + "\n");
+	    //    	bufferedWritter.write("\""+b.toString() +"\"\t" + eCargoPercent + "\t" + totalGrossBoat + "\t" + (totalGrossBoat - totalCommisionCostBoat) + "\n");
 	        }
 	        totalNetApportion = totalGrossApportion - totalCommisionCostApportion;
 	        if(!boatsApportion.isEmpty()){
-	        	bufferedWritter.write("\n\n\"Total bruto rateio\"\t" + totalGrossApportion + "\t\"Total liq. rateio\"\t" + totalNetApportion + "\n");
+	/*        	bufferedWritter.write("\n\n\"Total bruto rateio\"\t" + totalGrossApportion + "\t\"Total liq. rateio\"\t" + totalNetApportion + "\n");
 	        	bufferedWritter.write("\n\n\"Entraram no rateio\"\n\n");
-	        	bufferedWritter.write("Barco\t\"Perc. Carga\"\t\"Perc. rateio\"\tLiq.\n");
-	            for(Boat b : boatsApportion){
+	        	bufferedWritter.write("Barco\tPerc. Carga\tPerc. rateio\tLiq.\n");
+	*/            for(Boat b : boatsApportion){
 	            	double eCargoPercent = 0.0;
 	            	List<Tour> toursBoat = getToursByBoat(tours, b);
 	            	for(Tour t : toursBoat) eCargoPercent += t.payingPassengers();
 	            	eCargoPercent /= b.capacity() * toursBoat.size();
 	                double perApportionment = b.capacity()/totalCapacityApportion;
-	                bufferedWritter.write("\""+b.toString()+"\"\t" + eCargoPercent + "\t" + perApportionment + "\t" + perApportionment * totalNetApportion + "\n");
+	                bufferedWritter.write(b.toString()+"\t" +getDatePortuguese(timeTo) + "\t"+ String.format(formatPattern, avgCargoPercent) + "\t" + 
+	                		String.format(formatPattern, eCargoPercent) + "\t" + String.format(formatPattern,perApportionment) + "\t" + String.format("%.2f", perApportionment * totalNetApportion) + "\n");
+	                
 	                boatsEnvolved.remove(b); //remove to calculate who not on apportionment
 	            }
 	        }
 	        else{
-	        	bufferedWritter.write("\"Nao houve rateio\""+ "\n");
+//	        	bufferedWritter.write("\"Nao houve rateio\""+ "\n");
 	        }
-	        bufferedWritter.write("\n\n\"Não entraram no rateio\""+ "\n\n");
+	/*        bufferedWritter.write("\n\n\"Não entraram no rateio\""+ "\n\n");
 	        bufferedWritter.write("Barco\tLiq."+ "\n");
-	        for(Boat b : boatsEnvolved){
+	 */       for(Boat b : boatsEnvolved){
 	        	double totalCommisionCostBoat = 0.0;
 	        	double totalGrossBoat = 0.0;
+	        	double eCargoPercent = 0.0;
 	        	
 	        	List<Tour> toursBoat = getToursByBoat(tours, b);
-	        	for(Tour t : toursBoat) totalGrossBoat += t.payingPassengers() * b.tourCost();
+	        	for(Tour t : toursBoat) {
+	        		totalGrossBoat += t.payingPassengers() * b.tourCost();
+	        		eCargoPercent += t.payingPassengers();
+	        	}
+	        	eCargoPercent /= b.capacity() * toursBoat.size();
 	        	
 	        	List<Sale> salesBoat = getSalesByBoat(sales, b);
 	    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
 	    		
-	    		bufferedWritter.write("\""+b.toString()+"\"\t" + (totalGrossBoat - totalCommisionCostBoat) + "\n");
+	    		bufferedWritter.write(b.toString()+"\t" +getDatePortuguese(timeTo) + "\t"+ String.format(formatPattern, avgCargoPercent) + "\t" + 
+                		String.format(formatPattern, eCargoPercent) + "\t" + String.format(formatPattern,0.0) + "\t" + String.format("%.2f", totalGrossBoat - totalCommisionCostBoat) + "\n");
+	    		
+	//    		bufferedWritter.write("\""+b.toString()+"\"\t" + (totalGrossBoat - totalCommisionCostBoat) + "\n");
 	        	
 	        }
 	        bufferedWritter.close();
+	        Reporter.generateReport();
         }catch(IOException e){
         	e.printStackTrace();
         }
@@ -213,5 +236,22 @@ public class CalculatorDefault{
         	 e.printStackTrace();
          }
 
+    }
+    
+    public void calculateSalesByBoat(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
+    	
+    	List<Seller> sellers = dataBaseConnection.loadSellers(null, null);
+    	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
+    	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+    	
+		File outFile = new File("ResultadoVendas.csv");
+		FileWriter fileWriter = null;
+		BufferedWriter bufferedWritter = null;
+		try {
+			fileWriter = new FileWriter(outFile);
+			bufferedWritter = new BufferedWriter(fileWriter);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }
