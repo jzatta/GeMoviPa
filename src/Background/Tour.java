@@ -30,6 +30,14 @@ public class Tour{
     	return fullPass + halfPass * 0.5;
     }
     
+    public int fullPassengers(){
+    	return this.fullPass;
+    }
+    
+    public int freePassengers(){
+    	return this.freePass;
+    }
+    
     public Tour(int fullPass, int halfPass, int freePass,
                 Timestamp departure,
                 String boatName, String boatEnterprise){

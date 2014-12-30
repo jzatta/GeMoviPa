@@ -108,6 +108,15 @@ public class MainFrame extends JFrame {
 		});
 		mnRegistros.add(mntmComisses);
 		
+		JMenuItem mntmMovimentoGeral = new JMenuItem("Movimento Geral");
+		mntmMovimentoGeral.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processMovGeneralMenu();
+				
+			}
+		});
+		mnRegistros.add(mntmMovimentoGeral);
+		
 		JLabel lbLog = new JLabel("");
 		getContentPane().add(lbLog, BorderLayout.SOUTH);
 	}
@@ -151,7 +160,7 @@ public class MainFrame extends JFrame {
 		
 		if(timeFrom != null && timeTo != null){
 			new CalculatorDefault().calculateApportionment(dataBaseConnection, timeFrom, timeTo);
-			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoRateio.csv");
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoRateio.pdf");
 		}
 		
 	}
@@ -168,6 +177,19 @@ public class MainFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoComissões.csv");
 		}
 		
+	}
+	
+	void processMovGeneralMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		Timestamp timeFrom = tm.getTimestampFrom();
+		Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			new CalculatorDefault().calculateTotalMov(dataBaseConnection, timeFrom, timeTo);
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoMovimentoGeral.pdf");
+		}
 	}
 
 }

@@ -47,6 +47,14 @@ public class Sale{
     	return fullPass + halfPass * 0.5;
     }
     
+    public int fullPassengers(){
+    	return this.fullPass;
+    }
+    
+    public int freePassengers(){
+    	return this.freePass;
+    }
+    
     public String insertParameters(){
       return Integer.toString(this.fullPass)+","+
       Integer.toString(this.halfPass)+","+
