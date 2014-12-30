@@ -155,11 +155,20 @@ public class MainFrame extends JFrame {
 		TimesampDialog tm = new TimesampDialog(this,true);
 		tm.setVisible(true);
 		
-		Timestamp timeFrom = tm.getTimestampFrom();
-		Timestamp timeTo = tm.getTimestampTo();
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			new CalculatorDefault().calculateApportionment(dataBaseConnection, timeFrom, timeTo);
+			final ProgressDialog p = new ProgressDialog(this, "Calculando Rateio!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateApportionment(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoRateio.pdf");
 		}
 		
@@ -169,11 +178,20 @@ public class MainFrame extends JFrame {
 		TimesampDialog tm = new TimesampDialog(this,true);
 		tm.setVisible(true);
 		
-		Timestamp timeFrom = tm.getTimestampFrom();
-		Timestamp timeTo = tm.getTimestampTo();
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			new CalculatorDefault().calculateCommission(dataBaseConnection, timeFrom, timeTo);
+			final ProgressDialog p = new ProgressDialog(this, "Calculando comissões!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateCommission(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});				
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoComissões.csv");
 		}
 		
@@ -183,11 +201,20 @@ public class MainFrame extends JFrame {
 		TimesampDialog tm = new TimesampDialog(this,true);
 		tm.setVisible(true);
 		
-		Timestamp timeFrom = tm.getTimestampFrom();
-		Timestamp timeTo = tm.getTimestampTo();
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			new CalculatorDefault().calculateTotalMov(dataBaseConnection, timeFrom, timeTo);
+			final ProgressDialog p = new ProgressDialog(this, "Calculando movimento geral!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateTotalMov(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});			
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoMovimentoGeral.pdf");
 		}
 	}

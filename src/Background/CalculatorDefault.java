@@ -196,6 +196,7 @@ public class CalculatorDefault{
 	        }
 	        bufferedWritter.close();
 	        Reporter.generateApportionReport();
+	        
         }catch(IOException e){
         	e.printStackTrace();
         }

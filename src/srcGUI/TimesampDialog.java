@@ -36,6 +36,8 @@ public class TimesampDialog extends JDialog {
 		super(window,modal);
 		
 		setSize(new Dimension(300, 200));
+		setLocation(window.getLocation().x + (window.getSize().width - this.getSize().width)/2,
+				window.getLocation().y + (window.getSize().height - this.getSize().height)/2);
 		JPanel mainPanel = new JPanel();
 		getContentPane().add(mainPanel, BorderLayout.NORTH);
 		mainPanel.setLayout(new FormLayout(new ColumnSpec[] {
