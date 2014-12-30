@@ -387,4 +387,49 @@ public class SQLDatabase implements DatabaseInterface{
       return null;
     }
   }
+  
+  public boolean deleteTour(Tour toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`tours` WHERE `idtours`="+Integer.toString(toDelete.id())+";";
+    try{
+      this.store(deleteRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+  
+  public boolean deleteBoat(Boat toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`boats` WHERE `idboats`="+Integer.toString(toDelete.id())+";";
+    try{
+      this.store(deleteRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+  
+  public boolean deleteEnterprise(Enterprise toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`enterprises` WHERE `identerprises`="+Integer.toString(toDelete.id())+";";
+    try{
+      this.store(deleteRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+  
+  public boolean deleteSeller(Seller toDelete){
+    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`sellers` WHERE `idsellers`="+Integer.toString(toDelete.id())+";";
+    try{
+      this.store(deleteRule);
+    } catch (SQLException e){
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+  
 }

@@ -17,6 +17,10 @@ public class Enterprise{
       this.name = enterpriseName;
     }
     
+    public int id(){
+      return this.id;
+    }
+    
     public String insertParameters(){
       return "\""+this.name+"\"";
     }
