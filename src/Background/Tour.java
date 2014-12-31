@@ -26,6 +26,10 @@ public class Tour{
       return this.idTour;
     }
     
+    public Timestamp departureTime(){
+    	return this.departure;
+    }
+    
     public String boatName(){
     	return this.boatName;
     }

@@ -77,6 +77,25 @@ public class MainFrame extends JFrame {
 		});
 		mnRecebidos.add(mntmNewMenuItem_1);
 		
+		JMenu mnEstornos = new JMenu("Estornos");
+		menuBar.add(mnEstornos);
+		
+		JMenuItem mntmPa = new JMenuItem("Mesa");
+		mntmPa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processReversalTourMenu();
+			}
+		});
+		mnEstornos.add(mntmPa);
+		
+		JMenuItem mntmVendas = new JMenuItem("Vendas");
+		mntmVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				processReversalSalesMenu();
+			}
+		});
+		mnEstornos.add(mntmVendas);
+		
 		JMenu mnCadastro = new JMenu("Cadastro");
 		menuBar.add(mnCadastro);
 		
@@ -117,8 +136,14 @@ public class MainFrame extends JFrame {
 		});
 		mnRegistros.add(mntmMovimentoGeral);
 		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.CENTER);
+		
 		JLabel lbLog = new JLabel("");
-		getContentPane().add(lbLog, BorderLayout.SOUTH);
+		panel.add(lbLog);
+		
+		JLabel lblNewLabel = new JLabel("");
+		panel.add(lblNewLabel);
 	}
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable(){
@@ -217,6 +242,23 @@ public class MainFrame extends JFrame {
 			});			
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoMovimentoGeral.pdf");
 		}
+	}
+	
+	void processReversalTourMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		Timestamp timeFrom = tm.getTimestampFrom();
+		Timestamp timeTo = tm.getTimestampTo();
+		if(timeFrom != null && timeTo != null){
+			ReversalTourFrame reversalTour = new ReversalTourFrame(dataBaseConnection,timeFrom,timeTo);
+			reversalTour.setLocation(getLocation());
+			reversalTour.setVisible(true);
+		}
+	}
+	
+	void processReversalSalesMenu(){
+		
 	}
 
 }

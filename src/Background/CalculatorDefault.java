@@ -13,18 +13,6 @@ import Database.SQLDatabase;
 
 public class CalculatorDefault{
 	
-	private String getDatePortuguese(Timestamp t, boolean withHour){
-		String ret = t.toString();
-		String year = ret.substring(0,ret.indexOf('-'));
-		ret = ret.substring(ret.indexOf('-') + 1);
-		String month = ret.substring(0,ret.indexOf('-'));
-		ret = ret.substring(ret.indexOf('-') + 1);
-		String day = ret.substring(0,ret.indexOf(' '));
-		if(withHour) ret = ret.substring(ret.indexOf(' ') + 1,ret.lastIndexOf(':')) + " ";
-		else ret = "";
-		return ret + day + "/" + month + "/" + year;
-	}
-	
 	private Boat getBoatByName(List<Boat> boats, String name){
 		for(Boat b : boats) if(b.toString().equals(name)) return b;
 		return null;
@@ -162,7 +150,7 @@ public class CalculatorDefault{
 	            	for(Tour t : toursBoat) eCargoPercent += t.payingPassengers();
 	            	eCargoPercent /= b.capacity() * toursBoat.size();
 	                double perApportionment = b.capacity()/totalCapacityApportion;
-	                bufferedWritter.write(b.toString()+"\t" +getDatePortuguese(timeTo,false) + "\t"+ String.format(formatPattern, avgCargoPercent) + "\t" + 
+	                bufferedWritter.write(b.toString()+"\t" +ConversionUtils.getDatePortuguese(timeTo,false) + "\t"+ String.format(formatPattern, avgCargoPercent) + "\t" + 
 	                		String.format(formatPattern, eCargoPercent) + "\t" + String.format(formatPattern,perApportionment) + "\t" + String.format("%.2f", perApportionment * totalNetApportion) + "\n");
 	                
 	                boatsEnvolved.remove(b); //remove to calculate who not on apportionment
@@ -188,7 +176,7 @@ public class CalculatorDefault{
 	        	List<Sale> salesBoat = getSalesByBoat(sales, b);
 	    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
 	    		
-	    		bufferedWritter.write(b.toString()+"\t" +getDatePortuguese(timeTo,false) + "\t"+ String.format(formatPattern, avgCargoPercent) + "\t" + 
+	    		bufferedWritter.write(b.toString()+"\t" +ConversionUtils.getDatePortuguese(timeTo,false) + "\t"+ String.format(formatPattern, avgCargoPercent) + "\t" + 
                 		String.format(formatPattern, eCargoPercent) + "\t" + String.format(formatPattern,0.0) + "\t" + String.format("%.2f", totalGrossBoat - totalCommisionCostBoat) + "\n");
 	    		
 	//    		bufferedWritter.write("\""+b.toString()+"\"\t" + (totalGrossBoat - totalCommisionCostBoat) + "\n");
@@ -261,7 +249,7 @@ public class CalculatorDefault{
 	        	totalFreePass += freePassengers;
 	        	totalCommisionCost += totalCommisionCostBoat;
 	        	
-	    		bufferedWritter.write(b.toString()+"\t" +getDatePortuguese(timeTo,true) + "\t"+ String.format(formatPattern, totalGrossBoat) + "\t" + 
+	    		bufferedWritter.write(b.toString()+"\t" +ConversionUtils.getDatePortuguese(timeTo,true) + "\t"+ String.format(formatPattern, totalGrossBoat) + "\t" + 
                 		String.format(formatPattern, totalGrossBoat - totalCommisionCostBoat) + "\t" + String.format(formatPattern,totalCommisionCostBoat) + "\t" + String.format("%.2f", 0.0) + 
                 		"\t" + fullPassengers + "\t" + freePassengers + "\t" + (fullPassengers + freePassengers) + "\n");
 	        }
