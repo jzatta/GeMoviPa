@@ -5,12 +5,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class Sale{
+    int id;
     int fullPass, halfPass, freePass;
     Timestamp departure;
     String sellerName, sellerEnterprise;
     String boatName, boatEnterprise;
 
     public Sale(ResultSet result) throws SQLException{
+        this.id               = result.getInt("idsales");
         this.fullPass         = result.getInt("fullPass");
         this.halfPass         = result.getInt("halfPass");
         this.freePass         = result.getInt("freePass");
