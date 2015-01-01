@@ -258,7 +258,16 @@ public class MainFrame extends JFrame {
 	}
 	
 	void processReversalSalesMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
 		
+		Timestamp timeFrom = tm.getTimestampFrom();
+		Timestamp timeTo = tm.getTimestampTo();
+		if(timeFrom != null && timeTo != null){
+			ReversalSaleFrame reversalSale = new ReversalSaleFrame(dataBaseConnection,timeFrom,timeTo);
+			reversalSale.setLocation(getLocation());
+			reversalSale.setVisible(true);
+		}
 	}
 
 }

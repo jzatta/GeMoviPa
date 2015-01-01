@@ -11,7 +11,7 @@
 	<field name="Bruto" class="java.lang.String"/>
 	<field name="Líquido" class="java.lang.String"/>
 	<field name="Comissão" class="java.lang.String"/>
-	<field name="Transporte" class="java.lang.String"/>
+	<field name="Descontos" class="java.lang.String"/>
 	<field name="Pass. Inteiros" class="java.lang.String"/>
 	<field name="Pass. Free" class="java.lang.String"/>
 	<field name="Total Pass." class="java.lang.String"/>
@@ -71,7 +71,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Transporte]]></text>
+				<text><![CDATA[Descontos]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="600" y="15" width="69" height="20" uuid="f57f76a0-5caf-49ba-932b-88462455829f"/>
@@ -120,7 +120,7 @@
 			</textField>
 			<textField>
 				<reportElement x="500" y="10" width="100" height="20" uuid="db7a208c-d9c9-497b-938e-c163cbbee70d"/>
-				<textFieldExpression><![CDATA[$F{Transporte}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Descontos}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="600" y="10" width="69" height="20" uuid="7ad89f71-f584-4c73-a5f4-2410035261bf"/>

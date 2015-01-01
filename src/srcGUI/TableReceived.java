@@ -336,7 +336,7 @@ public class TableReceived extends JFrame {
 			Boat boat = (Boat)cBBoatName.getSelectedItem();
 			return new Tour(GUITransUtils.getIntFromJText(tFQtFull),0, GUITransUtils.getIntFromJText(tFQtFree),
 					GUITransUtils.getDepartureTimestamp(tFFDepartureHour,tFFDepartureDate),
-	                boat.toString(), boat.enterpriseName());
+	                boat.toString(), boat.enterpriseName(),GUITransUtils.getDoubleFromJText(tFTourValueDisc));
 	}
 	
 	void processRegButton(){

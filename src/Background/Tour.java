@@ -26,6 +26,10 @@ public class Tour{
       return this.idTour;
     }
     
+    public double discountValueTotal(){
+    	return this.discountValueTotal;
+    }
+    
     public Timestamp departureTime(){
     	return this.departure;
     }

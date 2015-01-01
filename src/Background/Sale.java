@@ -35,6 +35,10 @@ public class Sale{
         this.boatEnterprise   = boatEnterprise;
     }
     
+    public Timestamp departureTime(){
+    	return this.departure;
+    }
+    
     public String boatName(){
     	return this.boatName;
     }

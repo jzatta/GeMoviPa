@@ -18,7 +18,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class Reporter {	
 	
 	public static void generateTotalMovReport(){
-		genericGenerateReport(new String[]{"Embarcação", "Data", "Bruto","Líquido","Comissão", "Transporte","Pass. Inteiros",
+		genericGenerateReport(new String[]{"Embarcação", "Data", "Bruto","Líquido","Comissão", "Descontos","Pass. Inteiros",
 					"Pass. Free","Total Pass."}, 
 				"ResultadoMovimentoGeral","ReportTemplates/movimento_geral.jrxml");
 	}
