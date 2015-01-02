@@ -284,7 +284,7 @@ public class CalculatorDefault{
     	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
     	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
     	
-    	 File outFile = new File("ResultadoComissões.csv");
+    	 File outFile = new File("ResultadoVendasGeral.csv");
          FileWriter fileWriter = null;
          BufferedWriter bufferedWritter = null;
          try {
@@ -294,23 +294,33 @@ public class CalculatorDefault{
  			e.printStackTrace();
  		}
          try{
-         	bufferedWritter.write("De\t"+timeFrom.toString()+"\tAté\t"+timeTo.toString()+"\n\n");
-         	bufferedWritter.write("Vendedor\t\"Barco da venda\"\tComissão\n");
+         	bufferedWritter.write(ConversionUtils.getDatePortuguese(timeFrom, true)+"\t"+ConversionUtils.getDatePortuguese(timeTo, true)+"\t\t\t\t\t\n");
          
 	         for(Seller seller : sellers){
-	        	 double totalCommission = 0.0;	        	
-	        	 bufferedWritter.write(seller.toString() + "\t \t \n");
+	        	 List<Sale> thisSellersSales = new ArrayList<Sale>();
+	        	 double totalCommission = 0.0;
+	        	 double totalPayingPassengers = 0.0;	        	 
 	        	 for(Boat b : boats){
-	        		 double commissionBoat = 0.0;
 		        	 for(Sale sale : sales) {
-		        		 if((sale.sellerName().equals(seller.toString())) && (sale.boatName().equals(b.toString()))) commissionBoat += sale.payingPassengers() * 10;
+		        		 if((sale.sellerName().equals(seller.toString())) && (sale.boatName().equals(b.toString()))) {
+		        			 thisSellersSales.add(sale);
+		        		 }
+		        	 }	 
+	        	 }	    
+	        	 if(thisSellersSales.size() > 0){
+		        	 bufferedWritter.write("\t\t"+seller.toString()+"\t\t\t\t\n");
+		        	 for(Sale sale : thisSellersSales){
+			        	 double commissionSale = sale.payingPassengers() * 10;
+		    			 totalCommission += commissionSale;
+		    			 totalPayingPassengers += sale.payingPassengers();
+		    			 bufferedWritter.write("\t\t\t"+ConversionUtils.getDatePortuguese(sale.departureTime(), true) + 
+		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+commissionSale+"\n");
 		        	 }
-		        	 totalCommission += commissionBoat;
-		        	 if(commissionBoat > 0.0) bufferedWritter.write("\t\""+b.toString()+"\"\t"+commissionBoat+"\n");	 
-	        	 }	        	 
-	        	 bufferedWritter.write("\tTotal\t" + totalCommission+"\n\n");
+		    		 bufferedWritter.write("\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + totalCommission+"\n");
+	        	 }
 	         }
 	         bufferedWritter.close();
+	         Reporter.generateTotalSaleReport();
          }catch(IOException e){
         	 e.printStackTrace();
          }

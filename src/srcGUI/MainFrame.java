@@ -124,13 +124,12 @@ public class MainFrame extends JFrame {
 		});
 		mnRegistros.add(mntmRateio);
 		
-		JMenuItem mntmComisses = new JMenuItem("Comissões");
+		JMenuItem mntmComisses = new JMenuItem("Vendas Geral");
 		mntmComisses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				processCommissionMenu();
+				processTotalSaleMenu();
 			}
 		});
-		mnRegistros.add(mntmComisses);
 		
 		JMenuItem mntmMovimentoGeral = new JMenuItem("Movimento Geral");
 		mntmMovimentoGeral.addActionListener(new ActionListener() {
@@ -140,6 +139,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		mnRegistros.add(mntmMovimentoGeral);
+		mnRegistros.add(mntmComisses);
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -204,7 +204,7 @@ public class MainFrame extends JFrame {
 		
 	}
 	
-	void processCommissionMenu(){
+	void processTotalSaleMenu(){
 		TimesampDialog tm = new TimesampDialog(this,true);
 		tm.setVisible(true);
 		

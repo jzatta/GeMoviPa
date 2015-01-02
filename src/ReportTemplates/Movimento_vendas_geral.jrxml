@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="movimento_rateio_geral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2fd5221-6e2f-4f03-94a1-3ca1a88528eb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="De" class="java.lang.String"/>
+	<field name="Até" class="java.lang.String"/>
+	<field name="Vendedor" class="java.lang.String"/>
+	<field name="Data venda" class="java.lang.String"/>
+	<field name="Embarcação" class="java.lang.String"/>
+	<field name="Total Pass." class="java.lang.String"/>
+	<field name="Comissão" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="164" y="4" width="279" height="28" uuid="b2f50a9a-9b49-465d-9320-72b4ba07573d"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Movimento vendas geral]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="78" y="38" width="100" height="20" uuid="e401d358-1390-4c81-b031-d6a3df4d1a7f"/>
+				<textFieldExpression><![CDATA[$F{De}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="243" y="38" width="100" height="20" uuid="e0a46383-211b-44e6-a235-553b072441ab"/>
+				<textFieldExpression><![CDATA[$F{Até}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="38" width="65" height="20" uuid="bc33ee29-5f16-4e75-85c3-0a9d48d2e5e9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[De]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="38" width="65" height="20" uuid="098615e2-82aa-4040-9d79-963ebfe57be7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Até]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="42">
+			<staticText>
+				<reportElement x="113" y="12" width="100" height="20" uuid="180679f9-bd09-4f73-abf1-3f71fa0f135d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="12" width="100" height="20" uuid="80003925-9ace-4cf0-909c-2778653a13ab"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vendedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="12" width="100" height="20" uuid="f564424c-c6ed-49d5-aecf-290eda309068"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Embarcação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="313" y="12" width="100" height="20" uuid="ff5fa37c-d8c0-406e-aa3e-9a05af864e8b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pass.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="12" width="100" height="20" uuid="5f118b7c-d061-4932-895e-3059c5a4ffec"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comissão]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="0" width="100" height="20" uuid="a5019990-c530-44d9-aa11-c9b065e76996"/>
+				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="0" width="100" height="20" uuid="c6640494-dc89-4472-9978-82947ef526de"/>
+				<textFieldExpression><![CDATA[$F{Data venda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="213" y="0" width="100" height="20" uuid="145a2da4-261f-4722-9aff-a95eca27a356"/>
+				<textFieldExpression><![CDATA[$F{Embarcação}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="0" width="100" height="20" uuid="2d799c4e-3f95-4ccb-84ce-3043a51ac4d3"/>
+				<textFieldExpression><![CDATA[$F{Total Pass.}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="0" width="100" height="20" uuid="66997bb5-7773-418f-8ca3-dab6d8639d54"/>
+				<textFieldExpression><![CDATA[$F{Comissão}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>
