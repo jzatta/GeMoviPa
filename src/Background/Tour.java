@@ -26,12 +26,28 @@ public class Tour{
       return this.idTour;
     }
     
+    public double discountValueTotal(){
+    	return this.discountValueTotal;
+    }
+    
+    public Timestamp departureTime(){
+    	return this.departure;
+    }
+    
     public String boatName(){
     	return this.boatName;
     }
     
     public double payingPassengers(){
     	return fullPass + halfPass * 0.5;
+    }
+    
+    public int fullPassengers(){
+    	return this.fullPass;
+    }
+    
+    public int freePassengers(){
+    	return this.freePass;
     }
     
     public Tour(int fullPass, int halfPass, int freePass,

@@ -77,6 +77,25 @@ public class MainFrame extends JFrame {
 		});
 		mnRecebidos.add(mntmNewMenuItem_1);
 		
+		JMenu mnEstornos = new JMenu("Estornos");
+		menuBar.add(mnEstornos);
+		
+		JMenuItem mntmPa = new JMenuItem("Mesa");
+		mntmPa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processReversalTourMenu();
+			}
+		});
+		mnEstornos.add(mntmPa);
+		
+		JMenuItem mntmVendas = new JMenuItem("Vendas");
+		mntmVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				processReversalSalesMenu();
+			}
+		});
+		mnEstornos.add(mntmVendas);
+		
 		JMenu mnCadastro = new JMenu("Cadastro");
 		menuBar.add(mnCadastro);
 		
@@ -87,6 +106,11 @@ public class MainFrame extends JFrame {
 		mnCadastro.add(mntmEmpresa);
 		
 		JMenuItem mntmBarco = new JMenuItem("Barco");
+		mntmBarco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processCadastreBoatMenu();
+			}
+		});
 		mnCadastro.add(mntmBarco);
 		
 		JMenu mnRegistros = new JMenu("Relatórios");
@@ -108,8 +132,23 @@ public class MainFrame extends JFrame {
 		});
 		mnRegistros.add(mntmComisses);
 		
+		JMenuItem mntmMovimentoGeral = new JMenuItem("Movimento Geral");
+		mntmMovimentoGeral.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processMovGeneralMenu();
+				
+			}
+		});
+		mnRegistros.add(mntmMovimentoGeral);
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.CENTER);
+		
 		JLabel lbLog = new JLabel("");
-		getContentPane().add(lbLog, BorderLayout.SOUTH);
+		panel.add(lbLog);
+		
+		JLabel lblNewLabel = new JLabel("");
+		panel.add(lblNewLabel);
 	}
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable(){
@@ -146,12 +185,21 @@ public class MainFrame extends JFrame {
 		TimesampDialog tm = new TimesampDialog(this,true);
 		tm.setVisible(true);
 		
-		Timestamp timeFrom = tm.getTimestampFrom();
-		Timestamp timeTo = tm.getTimestampTo();
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			new CalculatorDefault().calculateApportionment(dataBaseConnection, timeFrom, timeTo);
-			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoRateio.csv");
+			final ProgressDialog p = new ProgressDialog(this, "Calculando Rateio!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateApportionment(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoRateio.pdf");
 		}
 		
 	}
@@ -160,14 +208,77 @@ public class MainFrame extends JFrame {
 		TimesampDialog tm = new TimesampDialog(this,true);
 		tm.setVisible(true);
 		
-		Timestamp timeFrom = tm.getTimestampFrom();
-		Timestamp timeTo = tm.getTimestampTo();
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			new CalculatorDefault().calculateCommission(dataBaseConnection, timeFrom, timeTo);
+			final ProgressDialog p = new ProgressDialog(this, "Calculando comissões!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateCommission(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});				
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoComissões.csv");
 		}
 		
+	}
+	
+	void processMovGeneralMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			final ProgressDialog p = new ProgressDialog(this, "Calculando movimento geral!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateTotalMov(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});			
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoMovimentoGeral.pdf");
+		}
+	}
+	
+	void processReversalTourMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		Timestamp timeFrom = tm.getTimestampFrom();
+		Timestamp timeTo = tm.getTimestampTo();
+		if(timeFrom != null && timeTo != null){
+			ReversalTourFrame reversalTour = new ReversalTourFrame(dataBaseConnection,timeFrom,timeTo);
+			reversalTour.setLocation(getLocation());
+			reversalTour.setVisible(true);
+		}
+	}
+	
+	void processReversalSalesMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		Timestamp timeFrom = tm.getTimestampFrom();
+		Timestamp timeTo = tm.getTimestampTo();
+		if(timeFrom != null && timeTo != null){
+			ReversalSaleFrame reversalSale = new ReversalSaleFrame(dataBaseConnection,timeFrom,timeTo);
+			reversalSale.setLocation(getLocation());
+			reversalSale.setVisible(true);
+		}
+	}
+	
+	void processCadastreBoatMenu(){
+		CadastreBoat c = new CadastreBoat(dataBaseConnection);
+		c.setLocation(getLocation());
+		c.setVisible(true);
 	}
 
 }

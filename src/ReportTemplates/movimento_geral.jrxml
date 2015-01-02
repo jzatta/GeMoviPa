@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="movimento_geral" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2fd5221-6e2f-4f03-94a1-3ca1a88528eb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Embarcação" class="java.lang.String"/>
+	<field name="Data" class="java.lang.String"/>
+	<field name="Bruto" class="java.lang.String"/>
+	<field name="Líquido" class="java.lang.String"/>
+	<field name="Comissão" class="java.lang.String"/>
+	<field name="Descontos" class="java.lang.String"/>
+	<field name="Pass. Inteiros" class="java.lang.String"/>
+	<field name="Pass. Free" class="java.lang.String"/>
+	<field name="Total Pass." class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="300" y="4" width="207" height="28" uuid="b2f50a9a-9b49-465d-9320-72b4ba07573d"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Movimento Geral]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="35">
+			<staticText>
+				<reportElement x="0" y="15" width="100" height="20" uuid="42a135a3-e1a8-4649-8a28-2e0e1d93f9fd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Embarcação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="15" width="100" height="20" uuid="180679f9-bd09-4f73-abf1-3f71fa0f135d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="15" width="100" height="20" uuid="da4cc2ca-b2e3-4376-b9cf-af17f943d2f8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bruto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="15" width="100" height="20" uuid="0b02c478-4615-4af0-b376-2a0ecdf279aa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Líquido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="15" width="100" height="20" uuid="440be989-94f8-4571-a6c4-5b4a8d782db9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="15" width="100" height="20" uuid="8207c454-fdcb-44d9-a094-7d2d7ea5e0fb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descontos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="15" width="69" height="20" uuid="f57f76a0-5caf-49ba-932b-88462455829f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pass. Inteiros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="669" y="15" width="69" height="20" uuid="c4622864-164b-4887-ac53-0210a6f7fe9a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pass. Free]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="738" y="15" width="69" height="20" uuid="34a0dd63-f7e8-43fe-a527-0322c84d17b7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pass.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="100" height="20" uuid="9d6b04fd-c6b8-4492-8e54-47294956543e"/>
+				<textFieldExpression><![CDATA[$F{Embarcação}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="10" width="100" height="20" uuid="c6640494-dc89-4472-9978-82947ef526de"/>
+				<textFieldExpression><![CDATA[$F{Data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="10" width="100" height="20" uuid="ccffbcaa-7e3f-42dd-bc01-0d007192e96f"/>
+				<textFieldExpression><![CDATA[$F{Bruto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="10" width="100" height="20" uuid="c7b526b0-e34a-4589-9142-d04e2fae710a"/>
+				<textFieldExpression><![CDATA[$F{Líquido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="10" width="100" height="20" uuid="1ff561ff-af14-4b9a-b117-ee6c5c2070a1"/>
+				<textFieldExpression><![CDATA[$F{Comissão}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="10" width="100" height="20" uuid="db7a208c-d9c9-497b-938e-c163cbbee70d"/>
+				<textFieldExpression><![CDATA[$F{Descontos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="10" width="69" height="20" uuid="7ad89f71-f584-4c73-a5f4-2410035261bf"/>
+				<textFieldExpression><![CDATA[$F{Pass. Inteiros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="669" y="10" width="69" height="20" uuid="8e0de120-bfe7-4b86-9140-1c4ed6efc65c"/>
+				<textFieldExpression><![CDATA[$F{Pass. Free}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="738" y="10" width="69" height="20" uuid="300a127c-19ce-47a7-8f12-bf5bd168e145"/>
+				<textFieldExpression><![CDATA[$F{Total Pass.}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

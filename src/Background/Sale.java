@@ -37,6 +37,10 @@ public class Sale{
         this.boatEnterprise   = boatEnterprise;
     }
     
+    public Timestamp departureTime(){
+    	return this.departure;
+    }
+    
     public String boatName(){
     	return this.boatName;
     }
@@ -47,6 +51,14 @@ public class Sale{
     
     public double payingPassengers(){
     	return fullPass + halfPass * 0.5;
+    }
+    
+    public int fullPassengers(){
+    	return this.fullPass;
+    }
+    
+    public int freePassengers(){
+    	return this.freePass;
     }
     
     public String insertParameters(){
