@@ -212,7 +212,7 @@ public class MainFrame extends JFrame {
 		final Timestamp timeTo = tm.getTimestampTo();
 		
 		if(timeFrom != null && timeTo != null){
-			final ProgressDialog p = new ProgressDialog(this, "Calculando comissões!");
+			final ProgressDialog p = new ProgressDialog(this, "Calculando vendas geral!");
 			p.execute(new Runnable() {
 				
 				@Override
@@ -222,7 +222,7 @@ public class MainFrame extends JFrame {
 					p.dispose();
 				}
 			});				
-			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoComissões.csv");
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoVendasGeral.pdf");
 		}
 		
 	}
