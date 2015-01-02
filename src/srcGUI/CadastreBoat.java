@@ -120,8 +120,7 @@ public class CadastreBoat extends JFrame{
 				Boat afterBoat = afterBoats.get(i);
 				if(!beforeBoat.equals(afterBoat)){
 					if(!enterpriseNames.contains(afterBoat.enterpriseName())){
-						JOptionPane.showMessageDialog(null, "Empresa não encontrada","ERRO!",JOptionPane.ERROR_MESSAGE);
-						break;
+						throw new Exception("Empresa não encontrada na edição, ID barco: " + afterBoat.id());
 					}
 					dataBaseConnection.deleteBoat(beforeBoat);
 					dataBaseConnection.storeBoat(afterBoat);
@@ -130,14 +129,24 @@ public class CadastreBoat extends JFrame{
 				}
 			}
 			if(boats.size() < afterBoats.size()){ //verify addtions
-				for(int i = 0; i < (afterBoats.size() - boats.size()); i++)
-					dataBaseConnection.storeBoat(afterBoats.get(i + boats.size()));
+				for(int i = 0; i < (afterBoats.size() - boats.size()); i++){
+					Boat afterBoat = afterBoats.get(i + boats.size());
+					if(!enterpriseNames.contains(afterBoat.enterpriseName())){
+						throw new Exception("Empresa não encontrada na inserção, ID barco: " + afterBoat.id());
+					}
+					dataBaseConnection.storeBoat(afterBoat);
+				}					
 			}
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "Problema nos dados","ERRO!",JOptionPane.ERROR_MESSAGE);
 		}catch(Exception e){
-			JOptionPane.showMessageDialog(null, "Erro fatal","ERRO!",JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			if(e.getMessage().contains("Empresa não encontrada")){
+				JOptionPane.showMessageDialog(null, e.getMessage(),"ERRO!",JOptionPane.ERROR_MESSAGE);
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Erro fatal","ERRO!",JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 		}
 	}
 	
