@@ -64,7 +64,7 @@ public class SQLDatabase implements DatabaseInterface{
   }
   
   public String storeSale(Sale sale){
-    String insertRule = "INSERT INTO `"+this.schemaName+"`.`sales` (`fullPass`,`halfPass`,`freePass`,`departure`,`sellerName`,`sellerEnterprise`,`boatName`,`boatEnterprise`) VALUES ";
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`sales` (`idsales`,`fullPass`,`halfPass`,`freePass`,`departure`,`sellerName`,`sellerEnterprise`,`boatName`,`boatEnterprise`) VALUES ";
     insertRule += "("+sale.insertParameters()+");";
     try{
       this.store(insertRule);

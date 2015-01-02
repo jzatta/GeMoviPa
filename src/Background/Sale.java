@@ -23,10 +23,24 @@ public class Sale{
         this.boatEnterprise   = result.getString("boatEnterprise");
     }
     
+    public Sale(int id, int fullPass, int halfPass, int freePass,
+                Timestamp departure,
+                String sellerName, String sellerEnterprise, String boatName, String boatEnterprise){
+        this.id               = id;
+        this.fullPass         = fullPass;
+        this.halfPass         = halfPass;
+        this.freePass         = freePass;
+        this.departure        = departure;
+        this.sellerName       = sellerName;
+        this.sellerEnterprise = sellerEnterprise;
+        this.boatName         = boatName;
+        this.boatEnterprise   = boatEnterprise;
+    }
     
     public Sale(int fullPass, int halfPass, int freePass,
                 Timestamp departure,
                 String sellerName, String sellerEnterprise, String boatName, String boatEnterprise){
+        this.id               = 0;
         this.fullPass         = fullPass;
         this.halfPass         = halfPass;
         this.freePass         = freePass;
@@ -62,7 +76,8 @@ public class Sale{
     }
     
     public String insertParameters(){
-      return Integer.toString(this.fullPass)+","+
+      return Integer.toString(this.id)+","+
+      Integer.toString(this.fullPass)+","+
       Integer.toString(this.halfPass)+","+
       Integer.toString(this.freePass)+","+
       "\""+this.departure       +"\","+
