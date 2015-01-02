@@ -14,6 +14,7 @@ public class Enterprise{
     }
     
     public Enterprise(String enterpriseName){
+      this.id   = 0;
       this.name = enterpriseName;
     }
     
@@ -22,7 +23,8 @@ public class Enterprise{
     }
     
     public String insertParameters(){
-      return "\""+this.name+"\"";
+      return Integer.toString(this.id)+","+
+      "\""+this.name+"\"";
     }
     
     public String name(){

@@ -19,6 +19,7 @@ public class Boat{
     }
     
     public Boat(String boatName, String boatEnterprise, int boatCapacity, double tourCost){
+      this.idBoat = 0;
       this.boatName       = boatName;
       this.boatEnterprise = boatEnterprise;
       this.boatCapacity   = boatCapacity;
@@ -26,8 +27,8 @@ public class Boat{
     }
     
     public Boat(int idBoat, String boatName, String boatEnterprise, int boatCapacity, double tourCost){
-        this.idBoat 		= idBoat;
-    	this.boatName       = boatName;
+        this.idBoat         = idBoat;
+        this.boatName       = boatName;
         this.boatEnterprise = boatEnterprise;
         this.boatCapacity   = boatCapacity;
         this.tourCost       = tourCost;
@@ -54,7 +55,8 @@ public class Boat{
     }
     
     public String insertParameters(){
-      return "\""+this.boatName+"\","+
+      return Integer.toString(this.idBoat)+","+
+      "\""+this.boatName+"\","+
       "\""+this.boatEnterprise+"\","+
       Integer.toString(this.boatCapacity)+","+
       Double.toString(this.tourCost);

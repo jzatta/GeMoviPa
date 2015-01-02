@@ -36,7 +36,8 @@ public class Seller{
   }
   
   public String insertParameters(){
-    return Integer.toString(this.idSeller)+",\""+this.sellerName+"\","+
+    return Integer.toString(this.idSeller)+",\""+
+    this.sellerName+"\","+
     "\""+this.sellerEnterprise+"\"";
   }
   

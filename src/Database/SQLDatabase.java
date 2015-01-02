@@ -86,7 +86,7 @@ public class SQLDatabase implements DatabaseInterface{
   }
   
   public String storeBoat(Boat boat){
-    String insertRule = "INSERT INTO `"+this.schemaName+"`.`boats`(`boatName`,`boatEnterprise`,`boatCapacity`,`tourCost`) VALUES ";
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`boats`(`idboats`,`boatName`,`boatEnterprise`,`boatCapacity`,`tourCost`) VALUES ";
     insertRule += "("+boat.insertParameters()+");";
     try{
       this.store(insertRule);
@@ -97,7 +97,7 @@ public class SQLDatabase implements DatabaseInterface{
   }
   
   public String storeEnterprise(Enterprise enterprise){
-    String insertRule = "INSERT INTO `"+this.schemaName+"`.`enterprises`(`enterpriseName`) VALUES ";
+    String insertRule = "INSERT INTO `"+this.schemaName+"`.`enterprises`(`identerprises`,`enterpriseName`) VALUES ";
     insertRule += "("+enterprise.insertParameters()+");";
     try{
       this.store(insertRule);
