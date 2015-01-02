@@ -18,6 +18,11 @@ public class Enterprise{
       this.name = enterpriseName;
     }
     
+    public Enterprise(int idEnterprise, String enterpriseName){
+      this.id   = idEnterprise;
+      this.name = enterpriseName;
+    }
+    
     public int id(){
       return this.id;
     }

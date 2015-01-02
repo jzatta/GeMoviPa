@@ -7,15 +7,19 @@ import java.sql.*;
 
 public class JulianoTester{
 	public static void main(String[] args) throws Exception{
-    SQLDatabase q = new SQLDatabase("127.0.0.1","root","root");
+    SQLDatabase q = new SQLDatabase("127.0.0.1","root","root","qqw");
     try {
       q.createDatabaseIfNoExist();
-      System.out.println(q.storeSeller(new Seller(1,"Samara","Barba Negra")));
+//       System.out.println(q.storeSeller(new Seller(1,"Samara","Barba Negra")));
 //       q.storeSale(new Sale(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"Juliano","qwerty","barcoza","empresabarcoza"));
 //       q.storeTour(new Tour(10, 100, 1000,new Timestamp(System.currentTimeMillis()),"barcao","empresabarco"));
 //       q.storeBoat(new Boat("barcao1","empresabarco1",8001,8.09));
 //       c
 //       q.storeSeller(new Seller("nomevendedor","empresavendedor"));
+      System.out.println(q.storeEnterprise(new Enterprise(2357,"teste")));
+      System.out.println(q.storeBoat(new Boat(2357,"teste","teste",150,50.0)));
+      System.out.println(q.storeSeller(new Seller(2357,"teste","teste")));
+      System.out.println(q.storeSale(new Sale(2357, 10, 100, 1000,new Timestamp(System.currentTimeMillis()),"teste","qwerty","barcoza","empresabarcoza")));
       /*
       	q.storeEnterprise(new Enterprise("Barba Negra"));
       	q.storeEnterprise(new Enterprise("Pérola Negra"));

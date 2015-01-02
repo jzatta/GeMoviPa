@@ -9,12 +9,19 @@ public class SQLDatabase implements DatabaseInterface{
   private String hostname;
   private String username;
   private String password;
-  private String schemaName = "qqw";
+  private String schemaName = "GeMoviPaData";
   
   public SQLDatabase(String hostname, String username, String password) {
     this.hostname = hostname;
     this.username = username;
     this.password = password;
+  }
+  
+  public SQLDatabase(String hostname, String username, String password, String schemaName) {
+    this.hostname   = hostname;
+    this.username   = username;
+    this.password   = password;
+    this.schemaName = schemaName;
   }
   
   private Connection connectServer() throws SQLException{
@@ -69,6 +76,9 @@ public class SQLDatabase implements DatabaseInterface{
     try{
       this.store(insertRule);
     } catch (SQLException e){
+      if (e.getMessage().startsWith("Duplicate entry '") && e.getMessage().endsWith("' for key 'PRIMARY'")){
+        return "ID da venda Duplicado";
+      }
       e.printStackTrace();
     }
     return "OK";
@@ -91,6 +101,9 @@ public class SQLDatabase implements DatabaseInterface{
     try{
       this.store(insertRule);
     } catch (SQLException e){
+      if (e.getMessage().startsWith("Duplicate entry '") && e.getMessage().endsWith("' for key 'PRIMARY'")){
+        return "ID do barco Duplicado";
+      }
       e.printStackTrace();
     }
     return "OK";
@@ -102,6 +115,9 @@ public class SQLDatabase implements DatabaseInterface{
     try{
       this.store(insertRule);
     } catch (SQLException e){
+      if (e.getMessage().startsWith("Duplicate entry '") && e.getMessage().endsWith("' for key 'PRIMARY'")){
+        return "ID da empresa Duplicado";
+      }
       e.printStackTrace();
     }
     return "OK";
@@ -113,7 +129,7 @@ public class SQLDatabase implements DatabaseInterface{
     try{
       this.store(insertRule);
     } catch (SQLException e){
-      if (e.getMessage().equals("Duplicate entry '1' for key 'PRIMARY'")){
+      if (e.getMessage().startsWith("Duplicate entry '") && e.getMessage().endsWith("' for key 'PRIMARY'")){
         return "ID do vendedor Duplicado";
       }
       e.printStackTrace();
