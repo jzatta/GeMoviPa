@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="movimento_rateio_geral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2fd5221-6e2f-4f03-94a1-3ca1a88528eb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="De" class="java.lang.String"/>
+	<field name="Até" class="java.lang.String"/>
+	<field name="Embarcação" class="java.lang.String"/>
+	<field name="Bruto" class="java.lang.String"/>
+	<field name="Líquido" class="java.lang.String"/>
+	<field name="Líquido rateio" class="java.lang.String"/>
+	<field name="% Carga" class="java.lang.String"/>
+	<field name="% Rateio" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="164" y="4" width="274" height="28" uuid="b2f50a9a-9b49-465d-9320-72b4ba07573d"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Movimento Rateio Geral]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="43" width="100" height="20" uuid="180679f9-bd09-4f73-abf1-3f71fa0f135d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[De]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="43" width="100" height="20" uuid="c6640494-dc89-4472-9978-82947ef526de"/>
+				<textFieldExpression><![CDATA[$F{De}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="43" width="100" height="20" uuid="c1859bad-2057-4059-921e-346e25dc393e"/>
+				<textFieldExpression><![CDATA[$F{Até}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="43" width="100" height="20" uuid="e0973976-9a17-4daf-8961-a1a9aa8dbd6c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Até]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="35">
+			<staticText>
+				<reportElement x="0" y="15" width="100" height="20" uuid="42a135a3-e1a8-4649-8a28-2e0e1d93f9fd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Embarcação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="15" width="100" height="20" uuid="da4cc2ca-b2e3-4376-b9cf-af17f943d2f8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bruto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="15" width="100" height="20" uuid="0b02c478-4615-4af0-b376-2a0ecdf279aa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Líquido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="15" width="100" height="20" uuid="4bf2584b-dc6a-43f5-822e-89dc0535f9e7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Líquido rateio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="15" width="67" height="20" uuid="3c773c6e-cc6f-458d-8842-b876889558e1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[% Carga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="15" width="72" height="20" uuid="c14ad1ce-cd02-4c90-8073-567f0265799b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[% Rateio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="100" height="20" uuid="9d6b04fd-c6b8-4492-8e54-47294956543e"/>
+				<textFieldExpression><![CDATA[$F{Embarcação}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="10" width="100" height="20" uuid="ccffbcaa-7e3f-42dd-bc01-0d007192e96f"/>
+				<textFieldExpression><![CDATA[$F{Bruto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="10" width="100" height="20" uuid="c7b526b0-e34a-4589-9142-d04e2fae710a"/>
+				<textFieldExpression><![CDATA[$F{Líquido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="10" width="100" height="20" uuid="1080aaad-c009-4120-b3b8-2b630df85966"/>
+				<textFieldExpression><![CDATA[$F{Líquido rateio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="10" width="67" height="20" uuid="24e05045-cc74-4251-9452-020a87349a2e"/>
+				<textFieldExpression><![CDATA[$F{% Carga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="467" y="10" width="72" height="20" uuid="fb4e4f0d-af5a-4888-ae33-502910dfc51a"/>
+				<textFieldExpression><![CDATA[$F{% Rateio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

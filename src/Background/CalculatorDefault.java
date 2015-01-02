@@ -177,7 +177,7 @@ public class CalculatorDefault{
 	        	for(Tour t : toursBoat) {
 	        		totalGrossBoat += t.payingPassengers() * b.tourCost();
 	        		eCargoPercent += t.payingPassengers();
-	        		totalDiscount += t.discountValueTotal();
+	        		totalDiscountBoat += t.discountValueTotal();
 	        	}
 	        	eCargoPercent /= b.capacity() * toursBoat.size();
 	        	
@@ -238,6 +238,7 @@ public class CalculatorDefault{
         }
         
         try{
+        	bufferedWritter.write(ConversionUtils.getDatePortuguese(timeFrom, true)+"\t"+ConversionUtils.getDatePortuguese(timeTo, true)+"\t\t\t\t\t\t\t\n");
 	        for(Boat b : boatsEnvolved){
 	        	double totalCommisionCostBoat = 0.0;
 	        	double totalGrossBoat = 0.0;
@@ -265,11 +266,11 @@ public class CalculatorDefault{
 	        	
 	        	double totalNetBoat = totalGrossBoat - totalCommisionCostBoat- totalDiscountBoat;
 	        	
-	    		bufferedWritter.write(b.toString()+"\t" +ConversionUtils.getDatePortuguese(timeTo,true) + "\t"+ String.format(formatPattern, totalGrossBoat) + "\t" + 
+	    		bufferedWritter.write("\t\t"+b.toString()+"\t" + String.format(formatPattern, totalGrossBoat) + "\t" + 
                 		String.format(formatPattern, totalNetBoat) + "\t" + String.format(formatPattern,totalCommisionCostBoat) + "\t" + String.format(formatPattern, totalDiscountBoat) + 
                 		"\t" + fullPassengers + "\t" + freePassengers + "\t" + (fullPassengers + freePassengers) + "\n");
 	        }
-	        bufferedWritter.write("\t"+"Totais"+"\t"+String.format(formatPattern, totalGross)+"\t"+String.format(formatPattern, totalNet)+"\t"+
+	        bufferedWritter.write("\t\t"+"Totais"+"\t"+String.format(formatPattern, totalGross)+"\t"+String.format(formatPattern, totalNet)+"\t"+
 	        		String.format(formatPattern, totalCommisionCost)+"\t"+String.format(formatPattern, totalDiscount) + "\t"+totalFullPass+"\t"+totalFreePass+"\t"+(totalFullPass + totalFreePass)+"\n");
 	        bufferedWritter.close();
 	        Reporter.generateTotalMovReport();
@@ -314,9 +315,9 @@ public class CalculatorDefault{
 		    			 totalCommission += commissionSale;
 		    			 totalPayingPassengers += sale.payingPassengers();
 		    			 bufferedWritter.write("\t\t\t"+ConversionUtils.getDatePortuguese(sale.departureTime(), true) + 
-		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+commissionSale+"\n");
+		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+String.format("%.2f",commissionSale)+"\n");
 		        	 }
-		    		 bufferedWritter.write("\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + totalCommission+"\n");
+		    		 bufferedWritter.write("\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + String.format("%.2f",totalCommission)+"\n");
 	        	 }
 	         }
 	         bufferedWritter.close();
@@ -325,6 +326,156 @@ public class CalculatorDefault{
         	 e.printStackTrace();
          }
 
+    }
+    
+    public void calculateTotalMovApportion(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
+    	double avgCargoPercent = 0.0;
+        int boatsTotal = 0;
+        double totalGross = 0.0;
+        double totalDiscount = 0.0;
+        double totalGrossApportion = 0.0;
+        double totalNetApportion = 0.0;
+        double totalCommisionCost = 0.0;
+        double totalCommisionCostApportion = 0.0;
+        double totalCapacityApportion = 0.0;
+        double totalDiscountApportion = 0.0;
+        
+        final String formatPatternPercent = "%.4f";
+        final String formatPatternMonetary= "%.2f";
+        
+        List<Boat> boatsEnvolved = new ArrayList<Boat>();
+        List<Boat> boatsApportion = new ArrayList<Boat>();
+        
+        List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+        
+        List<Tour> tours = dataBaseConnection.loadTours(timeFrom, timeTo, null, null);
+
+        List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
+        
+        File outFile = new File("ResultadoMovimentoRateioGeral.csv");
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWritter = null;
+        try {
+			fileWriter = new FileWriter(outFile);
+			bufferedWritter = new BufferedWriter(fileWriter);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+                
+        for(Tour tour : tours){
+        	Boat b = getBoatByName(boats, tour.boatName());
+        	totalGross += tour.payingPassengers() * b.tourCost();
+        	totalDiscount += tour.discountValueTotal();
+        	avgCargoPercent += tour.payingPassengers() / b.capacity();
+        	boatsTotal++;
+        	if(!boatsEnvolved.contains(b)) boatsEnvolved.add(b);
+        }
+        
+        for(Sale sale : sales){
+        	totalCommisionCost += sale.payingPassengers() * 10;
+        }
+        
+        avgCargoPercent /= boatsTotal;
+        
+        double totalNet = totalGross - totalCommisionCost - totalDiscount;
+        
+        try{
+        	bufferedWritter.write(ConversionUtils.getDatePortuguese(timeFrom, true)+"\t"+ConversionUtils.getDatePortuguese(timeTo, true)+"\t\t\t\t\t\t\n");
+	        for(Boat b : boatsEnvolved){
+	        	double eCargoPercent = 0.0;
+	        	double totalCommisionCostBoat = 0.0;
+	        	double totalGrossBoat = 0.0;
+	        	double totalDiscountBoat = 0.0;
+	        	List<Tour> toursBoat = getToursByBoat(tours, b);
+	        	for(Tour t : toursBoat) {
+	        		eCargoPercent += t.payingPassengers();
+	        		totalGrossBoat += t.payingPassengers() * b.tourCost();
+	        		totalDiscountBoat += t.discountValueTotal();
+	        	}
+	        	eCargoPercent /= b.capacity() * toursBoat.size();
+	        	
+	        	List<Sale> salesBoat = getSalesByBoat(sales, b);
+	    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
+	        	
+	        	if(eCargoPercent >= avgCargoPercent){
+	        		totalCapacityApportion += b.capacity();
+	        		totalGrossApportion += totalGrossBoat;
+	        		totalCommisionCostApportion += totalCommisionCostBoat;
+	        		totalDiscountApportion += totalDiscountBoat;
+	        		boatsApportion.add(b);
+	        	}
+	        }
+	        totalNetApportion = totalGrossApportion - totalCommisionCostApportion - totalDiscountApportion;
+	        if(!boatsApportion.isEmpty()){
+	        	double totalNetWithoutApportion = 0.0;
+	        	for(Boat b : boatsApportion){
+	            	double eCargoPercent = 0.0;
+	            	double totalCommisionCostBoat = 0.0;
+		        	double totalGrossBoat = 0.0;
+		        	double totalDiscountBoat = 0.0;
+	            	List<Tour> toursBoat = getToursByBoat(tours, b);
+	            	for(Tour t : toursBoat) {
+	            		eCargoPercent += t.payingPassengers();
+	            		totalGrossBoat += t.payingPassengers() * b.tourCost();
+		        		totalDiscountBoat += t.discountValueTotal();
+	            	}
+	            	eCargoPercent /= b.capacity() * toursBoat.size();
+	            	
+	            	List<Sale> salesBoat = getSalesByBoat(sales, b);
+		    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
+		    		
+	                double perApportionment = b.capacity()/totalCapacityApportion;
+	                
+	                double totalNetBoat = totalGrossBoat - totalCommisionCostBoat- totalDiscountBoat;
+	                totalNetWithoutApportion += totalNetBoat;
+	                
+	                bufferedWritter.write("\t\t"+b.toString()+ "\t" + String.format(formatPatternMonetary, totalGrossBoat) + "\t" + String.format(formatPatternMonetary, totalNetBoat) + "\t" +
+	                String.format(formatPatternMonetary, (perApportionment * totalNetApportion))+"\t"+
+	                String.format(formatPatternPercent, eCargoPercent) + "\t" + String.format(formatPatternPercent,perApportionment) + "\n");
+	                
+	                boatsEnvolved.remove(b); //remove to calculate who not on apportionment
+	            }
+	        	bufferedWritter.write("\t\t--Sub total\t" + String.format(formatPatternMonetary, totalGrossApportion) + "\t" + String.format(formatPatternMonetary, totalNetWithoutApportion) + "\t" +
+		                String.format(formatPatternMonetary, totalNetApportion)+"\t"+
+		                String.format(formatPatternPercent, avgCargoPercent) + "\t\n");
+	        	bufferedWritter.write("\t\t\t\t\t\t\t\n");
+	        }
+	        if(!boatsEnvolved.isEmpty()){
+		        for(Boat b : boatsEnvolved){
+		        	double totalCommisionCostBoat = 0.0;
+		        	double totalGrossBoat = 0.0;
+		        	double eCargoPercent = 0.0;
+		        	double totalDiscountBoat = 0.0;
+		        	
+		        	List<Tour> toursBoat = getToursByBoat(tours, b);
+		        	for(Tour t : toursBoat) {
+		        		totalGrossBoat += t.payingPassengers() * b.tourCost();
+		        		eCargoPercent += t.payingPassengers();
+		        		totalDiscountBoat += t.discountValueTotal();
+		        	}
+		        	eCargoPercent /= b.capacity() * toursBoat.size();
+		        	
+		        	List<Sale> salesBoat = getSalesByBoat(sales, b);
+		    		for(Sale sale : salesBoat) totalCommisionCostBoat += sale.payingPassengers() * 10;
+		    		
+		    		double totalNetBoat = totalGrossBoat - totalCommisionCostBoat - totalDiscountBoat;
+		    		double perApportionment = 0.0;
+		    		
+		    		bufferedWritter.write("\t\t"+b.toString()+ "\t" + String.format(formatPatternMonetary, totalGrossBoat) + "\t" + String.format(formatPatternMonetary, totalNetBoat) + "\t" +
+		 	                String.format(formatPatternMonetary, perApportionment * totalNetApportion)+"\t"+
+		 	                String.format(formatPatternPercent, eCargoPercent) + "\t" + String.format(formatPatternPercent,perApportionment) + "\n");	        	
+		        }
+		        bufferedWritter.write("\t\t--Sub total\t" + String.format(formatPatternMonetary, totalGross - totalGrossApportion) + "\t" + String.format(formatPatternMonetary, totalNet - totalNetApportion) + "\t" +
+		                String.format(formatPatternMonetary, 0.0)+"\t\t\n");
+		        bufferedWritter.write("\t\t\t\t\t\t\t\n");
+	        }
+	        bufferedWritter.write("\t\t--Total Geral\t" + String.format(formatPatternMonetary, totalGross) + "\t" + String.format(formatPatternMonetary, totalNet) + "\t\t\t\n");
+	        bufferedWritter.close();
+	        Reporter.generateTotalApportionReport();
+	        
+        }catch(IOException e){
+        	e.printStackTrace();
+        }
     }
     
     public void calculateSalesByBoat(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
