@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Background.Boat;
+import Background.Enterprise;
 import Background.Seller;
 import test.JulianoTester;
 
@@ -77,6 +78,22 @@ public class GUITransUtils {
 		if(boatNotFound){
 			jt.setBackground(Color.RED);
 			JOptionPane.showMessageDialog(null, "Vendedor não encontrado!","ERRO!",JOptionPane.ERROR_MESSAGE);				
+		}
+	}
+	
+	public static void setSelectedEnterpriseByID(JTextField jt, JComboBox<Enterprise> cb){
+		jt.setBackground(Color.WHITE);
+		boolean boatNotFound = true;
+		int id = GUITransUtils.getIntFromJText(jt);
+		for(int i = 0; i < cb.getItemCount(); i++){
+			if(cb.getItemAt(i).id() == id) {
+				cb.setSelectedIndex(i);
+				boatNotFound = false;
+			}
+		}
+		if(boatNotFound){
+			jt.setBackground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Empresa não encontrada!","ERRO!",JOptionPane.ERROR_MESSAGE);				
 		}
 	}
 }

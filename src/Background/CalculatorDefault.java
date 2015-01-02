@@ -280,7 +280,7 @@ public class CalculatorDefault{
     	
     }
     
-    public void calculateCommission(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
+    public void calculateTotalSales(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
     	List<Seller> sellers = dataBaseConnection.loadSellers(null, null);
     	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
     	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
@@ -326,6 +326,54 @@ public class CalculatorDefault{
         	 e.printStackTrace();
          }
 
+    }
+    
+    public void calculateSalesEnterprise(String enterpriseName,SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
+    	List<Seller> sellers = dataBaseConnection.loadSellers(null, enterpriseName);
+    	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
+    	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+    	
+    	 File outFile = new File("ResultadoVendasEmpresa.csv");
+         FileWriter fileWriter = null;
+         BufferedWriter bufferedWritter = null;
+         try {
+ 			fileWriter = new FileWriter(outFile);
+ 			bufferedWritter = new BufferedWriter(fileWriter);
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+         try{
+         	bufferedWritter.write(ConversionUtils.getDatePortuguese(timeFrom, true)+"\t"+ConversionUtils.getDatePortuguese(timeTo, true)+"\t"+
+         						  enterpriseName+"\t\t\t\t\n");
+         
+	         for(Seller seller : sellers){
+	        	 List<Sale> thisSellersSales = new ArrayList<Sale>();
+	        	 double totalCommission = 0.0;
+	        	 double totalPayingPassengers = 0.0;	        	 
+	        	 for(Boat b : boats){
+		        	 for(Sale sale : sales) {
+		        		 if((sale.sellerName().equals(seller.toString())) && (sale.boatName().equals(b.toString()))) {
+		        			 thisSellersSales.add(sale);
+		        		 }
+		        	 }	 
+	        	 }	    
+	        	 if(thisSellersSales.size() > 0){
+		        	 bufferedWritter.write("\t\t\t"+seller.toString()+"\t\t\t\t\n");
+		        	 for(Sale sale : thisSellersSales){
+			        	 double commissionSale = sale.payingPassengers() * 10;
+		    			 totalCommission += commissionSale;
+		    			 totalPayingPassengers += sale.payingPassengers();
+		    			 bufferedWritter.write("\t\t\t\t"+ConversionUtils.getDatePortuguese(sale.departureTime(), true) + 
+		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+String.format("%.2f",commissionSale)+"\n");
+		        	 }
+		    		 bufferedWritter.write("\t\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + String.format("%.2f",totalCommission)+"\n");
+	        	 }
+	         }
+	         bufferedWritter.close();
+	         Reporter.generateEnterpriseSaleReport();
+         }catch(IOException e){
+        	 e.printStackTrace();
+         }
     }
     
     public void calculateTotalMovApportion(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){

@@ -149,6 +149,14 @@ public class MainFrame extends JFrame {
 		mnRegistros.add(mntmMovimentoRateioGeral);
 		mnRegistros.add(mntmComisses);
 		
+		JMenuItem mntmVendasEmpresa = new JMenuItem("Vendas Empresa");
+		mntmVendasEmpresa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processSalesReportMenu();
+			}
+		});
+		mnRegistros.add(mntmVendasEmpresa);
+		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
@@ -226,7 +234,7 @@ public class MainFrame extends JFrame {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					new CalculatorDefault().calculateCommission(dataBaseConnection, timeFrom, timeTo);
+					new CalculatorDefault().calculateTotalSales(dataBaseConnection, timeFrom, timeTo);
 					p.dispose();
 				}
 			});				
@@ -234,6 +242,35 @@ public class MainFrame extends JFrame {
 		}
 		
 	}
+	
+	void processSalesReportMenu(){
+		EnterpriseDialog en = new EnterpriseDialog(this, true, dataBaseConnection);
+		en.setVisible(true);
+		
+		final String enterpriseName = en.getEnterpriseName();
+		
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			final ProgressDialog p = new ProgressDialog(this, "Calculando vendas empresa!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateSalesEnterprise(enterpriseName, dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});			
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoVendasEmpresa.pdf");
+		}
+		
+	}
+
 	
 	void processMovGeneralMenu(){
 		TimesampDialog tm = new TimesampDialog(this,true);
@@ -310,5 +347,4 @@ public class MainFrame extends JFrame {
 		c.setLocation(getLocation());
 		c.setVisible(true);
 	}
-
 }

@@ -37,6 +37,11 @@ public class Reporter {
 		genericGenerateReport(new String[]{"De", "Até", "Vendedor","Data venda","Embarcação", "Total Pass.","Comissão"}, 
 				"ResultadoVendasGeral","ReportTemplates/Movimento_vendas_geral.jrxml");
 	}
+	
+	public static void generateEnterpriseSaleReport(){
+		genericGenerateReport(new String[]{"De", "Até", "Empresa","Vendedor","Data venda","Embarcação", "Total Pass.","Comissão"}, 
+				"ResultadoVendasEmpresa","ReportTemplates/Movimento_vendas.jrxml");
+	}
 	 
 	public static void genericGenerateReport(String[] columnNames, String outFile, String reportTemplateFile){
 		JasperReport jasperReport;
