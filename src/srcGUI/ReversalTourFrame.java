@@ -89,24 +89,19 @@ public class ReversalTourFrame extends JFrame {
 		scrollPane.setViewportView(table);		
 	}
 	
-	void processReversal(){
-		List<Tour> selectedTours = new ArrayList<Tour>();
-		
+	void processReversal(){		
 		int[] selectedRows = table.getSelectedRows();
 		
 		for(int i = 0; i < selectedRows.length; i++){
 			int id = (Integer)table.getModel().getValueAt(selectedRows[i],0);
 			for(Tour t : toursEnvolved){
 				if(t.id() == id) {
-					selectedTours.add(t);
+					dataBaseConnection.deleteTour(t);
 					break;
 				}
-			}
+			}			
 		}
-		for(Tour t : selectedTours) {
-			dataBaseConnection.deleteTour(t);
-		}
+		for(int i : selectedRows) ((DefaultTableModel)table.getModel()).removeRow(i);
 		JOptionPane.showMessageDialog(null, "Registros removidos!","Sucesso",JOptionPane.INFORMATION_MESSAGE);
-		dispose();
 	}
 }

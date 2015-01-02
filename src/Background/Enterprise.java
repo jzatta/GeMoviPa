@@ -25,6 +25,10 @@ public class Enterprise{
       return "\""+this.name+"\"";
     }
     
+    public String name(){
+    	return this.name;
+    }
+    
     public String toString(){
       return name;
     }

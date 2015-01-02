@@ -106,6 +106,11 @@ public class MainFrame extends JFrame {
 		mnCadastro.add(mntmEmpresa);
 		
 		JMenuItem mntmBarco = new JMenuItem("Barco");
+		mntmBarco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processCadastreBoatMenu();
+			}
+		});
 		mnCadastro.add(mntmBarco);
 		
 		JMenu mnRegistros = new JMenu("Relatórios");
@@ -268,6 +273,12 @@ public class MainFrame extends JFrame {
 			reversalSale.setLocation(getLocation());
 			reversalSale.setVisible(true);
 		}
+	}
+	
+	void processCadastreBoatMenu(){
+		CadastreBoat c = new CadastreBoat(dataBaseConnection);
+		c.setLocation(getLocation());
+		c.setVisible(true);
 	}
 
 }
