@@ -18,7 +18,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class Reporter {	
 	
 	public static void generateTotalMovReport(){
-		genericGenerateReport(new String[]{"Embarcação", "Data", "Bruto","Líquido","Comissão", "Descontos","Pass. Inteiros",
+		genericGenerateReport(new String[]{"De","Até","Embarcação", "Bruto","Líquido","Comissão", "Descontos","Pass. Inteiros",
 					"Pass. Free","Total Pass."}, 
 				"ResultadoMovimentoGeral","ReportTemplates/movimento_geral.jrxml");
 	}
@@ -26,6 +26,11 @@ public class Reporter {
 	public static void generateApportionReport(){
 		genericGenerateReport(new String[]{"Embarcação", "Data", "Média","% Carga","% Rateio", "Valor"}, 
 				"ResultadoRateio","ReportTemplates/rateio.jrxml");
+	}
+	
+	public static void generateTotalApportionReport(){
+		genericGenerateReport(new String[]{"De","Até","Embarcação", "Bruto","Líquido","Líquido rateio","% Carga","% Rateio"}, 
+				"ResultadoMovimentoRateioGeral","ReportTemplates/movimento_rateio_geral.jrxml");
 	}
 	
 	public static void generateTotalSaleReport(){

@@ -139,6 +139,14 @@ public class MainFrame extends JFrame {
 			}
 		});
 		mnRegistros.add(mntmMovimentoGeral);
+		
+		JMenuItem mntmMovimentoRateioGeral = new JMenuItem("Movimento Rateio Geral");
+		mntmMovimentoRateioGeral.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processMovGeneralApportionMenu();
+			}
+		});
+		mnRegistros.add(mntmMovimentoRateioGeral);
 		mnRegistros.add(mntmComisses);
 		
 		JPanel panel = new JPanel();
@@ -246,6 +254,28 @@ public class MainFrame extends JFrame {
 				}
 			});			
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoMovimentoGeral.pdf");
+		}
+	}
+	
+	void processMovGeneralApportionMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			final ProgressDialog p = new ProgressDialog(this, "Calculando movimento rateio geral!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateTotalMovApportion(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});			
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoMovimentoRateioGeral.pdf");
 		}
 	}
 	
