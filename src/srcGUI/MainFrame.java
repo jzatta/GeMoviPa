@@ -46,7 +46,7 @@ public class MainFrame extends JFrame {
 		}
 		
 		System.out.println("DB address: " + address.toString());
-		dataBaseConnection = new SQLDatabase(address.toString(),"root","root");
+		dataBaseConnection = new SQLDatabase(address.toString(),"root","root","qqw");
 		
 		try{
 			dataBaseConnection.createDatabaseIfNoExist();			
@@ -100,9 +100,19 @@ public class MainFrame extends JFrame {
 		menuBar.add(mnCadastro);
 		
 		JMenuItem menuItem = new JMenuItem("Vendedores");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processCadastreSellerMenu();
+			}
+		});
 		mnCadastro.add(menuItem);
 		
 		JMenuItem mntmEmpresa = new JMenuItem("Empresa");
+		mntmEmpresa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processCadastreEnterpriseMenu();
+			}
+		});
 		mnCadastro.add(mntmEmpresa);
 		
 		JMenuItem mntmBarco = new JMenuItem("Barco");
@@ -346,5 +356,17 @@ public class MainFrame extends JFrame {
 		CadastreBoat c = new CadastreBoat(dataBaseConnection);
 		c.setLocation(getLocation());
 		c.setVisible(true);
+	}
+	
+	void processCadastreSellerMenu(){
+		CadastreSeller s = new CadastreSeller(dataBaseConnection);
+		s.setLocation(getLocation());
+		s.setVisible(true);
+	}
+	
+	void processCadastreEnterpriseMenu(){
+		CadastreEnterprise e = new CadastreEnterprise(dataBaseConnection);
+		e.setLocation(getLocation());
+		e.setVisible(true);
 	}
 }

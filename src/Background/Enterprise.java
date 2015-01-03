@@ -36,6 +36,13 @@ public class Enterprise{
     	return this.name;
     }
     
+    public boolean equals(Enterprise e){
+  	  if((id == e.id) &&
+  		 (name.equals(e.name)))
+  		  return true;
+  	  return false;
+    }
+    
     public String toString(){
       return name;
     }

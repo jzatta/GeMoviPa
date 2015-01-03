@@ -31,6 +31,10 @@ public class Seller{
   	return this.sellerEnterprise;
   }
   
+  public String name(){
+	  return this.sellerName;
+  }
+  
   public int id(){
 	  return this.idSeller;
   }
@@ -39,6 +43,14 @@ public class Seller{
     return Integer.toString(this.idSeller)+",\""+
     this.sellerName+"\","+
     "\""+this.sellerEnterprise+"\"";
+  }
+  
+  public boolean equals(Seller s){
+	  if((idSeller == s.idSeller) &&
+		 (sellerName.equals(s.sellerName)) &&
+		 (sellerEnterprise.equals(s.sellerEnterprise)))
+		  return true;
+	  return false;
   }
   
   public String toString(){
