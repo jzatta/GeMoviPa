@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import Background.CalculatorDefault;
+import Background.Reporter;
 import Database.SQLDatabase;
 
 import java.awt.Dimension;
@@ -46,7 +47,7 @@ public class MainFrame extends JFrame {
 		}
 		
 		System.out.println("DB address: " + address.toString());
-		dataBaseConnection = new SQLDatabase(address.toString(),"root","root","qqw");
+		dataBaseConnection = new SQLDatabase(address.toString(),"root","root");
 		
 		try{
 			dataBaseConnection.createDatabaseIfNoExist();			
@@ -179,6 +180,11 @@ public class MainFrame extends JFrame {
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run() {
+				/*Reporter.compileTemplate("ReportTemplates/rateio");
+				Reporter.compileTemplate("ReportTemplates/movimento_geral");
+				Reporter.compileTemplate("ReportTemplates/movimento_rateio_geral");
+				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral");
+				Reporter.compileTemplate("ReportTemplates/Movimento_vendas");*/
 				new MainFrame().setVisible(true);
 			}
 		});
