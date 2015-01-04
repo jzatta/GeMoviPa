@@ -55,6 +55,10 @@ public class Sale{
     	return this.departure;
     }
     
+    public int id(){
+    	return this.id;
+    }
+    
     public String boatName(){
     	return this.boatName;
     }

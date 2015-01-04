@@ -415,6 +415,17 @@ public class SQLDatabase implements DatabaseInterface{
     return true;
   }
   
+  public boolean deleteSale(Sale toDelete){
+	    String deleteRule = "DELETE FROM `"+this.schemaName+"`.`sales` WHERE `idsales`="+Integer.toString(toDelete.id())+";";
+	    try{
+	      this.store(deleteRule);
+	    } catch (SQLException e){
+	      e.printStackTrace();
+	      return false;
+	    }
+	    return true;
+  }
+  
   public boolean deleteBoat(Boat toDelete){
     String deleteRule = "DELETE FROM `"+this.schemaName+"`.`boats` WHERE `idboats`="+Integer.toString(toDelete.id())+";";
     try{

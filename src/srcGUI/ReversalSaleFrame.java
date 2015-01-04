@@ -73,7 +73,7 @@ public class ReversalSaleFrame extends JFrame {
 		Object rowElements[][] = new Object[salesEnvolved.size()][columnNames.length];
 		for(int i = 0; i < salesEnvolved.size(); i++){
 				Sale s = salesEnvolved.get(i);
-				rowElements[i][0] = 0;//s.id();
+				rowElements[i][0] = s.id();
 				rowElements[i][1] = ConversionUtils.getDatePortuguese(s.departureTime(), true);
 				rowElements[i][2] = s.sellerName();
 				rowElements[i][3] = s.boatName();
@@ -98,15 +98,15 @@ public class ReversalSaleFrame extends JFrame {
 		for(int i = 0; i < selectedRows.length; i++){
 			int id = (Integer)table.getModel().getValueAt(selectedRows[i],0);
 			for(Sale s : salesEnvolved){
-				/*if(s.id() == id) {
+				if(s.id() == id) {
 					selectedSales.add(s);
 					break;
-				}*/
+				}
 			}
 		}
-		/*for(Tour t : selectedTours) {
-			dataBaseConnection.deleteTour(t);
-		}*/
+		for(Sale s : selectedSales) {
+			dataBaseConnection.deleteSale(s);
+		}
 		JOptionPane.showMessageDialog(null, "Registros removidos!","Sucesso",JOptionPane.INFORMATION_MESSAGE);
 		dispose();
 	}
