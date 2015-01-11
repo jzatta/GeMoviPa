@@ -364,13 +364,13 @@ public class CalculatorDefault{
 		        	 bufferedWritter.write("\t\t\t"+seller.toString()+"\t\t\t\t\n");
 		        	 for(Sale sale : thisSellersSales){
 			        	 double commissionSale = sale.payingPassengers() * 10;
-		    			 totalCommission += commissionSale;
-		    			 generalTotalCommission += totalCommission;
-		    			 totalPayingPassengers += sale.payingPassengers();
-		    			 generalTotalPayingPassengers += totalPayingPassengers;
+		    			 totalCommission += commissionSale;		    			 
+		    			 totalPayingPassengers += sale.payingPassengers();		    			 
 		    			 bufferedWritter.write("\t\t\t\t"+ConversionUtils.getDatePortuguese(sale.departureTime(), true) + 
 		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+String.format("%.2f",commissionSale)+"\n");
 		        	 }
+		        	 generalTotalCommission += totalCommission;
+		        	 generalTotalPayingPassengers += totalPayingPassengers;
 		    		 bufferedWritter.write("\t\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + String.format("%.2f",totalCommission)+"\n");
 	        	 }
 	         }
@@ -552,7 +552,6 @@ public class CalculatorDefault{
     
     public void calculateTotalSalesEnterprises(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
     	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
-    	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
     	List<Enterprise> enterprises = dataBaseConnection.loadEnterprises(null);
     	
     	 File outFile = new File("ResultadoVendasGeralEmpresas.csv");
