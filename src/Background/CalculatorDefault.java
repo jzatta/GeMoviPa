@@ -565,7 +565,7 @@ public class CalculatorDefault{
  			e.printStackTrace();
  		}
          try{
-         	bufferedWritter.write(ConversionUtils.getDatePortuguese(timeFrom, true)+"\t"+ConversionUtils.getDatePortuguese(timeTo, true)+"\t\t\t\t\t\n");
+         	bufferedWritter.write(ConversionUtils.getDatePortuguese(timeFrom, true)+"\t"+ConversionUtils.getDatePortuguese(timeTo, true)+"\t\t\t\n");
          	 
          	 for(Enterprise enterprise : enterprises){
 	        	 List<Sale> thisEnterpriseSales = new ArrayList<Sale>();
@@ -577,16 +577,13 @@ public class CalculatorDefault{
 	        		 }
 	        	 }	    
 	        	 if(thisEnterpriseSales.size() > 0){
-		        	 bufferedWritter.write("\t\t"+enterprise.toString()+"\t\t\t\t\n");
 		        	 for(Sale sale : thisEnterpriseSales){
 			        	 double commissionSale = sale.payingPassengers() * 10;
 			        	 totalCommission += commissionSale;
 			        	 totalPayingPassengers += sale.payingPassengers();
-		    			 bufferedWritter.write("\t\t\t"+ConversionUtils.getDatePortuguese(sale.departureTime(), true) + 
-		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+String.format("%.2f",commissionSale)+"\n");
 		        	 }
-		    		 bufferedWritter.write("\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + String.format("%.2f",totalCommission)+"\n");
-	        	 }
+		        	 bufferedWritter.write("\t\t"+enterprise.toString()+ "\t" + totalPayingPassengers + "\t" + String.format("%.2f",totalCommission)+"\n");
+	        	 }	        	
          	 }
 	         bufferedWritter.close();
 	         Reporter.generateTotalSaleEnterprisesReport();

@@ -28,7 +28,7 @@ public class Reporter {
 	}
 	
 	public static void generateTotalSaleEnterprisesReport(){
-		genericGenerateReport(new String[]{"De","Até","Empresa", "Data passeio","Embarcação","Total Pass.", "Comissão"}, 
+		genericGenerateReport(new String[]{"De","Até","Empresa","Total Pass.","Comissão"}, 
 				"ResultadoVendasGeralEmpresas","ReportTemplates/Movimento_vendas_geral_empresas");
 	}
 
