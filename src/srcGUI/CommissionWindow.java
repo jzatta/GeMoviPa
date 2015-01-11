@@ -37,6 +37,8 @@ import javax.swing.JFormattedTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CommissionWindow extends JFrame {
 	private JTextField tFBoatID;
@@ -127,6 +129,12 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblCod, "2, 6, left, center");
 		
 		tFBoatID = new JTextField();
+		tFBoatID.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				tFBoatID.selectAll();
+			}
+		});
 		tFBoatID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				GUITransUtils.setSelectedBoatByID(tFBoatID, cBBoat);
@@ -150,6 +158,12 @@ public class CommissionWindow extends JFrame {
 		jPSaleInfo.add(lblCdVendedor, "2, 8, left, center");
 		
 		tFSellerID = new JTextField();
+		tFSellerID.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				tFSellerID.selectAll();
+			}
+		});
 		tFSellerID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUITransUtils.setSelectedSellerByID(tFSellerID,cBSeller);

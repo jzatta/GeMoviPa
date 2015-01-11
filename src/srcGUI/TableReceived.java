@@ -41,6 +41,8 @@ import Database.SQLDatabase;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 public class TableReceived extends JFrame {
@@ -146,6 +148,12 @@ public class TableReceived extends JFrame {
 		jPTourInfo.add(lblCdigoBarco, "2, 4, left, center");
 		
 		tFBoatID = new JTextField();
+		tFBoatID.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				tFBoatID.selectAll();
+			}
+		});
 		tFBoatID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUITransUtils.setSelectedBoatByID(tFBoatID, cBBoatName);				
