@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
 	private SQLDatabase dataBaseConnection;
 	
 	public MainFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		File dbAddress;
 		FileReader fR;
