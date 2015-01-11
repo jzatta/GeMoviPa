@@ -333,6 +333,9 @@ public class CalculatorDefault{
     	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
     	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
     	
+    	double generalTotalCommission = 0.0;
+    	double generalTotalPayingPassengers = 0.0;
+    	
     	 File outFile = new File("ResultadoVendasEmpresa.csv");
          FileWriter fileWriter = null;
          BufferedWriter bufferedWritter = null;
@@ -362,13 +365,17 @@ public class CalculatorDefault{
 		        	 for(Sale sale : thisSellersSales){
 			        	 double commissionSale = sale.payingPassengers() * 10;
 		    			 totalCommission += commissionSale;
+		    			 generalTotalCommission += totalCommission;
 		    			 totalPayingPassengers += sale.payingPassengers();
+		    			 generalTotalPayingPassengers += totalPayingPassengers;
 		    			 bufferedWritter.write("\t\t\t\t"+ConversionUtils.getDatePortuguese(sale.departureTime(), true) + 
 		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+String.format("%.2f",commissionSale)+"\n");
 		        	 }
 		    		 bufferedWritter.write("\t\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + String.format("%.2f",totalCommission)+"\n");
 	        	 }
 	         }
+	         bufferedWritter.write("\t\t\t\t\t\t\t\n");
+	         bufferedWritter.write("\t\t\t\t\tTotal geral\t" + generalTotalPayingPassengers + "\t" + String.format("%.2f",generalTotalCommission)+"\n");
 	         bufferedWritter.close();
 	         Reporter.generateEnterpriseSaleReport();
          }catch(IOException e){
