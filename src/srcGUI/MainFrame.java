@@ -169,6 +169,14 @@ public class MainFrame extends JFrame {
 		});
 		mnRegistros.add(mntmVendasEmpresa);
 		
+		JMenuItem mntmVendasGeralEmpresas = new JMenuItem("Vendas Geral Empresas");
+		mntmVendasGeralEmpresas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processSalesReportEnterprisesMenu();
+			}
+		});
+		mnRegistros.add(mntmVendasGeralEmpresas);
+		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
@@ -185,7 +193,8 @@ public class MainFrame extends JFrame {
 				Reporter.compileTemplate("ReportTemplates/movimento_geral");
 				Reporter.compileTemplate("ReportTemplates/movimento_rateio_geral");
 				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral");
-				Reporter.compileTemplate("ReportTemplates/Movimento_vendas");*/
+				Reporter.compileTemplate("ReportTemplates/Movimento_vendas");
+				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral_empresas");*/
 				new MainFrame().setVisible(true);
 			}
 		});
@@ -258,6 +267,28 @@ public class MainFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoVendasGeral.pdf");
 		}
 		
+	}
+	
+	void processSalesReportEnterprisesMenu(){
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			final ProgressDialog p = new ProgressDialog(this, "Calculando vendas geral empresas!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateTotalSalesEnterprises(dataBaseConnection, timeFrom, timeTo);
+					p.dispose();
+				}
+			});				
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoVendasGeralEmpresas.pdf");
+		}
 	}
 	
 	void processSalesReportMenu(){

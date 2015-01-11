@@ -26,6 +26,11 @@ public class Reporter {
 					"Pass. Free","Total Pass."}, 
 				"ResultadoMovimentoGeral","ReportTemplates/movimento_geral");
 	}
+	
+	public static void generateTotalSaleEnterprisesReport(){
+		genericGenerateReport(new String[]{"De","Até","Empresa", "Data passeio","Embarcação","Total Pass.", "Comissão"}, 
+				"ResultadoVendasGeralEmpresas","ReportTemplates/Movimento_vendas_geral_empresas");
+	}
 
 	public static void generateApportionReport(){
 		genericGenerateReport(new String[]{"Embarcação", "Data", "Média","% Carga","% Rateio", "Valor"}, 

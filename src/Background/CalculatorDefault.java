@@ -549,4 +549,49 @@ public class CalculatorDefault{
 			e.printStackTrace();
 		}
     }
+    
+    public void calculateTotalSalesEnterprises(SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
+    	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
+    	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+    	List<Enterprise> enterprises = dataBaseConnection.loadEnterprises(null);
+    	
+    	 File outFile = new File("ResultadoVendasGeralEmpresas.csv");
+         FileWriter fileWriter = null;
+         BufferedWriter bufferedWritter = null;
+         try {
+ 			fileWriter = new FileWriter(outFile);
+ 			bufferedWritter = new BufferedWriter(fileWriter);
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+         try{
+         	bufferedWritter.write(ConversionUtils.getDatePortuguese(timeFrom, true)+"\t"+ConversionUtils.getDatePortuguese(timeTo, true)+"\t\t\t\t\t\n");
+         	 
+         	 for(Enterprise enterprise : enterprises){
+	        	 List<Sale> thisEnterpriseSales = new ArrayList<Sale>();
+	        	 double totalCommission = 0.0;
+	        	 double totalPayingPassengers = 0.0;	   
+	        	 for(Sale sale : sales) {
+	        		 if(sale.sellerEnterprise().equals(enterprise.name())) {
+	        			 thisEnterpriseSales.add(sale);
+	        		 }
+	        	 }	    
+	        	 if(thisEnterpriseSales.size() > 0){
+		        	 bufferedWritter.write("\t\t"+enterprise.toString()+"\t\t\t\t\n");
+		        	 for(Sale sale : thisEnterpriseSales){
+			        	 double commissionSale = sale.payingPassengers() * 10;
+			        	 totalCommission += commissionSale;
+			        	 totalPayingPassengers += sale.payingPassengers();
+		    			 bufferedWritter.write("\t\t\t"+ConversionUtils.getDatePortuguese(sale.departureTime(), true) + 
+		    					 				"\t"+ sale.boatName() + "\t" + sale.payingPassengers()+"\t"+String.format("%.2f",commissionSale)+"\n");
+		        	 }
+		    		 bufferedWritter.write("\t\t\t\tTotais\t" + totalPayingPassengers + "\t" + String.format("%.2f",totalCommission)+"\n");
+	        	 }
+         	 }
+	         bufferedWritter.close();
+	         Reporter.generateTotalSaleEnterprisesReport();
+         }catch(IOException e){
+        	 e.printStackTrace();
+         }
+    }
 }

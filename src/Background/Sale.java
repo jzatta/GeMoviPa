@@ -67,6 +67,10 @@ public class Sale{
     	return this.sellerName;
     }
     
+    public String sellerEnterprise(){
+    	return this.sellerEnterprise;
+    }
+    
     public double payingPassengers(){
     	return fullPass + halfPass * 0.5;
     }
