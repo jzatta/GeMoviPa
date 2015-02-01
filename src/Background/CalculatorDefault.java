@@ -328,15 +328,19 @@ public class CalculatorDefault{
 
     }
     
-    public void calculateSalesEnterprise(String enterpriseName,SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo){
+    public void calculateSalesEnterprise(String enterpriseName,SQLDatabase dataBaseConnection, Timestamp timeFrom, Timestamp timeTo, boolean self){
     	List<Seller> sellers = dataBaseConnection.loadSellers(null, enterpriseName);
     	List<Sale> sales = dataBaseConnection.loadSales(timeFrom, timeTo,null,null, null, null);
-    	List<Boat> boats = dataBaseConnection.loadBoats(null, null);
+    	List<Boat> boats;
+    	if(self) boats = dataBaseConnection.loadBoats(null, enterpriseName);
+    	else boats = dataBaseConnection.loadBoats(null, null);
     	
     	double generalTotalCommission = 0.0;
     	double generalTotalPayingPassengers = 0.0;
     	
-    	 File outFile = new File("ResultadoVendasEmpresa.csv");
+    	String outFileName = "ResultadoVendasEmpresa.csv";
+    	if(self) outFileName = "ResultadoVendasEmpresaParaEmpresa.csv";
+    	 File outFile = new File(outFileName);
          FileWriter fileWriter = null;
          BufferedWriter bufferedWritter = null;
          try {
@@ -377,7 +381,10 @@ public class CalculatorDefault{
 	         bufferedWritter.write("\t\t\t\t\t\t\t\n");
 	         bufferedWritter.write("\t\t\t\t\tTotal geral\t" + generalTotalPayingPassengers + "\t" + String.format("%.2f",generalTotalCommission)+"\n");
 	         bufferedWritter.close();
-	         Reporter.generateEnterpriseSaleReport();
+	         if(self)
+	        	 Reporter.generateEnterprise2EnterpriseSaleReport();
+	         else
+	        	 Reporter.generateEnterpriseSaleReport();
          }catch(IOException e){
         	 e.printStackTrace();
          }

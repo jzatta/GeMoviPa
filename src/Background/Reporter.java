@@ -52,6 +52,11 @@ public class Reporter {
 				"ResultadoVendasEmpresa","ReportTemplates/Movimento_vendas");
 	}
 	
+	public static void generateEnterprise2EnterpriseSaleReport(){
+		genericGenerateReport(new String[]{"De", "Até", "Empresa","Vendedor","Data venda","Embarcação", "Total Pass.","Comissão"}, 
+				"ResultadoVendasEmpresaParaEmpresa","ReportTemplates/Movimento_vendas_empresa_para_empresa");
+	}
+	
 	public static void serializes(Object obj, String filePath){
 		try{
 			FileOutputStream file = new FileOutputStream(filePath);

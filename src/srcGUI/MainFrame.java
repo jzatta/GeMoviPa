@@ -177,6 +177,14 @@ public class MainFrame extends JFrame {
 		});
 		mnRegistros.add(mntmVendasGeralEmpresas);
 		
+		JMenuItem mntmVendasEmpresaP = new JMenuItem("Vendas Empresa p/ Empresa");
+		mntmVendasEmpresaP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processSalesReportEnterprise2Enterprise();
+			}
+		});
+		mnRegistros.add(mntmVendasEmpresaP);
+		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
@@ -194,7 +202,8 @@ public class MainFrame extends JFrame {
 				Reporter.compileTemplate("ReportTemplates/movimento_rateio_geral");
 				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral");
 				Reporter.compileTemplate("ReportTemplates/Movimento_vendas");
-				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral_empresas");*/
+				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral_empresas");
+				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_empresa_para_empresa");*/
 				new MainFrame().setVisible(true);
 			}
 		});
@@ -310,13 +319,40 @@ public class MainFrame extends JFrame {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					new CalculatorDefault().calculateSalesEnterprise(enterpriseName, dataBaseConnection, timeFrom, timeTo);
+					new CalculatorDefault().calculateSalesEnterprise(enterpriseName, dataBaseConnection, timeFrom, timeTo,false);
 					p.dispose();
 				}
 			});			
 			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoVendasEmpresa.pdf");
 		}
 		
+	}
+	
+	void processSalesReportEnterprise2Enterprise(){
+		EnterpriseDialog en = new EnterpriseDialog(this, true, dataBaseConnection);
+		en.setVisible(true);
+		
+		final String enterpriseName = en.getEnterpriseName();
+		
+		TimesampDialog tm = new TimesampDialog(this,true);
+		tm.setVisible(true);
+		
+		final Timestamp timeFrom = tm.getTimestampFrom();
+		final Timestamp timeTo = tm.getTimestampTo();
+		
+		if(timeFrom != null && timeTo != null){
+			final ProgressDialog p = new ProgressDialog(this, "Calculando vendas empresa para empresa!");
+			p.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					new CalculatorDefault().calculateSalesEnterprise(enterpriseName, dataBaseConnection, timeFrom, timeTo,true);
+					p.dispose();
+				}
+			});			
+			JOptionPane.showMessageDialog(null, "Verifique arquivo ResultadoVendasEmpresaParaEmpresa.pdf");
+		}
 	}
 
 	
