@@ -196,14 +196,14 @@ public class MainFrame extends JFrame {
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run() {
-				Reporter.compileTemplate("ReportTemplates/rateio");
+				/*Reporter.compileTemplate("ReportTemplates/rateio");
 				Reporter.compileTemplate("ReportTemplates/Movimento_vendas");				
 				Reporter.compileTemplate("ReportTemplates/movimento_geral");
 				Reporter.compileTemplate("ReportTemplates/movimento_rateio_geral");
 				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral");
 				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_geral_empresas");
 				Reporter.compileTemplate("ReportTemplates/Movimento_vendas_empresa_para_empresa");
-				System.out.println("Compilou templates!");
+				System.out.println("Compilou templates!");*/
 				new MainFrame().setVisible(true);
 			}
 		});
