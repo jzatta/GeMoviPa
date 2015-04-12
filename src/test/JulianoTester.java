@@ -16,20 +16,21 @@ public class JulianoTester{
 //       q.storeBoat(new Boat("barcao1","empresabarco1",8001,8.09));
 //       c
 //       q.storeSeller(new Seller("nomevendedor","empresavendedor"));
-      System.out.println(q.storeEnterprise(new Enterprise(2357,"teste")));
+      /*System.out.println(q.storeEnterprise(new Enterprise(2357,"teste")));
       System.out.println(q.storeBoat(new Boat(2357,"teste","teste",150,50.0)));
       System.out.println(q.storeSeller(new Seller(2357,"teste","teste")));
       System.out.println(q.storeSale(new Sale(2357, 10, 100, 1000,new Timestamp(System.currentTimeMillis()),"teste","qwerty","barcoza","empresabarcoza")));
+      */
       /*
       	q.storeEnterprise(new Enterprise("Barba Negra"));
-      	q.storeEnterprise(new Enterprise("Pérola Negra"));
+      	q.storeEnterprise(new Enterprise("P��rola Negra"));
       	q.storeEnterprise(new Enterprise("Barba Negra"));
       	q.storeBoat(new Boat("Barba Negra I","Barba Negra",120,50.0));
       	q.storeBoat(new Boat("Barba Negra II","Barba Negra",100,50.0));
       	q.storeBoat(new Boat("Perola Negra I","Perola Negra",200,50.0));
       	q.storeSeller(new Seller("Serjio","Barba Negra"));*/
       
-      /*q.storeBoat(new Boat("Holandês Voador","Scuna Sul",150,50.0));
+      q.storeBoat(new Boat("Holandês Voador","Scuna Sul",150,50.0));
       q.storeBoat(new Boat("Corsário Negro","Scuna Sul",150,50.0));
       q.storeBoat(new Boat("Pirata do Caribe I","Scuna Sul",150,50.0));
       q.storeBoat(new Boat("Pirata do Caribe II","Scuna Sul",150,50.0));
@@ -64,7 +65,7 @@ public class JulianoTester{
       q.storeSeller(new Seller("Alex","Scuna Sul"));
       q.storeSeller(new Seller("Noel","Scuna Sul"));
       q.storeSeller(new Seller("Guilherme","Scuna Sul"));
-      q.storeSeller(new Seller("Nô","Scuna Sul"));
+      q.storeSeller(new Seller("Noel","Scuna Sul"));
       q.storeSeller(new Seller("Scuna Sul 1","Scuna Sul"));
       q.storeSeller(new Seller("Scuna Sul 2","Scuna Sul"));
       
@@ -101,7 +102,7 @@ public class JulianoTester{
       q.storeEnterprise(new Enterprise("Scuna Sul"));
       q.storeEnterprise(new Enterprise("Pérola Negra"));
       q.storeEnterprise(new Enterprise("Kallmaria"));
-      q.storeEnterprise(new Enterprise("Martin"));*/
+      q.storeEnterprise(new Enterprise("Martin"));
       
       
       for (Sale t: q.loadSales(null, null, null, null, null, null)){
