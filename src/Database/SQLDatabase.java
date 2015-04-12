@@ -50,7 +50,7 @@ public class SQLDatabase implements DatabaseInterface{
     String[] creationCommands = {
       "SET sql_notes = 0;",
       "CREATE DATABASE IF NOT EXISTS `"+this.schemaName+"`;",
-      "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`sales` (`idsales` INT NOT NULL AUTO_INCREMENT, `fullPass` INT NOT NULL, `halfPass` INT NOT NULL, `freePass` INT NOT NULL, `departure` TIMESTAMP NOT NULL, `sellerName` VARCHAR(100) NOT NULL, `sellerEnterprise` VARCHAR(100) NOT NULL, `boatName` VARCHAR(100) NOT NULL, `boatEnterprise` VARCHAR(100) NOT NULL, PRIMARY KEY (`idsales`));",
+      "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`sales` (`idsales` INT NOT NULL AUTO_INCREMENT, `fullPass` INT NOT NULL, `halfPass` INT NOT NULL, `freePass` INT NOT NULL, `departure` TIMESTAMP NOT NULL, `sellerName` VARCHAR(100) NOT NULL, `sellerEnterprise` VARCHAR(100) NOT NULL, `boatName` VARCHAR(100) NOT NULL, `boatEnterprise` VARCHAR(100) NOT NULL, `discountValueTotal` DOUBLE NOT NULL, PRIMARY KEY (`idsales`));",
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`tours` (`idtours` INT NOT NULL AUTO_INCREMENT, `fullPass` INT NOT NULL, `halfPass` INT NOT NULL, `freePass` INT NOT NULL, `departure` TIMESTAMP NOT NULL, `boatName` VARCHAR(100) NOT NULL, `boatEnterprise` VARCHAR(100) NOT NULL, PRIMARY KEY (`idtours`));",
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`enterprises` (`identerprises` INT NOT NULL AUTO_INCREMENT,`enterpriseName` VARCHAR(100) NOT NULL, PRIMARY KEY (`identerprises`));",
       "CREATE TABLE IF NOT EXISTS `"+this.schemaName+"`.`boats` (`idboats` INT NOT NULL AUTO_INCREMENT,`boatName` VARCHAR(100) NOT NULL,`boatEnterprise` VARCHAR(100) NOT NULL,`boatCapacity` INT NOT NULL,`tourCost` DOUBLE NOT NULL,PRIMARY KEY (`idboats`));",
