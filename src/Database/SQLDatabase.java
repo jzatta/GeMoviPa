@@ -9,7 +9,7 @@ public class SQLDatabase implements DatabaseInterface{
   private String hostname;
   private String username;
   private String password;
-  private String schemaName = "qqw";
+  private String schemaName = "beach";
   
   public SQLDatabase(String hostname, String username, String password) {
     this.hostname = hostname;
